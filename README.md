@@ -13,11 +13,9 @@ The repository structure is as follows:
     └── example_script.py
 ```
 
-Documentation of the scripts
----
+## Documentation of the scripts
 
-`download_and_merge_data.py`
-~~~
+### `download_and_merge_data.py`
 
 This script downloads multiple image sets and annotations from the ImageTagger.
 The imagesets and the annotation format are defined at the top of the file.
@@ -26,31 +24,26 @@ To avoid conflicting names, every filename is prepended with its dataset id.
 Additionally, a file `annotations.yaml` is created that contains a dict mapping set ids to their
 metadata and a dict mapping image names to their labels.
 
-`download.py`
-~~~
+### `download.py`
 
 This is just a verbatim copy of the ImageTagger download script. Its API is used by
 `download_and_merge_data.py`, it it not necessary to use this script directly.
 
-`data_filter.py`
-~~~
+### `data_filter.py`
 
 This script goes through the data in the `data_raw` folder and copies an “interesting” selection of
 images to the `data` folder.
 
-`annotation_filter.py`
-~~~
+### `annotation_filter.py`
 
 This script filters the annotations contained in `data_raw/annotations.yaml` to only include the
 images in the `data` folder and creates a `data/annotations.yaml` file.
 
-`imagetagger_prepare_script.py`
-~~~
+### `imagetagger_prepare_script.py`
 
 This script prepares the files in `data` for the ImageTagger, i.e. zips the images and converts the
 annotations to the upload format.
 
-`line_label_tool.py`
-~~~
+### `line_label_tool.py`
 
 This script can be used to label lines.
