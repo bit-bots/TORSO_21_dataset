@@ -5,7 +5,7 @@ import sys
 import yaml
 from download import login, download_zip, download_annotations
 
-SETS = [261, 156, 614]
+SETS = [261, 156, 614, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035]
 EXPORT_FORMAT = 196
 OUTPUT_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data_raw'))
 SET_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '%s'))
