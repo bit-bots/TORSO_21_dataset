@@ -78,3 +78,22 @@ annotations to the upload format.
 #### `line_label_tool.py`
 
 This script can be used to label lines.
+
+### Variational Autoencoder
+
+The training code for the autoencoder is located in `scripts/vae/`.
+
+#### `vae/train.py`
+
+This file runs the training of the vae.
+More details are avalible by running `vae/train.py -h`.
+
+#### `vae/reconstruct.py`
+
+This script runs the autoencoder on a given input and shows the recnstruction of the image.
+More details are avalible by running `vae/reconstruct.py -h`.
+
+#### `vae/embeddings.py`
+
+This script runs the vae recursivly on all image inside a given folder and saves their latent space representation inside a file.
+More details are avalible by running `vae/embeddings.py -h`.
