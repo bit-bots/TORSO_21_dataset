@@ -17,6 +17,34 @@ The repository structure is as follows:
 
 ## Documentation of the scripts
 
+### Installation
+
+Follow these instructions to run the dataset scripts and the autoencoder.
+
+```
+# Clone the repository
+git clone https://github.com/bit-bots/vision_dataset_2021.git
+cd vision_dataset_2021
+
+# Install poetry
+pip3 install poetry --user
+
+# Install dependencies
+poetry install
+```
+
+### Usage
+
+You then need to source the environment in your shell to run the scripts.
+
+```
+poetry shell
+```
+
+You can also use `poetry run <path-to-script>` to run scripts without sourcing.
+
+### Scripts
+
 ### `download_and_merge_data.py`
 
 This script downloads multiple image sets and annotations from the ImageTagger.
