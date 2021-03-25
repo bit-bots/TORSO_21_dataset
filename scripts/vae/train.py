@@ -18,7 +18,6 @@ import argparse
 import model
 
 def kl_loss(mu, log_var):
-    # TODO: dividir entre el numero de batches?
     return -0.5 * torch.mean(1 + log_var - mu.pow(2) - torch.exp(log_var))
 
 def r_loss(y_train, y_pred):
