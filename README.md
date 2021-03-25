@@ -24,7 +24,7 @@ Follow these instructions setup the dependencies for the dataset scripts and the
 ```
 # Clone the repository
 git clone https://github.com/bit-bots/vision_dataset_2021.git
-cd vision_dataset_2021
+cd vision_dataset_2021/scripts
 
 # Install poetry
 pip3 install poetry --user
@@ -38,10 +38,11 @@ poetry install
 To run the tools you need to source the poetry environment in your shell.
 
 ```
+# Source the virtualenv
 poetry shell
 ```
 
-You can also use `poetry run <path-to-script>` to run scripts without sourcing.
+You can also use `poetry run <script>` to run scripts without sourcing.
 
 ### Scripts
 
