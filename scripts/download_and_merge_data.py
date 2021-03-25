@@ -50,11 +50,10 @@ if __name__ == '__main__':
         annotation_data['sets'][s] = new_annotation_data['metadata']
 
         # Add the images of this set, prepend them with the set id
-        for image in new_annotation_data['labels']:
-            old_name = image['name']
-            new_name = f"{s}-{old_name}"
-            del image['name']
-            annotation_data['images'][new_name] = image['annotations']
+        if new_annotation_data['labels']:
+            for image, annotations in new_annotation_data['labels'].items():
+                new_name = f"{s}-{image}"
+                annotation_data['images'][new_name] = annotations
 
         # Write the new data
         with open(annotation_file, 'w') as f:
