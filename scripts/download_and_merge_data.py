@@ -28,15 +28,15 @@ if __name__ == '__main__':
         download_zip(s, set_folder, login_data)
 
         print(f'Moving images of set {s}')
-        for image in os.listdir(str(s)):
-            os.rename(os.path.join(str(s), image), os.path.join(OUTPUT_FOLDER, f'{s}-{image}'))
-        
+        for image in os.listdir(set_folder):
+            os.rename(os.path.join(set_folder, image), os.path.join(OUTPUT_FOLDER, f'{s}-{image}'))
+
         print(f'Downloading annotations for set {s}')
         download_annotations(s, EXPORT_FORMAT, set_folder, login_data)
 
         print(f'Converting annotations for set {s}')
         # Read annotations for this set
-        with open(f'{s}/{s}.txt') as f:
+        with open(f'{set_folder}/{s}.txt') as f:
             new_annotation_data = yaml.safe_load(f)
 
         # Load existing collected annotations
