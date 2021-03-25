@@ -19,7 +19,7 @@ The repository structure is as follows:
 
 ### Installation
 
-Follow these instructions to run the dataset scripts and the autoencoder.
+Follow these instructions setup the dependencies for the dataset scripts and the autoencoder.
 
 ```
 # Clone the repository
@@ -35,7 +35,7 @@ poetry install
 
 ### Usage
 
-You then need to source the environment in your shell to run the scripts.
+To run the tools you need to source the poetry environment in your shell.
 
 ```
 poetry shell
