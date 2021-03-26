@@ -69,7 +69,7 @@ def main():
     with torch.no_grad():
         for batch_idx, (images, _, paths) in enumerate(tqdm(data_loader)):
             images_v = images.to("cuda")
-            mu, out_img, _ = vae(images_v, sampling=False)
+            mu, _, out_img = vae(images_v, sampling=False)
             mu = mu.to("cpu")
             for img_idx, path in enumerate(paths):
                 error = error_function(out_img[img_idx], images_v[img_idx]).detach().to("cpu")
