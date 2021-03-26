@@ -24,9 +24,9 @@ import model
 class ImageFolderWithPaths(Dataset):
     def __init__(self, folder_path, transform=None):
         files = sorted(glob.glob(folder_path + '/**/*', recursive=True))
-        self.files = filter(
+        self.files = list(filter(
             lambda x: os.path.splitext(os.path.basename(a))[-1] in [".png", ".jpg", ".jpeg", ".PNG", ".JPG"], 
-            files)
+            files))
 
         self.transform = transform
 
@@ -40,7 +40,7 @@ class ImageFolderWithPaths(Dataset):
         if self.transform:
             img = self.transform(img)
 
-        return img_path, img
+        return img, img_path
 
     def __len__(self):
         return len(self.files)
@@ -81,7 +81,7 @@ def main():
     error_function = torch.nn.MSELoss()
 
     with torch.no_grad():
-        for batch_idx, (images, _, paths) in enumerate(tqdm(data_loader)):
+        for batch_idx, (images, paths) in enumerate(tqdm(data_loader)):
             images_v = images.to("cuda")
             mu, _, out_img = vae(images_v, sampling=False)
             mu = mu.to("cpu")
