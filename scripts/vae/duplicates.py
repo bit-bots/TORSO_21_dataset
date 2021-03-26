@@ -32,7 +32,7 @@ def main():
     # Add all ones where the autoencoder performed bad without checking for the density
     finished_set = set([path_list[i] for i in np.where(errors >= error_threshold)[0]])
 
-    print(finished_set)
+    print(len(finished_set))
 
     path_set = set(path_list)
 
