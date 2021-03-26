@@ -15,6 +15,9 @@ NAME_TO_TYPE = {
     'rhoban': "robot",
 }
 
+BLURRED_DEFAULT = False
+CONCEALED_DEFAULT = False
+
 
 def get_data_from_VOC(path):
     tree = ET.parse(path)
@@ -36,6 +39,9 @@ def get_annotations(subtree):
         bbox = annotation.find('bndbox')
         annotation_data = {
             'type': NAME_TO_TYPE[annotation.find('name').text],
+            'in_image': True,
+            'blurred': BLURRED_DEFAULT,
+            'concealed': CONCEALED_DEFAULT,
             'vector': [  # BBox points
                 [  # X, Y value
                     int(bbox.find('xmin').text),
@@ -48,6 +54,25 @@ def get_annotations(subtree):
             ],
         }
         annotations.append(annotation_data)
+
+    # Check for missing types
+    # Add annotations for types not in image
+    ball = goalpost = robot = False
+    for annotation in annotations:
+        if annotation['type'] == 'ball':
+            ball = True
+        elif annotation['type'] == 'goalpost':
+            goalpost = True
+        elif annotation['type'] == 'robot':
+            robot = True
+
+    if not ball:
+        annotations.append({'type': 'ball', 'in_image': False})
+    if not goalpost:
+        annotations.append({'type': 'goalpost', 'in_image': False})
+    if not robot:
+        annotations.append({'type': 'robot', 'in_image': False})
+
     return annotations
 
 def get_metadata(subtree):
