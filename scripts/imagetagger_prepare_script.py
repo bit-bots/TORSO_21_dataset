@@ -4,26 +4,38 @@ import os
 import yaml
 from zipfile import ZipFile
 
-DATA_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data'))
-ANNOTATION_INPUT_FILE = os.path.join(DATA_FOLDER, 'annotations.yaml')
-IMAGES_ZIP_FILE = os.path.join(DATA_FOLDER, 'images.zip')
-ANNOTATION_OUTPUT_FILE = os.path.join(DATA_FOLDER, 'annotations.txt')
+INPUT_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data_raw'))
+OUTPUT_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data'))
+ANNOTATION_INPUT_FILE = os.path.join(INPUT_FOLDER, 'annotations.yaml')
+SELECTION_INPUT_FILE = os.path.join(INPUT_FOLDER, 'selection.yaml')
+IMAGES_ZIP_FILE = os.path.join(OUTPUT_FOLDER, 'images.zip')
+ANNOTATION_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, 'annotations.txt')
 
 if __name__ == '__main__':
-    print('Writing images to zip file')
-    with ZipFile(IMAGES_ZIP_FILE, 'w') as f:
-        for image in os.listdir(DATA_FOLDER):
-            if image.endswith('.zip') or image.endswith('.yaml'):
-                continue
-            f.write(os.path.join(DATA_FOLDER, image), image)
+    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-    print('Writing labels in upload format')
+    print('Writing images to zip file')
+    with open(SELECTION_INPUT_FILE) as f:
+        selection = yaml.safe_load(f)['selection']
+
+    all_images = os.listdir(INPUT_FOLDER)
+    with ZipFile(IMAGES_ZIP_FILE, 'w') as f:
+        for image in selection:
+            if image not in all_images:
+                print(f'!!! Image {image} in selection but not in data folder !!!')
+            else:
+                f.write(os.path.join(INPUT_FOLDER, image), image)
+
+    print('Reading all existing labels')
     with open(ANNOTATION_INPUT_FILE) as f:
         data = yaml.safe_load(f)
 
+    print('Writing labels in upload format')
     with open(ANNOTATION_OUTPUT_FILE, 'w') as f:
-        for image, image_data in data['images'].items():
-            for annotation in image_data['annotations']:
+        for image, annotations in data['images'].items():
+            if image not in selection:
+                continue
+            for annotation in annotations:
                 if annotation['in_image']:
                     vector = {}
                     for i, (x, y) in enumerate(annotation['vector']):
