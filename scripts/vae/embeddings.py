@@ -62,7 +62,7 @@ def main():
 
     path_list = list()
 
-    latent_spaces_numpy = np.empty((len(data_set), 500))
+    latent_spaces_numpy = np.empty((len(data_set), dump['z_dim']))
 
     with torch.no_grad():
         for batch_idx, (images, _, paths) in enumerate(tqdm(data_loader)):
