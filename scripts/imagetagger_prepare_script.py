@@ -19,12 +19,12 @@ if __name__ == '__main__':
 
     print('Writing labels in upload format')
     with open(ANNOTATION_INPUT_FILE) as f:
-        annotations = yaml.safe_load(f)
+        data = yaml.safe_load(f)
 
     with open(ANNOTATION_OUTPUT_FILE, 'w') as f:
-        for image, annotations in annotations['images'].items():
-            for annotation in annotations:
-                if annotation['in']:
+        for image, image_data in data['images'].items():
+            for annotation in image_data['annotations']:
+                if annotation['in_image']:
                     vector = {}
                     for i, (x, y) in enumerate(annotation['vector']):
                         vector['x' + str(i + 1)] = x
