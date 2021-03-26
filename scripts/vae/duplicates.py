@@ -15,7 +15,7 @@ from tqdm import tqdm
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", type=str, help='Input embeddings')
-    parser.add_argument("-d", type=str, help='The distance in latent space arroud the sample that is pruned.')
+    parser.add_argument("-d", type=int, default=30, help='The distance in latent space arroud the sample that is pruned.')
 
     args = parser.parse_args()
 
