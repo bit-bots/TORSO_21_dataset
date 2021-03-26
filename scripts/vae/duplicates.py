@@ -32,7 +32,7 @@ def main():
     print(np.where(errors >= error_threshold).shape)
 
     # Add all ones where the autoencoder performed bad without checking for the density
-    finished_set = set(path_list[np.where(errors >= error_threshold)])
+    finished_set = set([path_list[i] for i in np.where(errors >= error_threshold)[0]])
 
     path_set = set(path_list)
 
