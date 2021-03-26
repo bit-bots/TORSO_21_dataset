@@ -19,29 +19,7 @@ from torch.utils.data import Dataset
 from tqdm import tqdm
 
 import model
-
-
-class ImageFolderWithPaths(Dataset):
-    def __init__(self, folder_path, transform=None):
-        files = sorted(glob.glob(folder_path + '/**/*', recursive=True))
-        self.files = list(filter(
-            lambda x: os.path.splitext(os.path.basename(x))[-1] in [".png", ".jpg", ".jpeg", ".PNG", ".JPG"], 
-            files))
-
-        self.transform = transform
-
-    def __getitem__(self, index):
-        img_path = self.files[index % len(self.files)]
-        img = Image.open(img_path).convert('RGB')
-
-        # Apply transforms
-        if self.transform:
-            img = self.transform(img)
-
-        return img, img_path
-
-    def __len__(self):
-        return len(self.files)
+import dataset
 
 
 def main():
@@ -61,7 +39,7 @@ def main():
         transforms.ToTensor(),
     ])
 
-    data_set = ImageFolderWithPaths(args.data_dir, transform=train_transforms)
+    data_set = dataset.ImageFolderWithPaths(args.data_dir, transform=train_transforms)
     data_loader = torch.utils.data.DataLoader(data_set, batch_size=args.batch_size, shuffle=False, pin_memory=True)
 
     # load model
