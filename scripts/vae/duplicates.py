@@ -6,6 +6,7 @@ import argparse
 
 import numpy as np
 import pickle
+import yaml
 from PIL import Image
 import matplotlib.pyplot as plt
 from sklearn.neighbors import BallTree
@@ -30,12 +31,13 @@ def main():
     error_threshold = errors.mean() + errors.std() * 1.64
 
     # Add all ones where the autoencoder performed bad without checking for the density
-    finished_set = set([path_list[i] for i in np.where(errors >= error_threshold)[0]])
+    not_recreatable = set([path_list[i] for i in np.where(errors >= error_threshold)[0]])
+    
+    print(f"{len(not_recreatable)} images are included due to their high error in the autoencoder.")
 
-    print(len(finished_set))
+    finished_set = not_recreatable.copy()
 
     path_set = set(path_list)
-
 
     while len(path_set) > 0:
 
@@ -54,7 +56,15 @@ def main():
             if path_list[index] in path_set:
                 path_set.remove(path_list[index])
 
-    print(len(finished_set))
+    print(f"{len(finished_set)} images are included after the latent space distance sampling.")
+
+    with open("selection.yaml", "w") as f:
+        yaml.dump(
+            {
+                'high_autoencoder_error': list(not_recreatable), 
+                'selection': list(finished_set),
+                'dropout': list(set(path_list) - finished_set),
+            }, f)
 
     fig = plt.figure()
     for idx, path in enumerate(sorted(list(finished_set))[0:50]):
