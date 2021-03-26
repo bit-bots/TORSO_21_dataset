@@ -15,6 +15,50 @@ The repository structure is as follows:
     └── example_script.py
 ```
 
+The annotations are in the following format:
+
+```yaml
+images:
+  130-16_02_2018__11_16_34_0000_upper.png:
+    annotations:
+      - blurred: true
+        concealed: true
+        in_image: true
+        type: robot
+        vector:
+        - - 42 # x value
+          - 26 # y value
+        - - 81
+          - 98
+        pose: # Sim only
+          position:
+            x: 0
+            y: 0
+            z: 0
+          orientation:
+            x: 0
+            y: 0
+            z: 0
+            w: 0 
+      - in_image: false
+        type: ball
+    metadata: # Die Keys sollten sich an dem Beispiel hier orientieren, müssen aber nicht zwingend alle da sein für jedes Bild.
+      fov: 42
+      location: "foobay"
+      tags: ["natural_light", "telstar18", "do_not_use"]
+      imageset_id: 130
+      camera_pose: # Sim only
+        position:
+          x: 0
+          y: 0
+          z: 0
+        orientation:
+          x: 0
+          y: 0
+          z: 0
+          w: 0
+```
+
 ## Documentation of the scripts
 
 ### Installation
