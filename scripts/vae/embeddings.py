@@ -68,8 +68,6 @@ def main():
 
     error_function = torch.nn.MSELoss()
 
-    image_counter = 0
-
     with torch.no_grad():
         for batch_idx, (images, _, paths) in enumerate(tqdm(data_loader)):
             images_v = images.to("cuda")
@@ -78,13 +76,13 @@ def main():
             for img_idx, path in enumerate(paths):
                 total_image_idx = img_idx + (batch_idx * args.batch_size)
 
-                assert image_counter == total_image_idx, "That should no happen"
-
-                errors_numpy[total_image_idx] = error_function(out_img[img_idx], images_v[img_idx]).detach().to("cpu")
+                errors_numpy[total_image_idx] = error_function(
+                        out_img[img_idx], 
+                        images_v[img_idx]
+                    ).detach().to("cpu")
                 np_mu = mu[img_idx].detach().numpy()
                 latent_spaces_numpy[total_image_idx] = np_mu
                 path_list.append(path)
-                image_counter += 1
 
     print(len(path_list), latent_spaces_numpy.shape[0])
 
@@ -96,6 +94,7 @@ def main():
         'path_list': path_list,
         'latent': latent_spaces_numpy,
         'tree': tree,
+        'errors': errors_numpy,
     }
 
     print("Save embeddings!")
