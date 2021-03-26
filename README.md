@@ -15,6 +15,9 @@ The repository structure is as follows:
     └── example_script.py
 ```
 
+TODO: Define image folders in collections
+TODO: Was ist mit den dimensionen der Bilddatei?
+
 The annotations are in the following format:
 
 ```yaml
@@ -104,11 +107,6 @@ metadata and a dict mapping image names to their labels.
 This is just a verbatim copy of the ImageTagger download script. Its API is used by
 `download_and_merge_data.py`, it it not necessary to use this script directly.
 
-#### `data_filter.py`
-
-This script goes through the data in the `data_raw` folder and copies an “interesting” selection of
-images to the `data` folder.
-
 #### `annotation_filter.py`
 
 This script filters the annotations contained in `data_raw/annotations.yaml` to only include the
@@ -122,6 +120,10 @@ annotations to the upload format.
 #### `line_label_tool.py`
 
 This script can be used to label lines.
+
+#### `convert_pascal_voc.py`
+
+This script converts labels from the Pascal VOC XML format to the `yaml` format as defined above.
 
 ### Variational Autoencoder
 
