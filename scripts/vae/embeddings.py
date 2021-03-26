@@ -32,9 +32,7 @@ class ImageFolderWithPaths(Dataset):
 
     def __getitem__(self, index):
         img_path = self.files[index % len(self.files)]
-        img = np.array(
-            Image.open(img_path).convert('RGB'),
-            dtype=np.uint8)
+        img = Image.open(img_path).convert('RGB')
 
         # Apply transforms
         if self.transform:
