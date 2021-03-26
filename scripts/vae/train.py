@@ -16,6 +16,7 @@ from tensorboardX import SummaryWriter
 import argparse
 
 import model
+import dataset 
 
 def kl_loss(mu, log_var):
     return -0.5 * torch.mean(1 + log_var - mu.pow(2) - torch.exp(log_var))
@@ -57,10 +58,10 @@ def main():
         transforms.ToTensor(),
     ])
 
-    train_data = datasets.ImageFolder(data_dir, transform=train_transforms)
+    train_data = dataset.ImageFolderWithPaths(data_dir, transform=train_transforms)
     trainloader = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True, pin_memory=True)
 
-    images, labels = next(iter(trainloader))
+    images, _ = next(iter(trainloader))
 
     # create model
     input_shape = next(iter(trainloader))[0].shape
