@@ -2,6 +2,7 @@
 
 # Based on https://github.com/noctrog/conv-vae
 
+import os
 import argparse
 
 import numpy as np
@@ -58,13 +59,17 @@ def main():
 
     print(f"{len(finished_set)} images are included after the latent space distance sampling.")
 
-    with open("selection.yaml", "w") as f:
+    out_dir = os.path.join(os.path.dirname(args.i), "selection.yaml")
+
+    with open(out_dir, "w") as f:
         yaml.dump(
             {
                 'high_autoencoder_error': list(not_recreatable), 
                 'selection': list(finished_set),
                 'dropout': list(set(path_list) - finished_set),
             }, f)
+
+    print(f"Output writen '{out_dir}'.")
 
     fig = plt.figure()
     for idx, path in enumerate(sorted(list(finished_set))[0:50]):
