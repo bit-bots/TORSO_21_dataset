@@ -36,7 +36,6 @@ class ImageFolderWithPaths(datasets.ImageFolder):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", type=str, help='input image')
     parser.add_argument("-w", type=str, default='', help='Model weights')
     parser.add_argument("--data_dir", help="Folder where the data is located")
     parser.add_argument("--batch_size", default=32, type=int, help='Batch size')
