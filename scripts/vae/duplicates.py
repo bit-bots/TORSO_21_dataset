@@ -61,9 +61,9 @@ def main():
     with open("selection.yaml", "w") as f:
         yaml.dump(
             {
-                'high_autoencoder_error': not_recreatable, 
-                'selection': finished_set,
-                'dropout': set(path_list) - finished_set,
+                'high_autoencoder_error': list(not_recreatable), 
+                'selection': list(finished_set),
+                'dropout': list(set(path_list) - finished_set),
             }, f)
 
     fig = plt.figure()
