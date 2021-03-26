@@ -3,6 +3,8 @@
 # Based on https://github.com/noctrog/conv-vae
 
 import argparse
+import os
+import glob
 
 import numpy as np
 import pickle
@@ -12,26 +14,36 @@ import matplotlib.pyplot as plt
 from sklearn.neighbors import KDTree
 
 from torchvision import datasets, transforms, utils
+from torch.utils.data import Dataset
 
 from tqdm import tqdm
 
 import model
 
 
-class ImageFolderWithPaths(datasets.ImageFolder):
-    """Custom dataset that includes image file paths. Extends
-    torchvision.datasets.ImageFolder
-    """
+class ImageFolderWithPaths(Dataset):
+    def __init__(self, folder_path, transform=None):
+        files = sorted(glob.glob(folder_path + '/**/*', recursive=True))
+        self.files = filter(
+            lambda x: os.path.splitext(os.path.basename(a))[-1] in [".png", ".jpg", ".jpeg", ".PNG", ".JPG"], 
+            files)
 
-    # override the __getitem__ method. this is the method that dataloader calls
+        self.transform = transform
+
     def __getitem__(self, index):
-        # this is what ImageFolder normally returns
-        original_tuple = super(ImageFolderWithPaths, self).__getitem__(index)
-        # the image file path
-        path = self.imgs[index][0]
-        # make a new tuple that includes original and the path
-        tuple_with_path = (original_tuple + (path,))
-        return tuple_with_path
+        img_path = self.files[index % len(self.files)]
+        img = np.array(
+            Image.open(img_path).convert('RGB'),
+            dtype=np.uint8)
+
+        # Apply transforms
+        if self.transform:
+            img = self.transform(img)
+
+        return img_path, img
+
+    def __len__(self):
+        return len(self.files)
 
 
 def main():
