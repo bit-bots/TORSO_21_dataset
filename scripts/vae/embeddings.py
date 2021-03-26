@@ -25,7 +25,7 @@ class ImageFolderWithPaths(Dataset):
     def __init__(self, folder_path, transform=None):
         files = sorted(glob.glob(folder_path + '/**/*', recursive=True))
         self.files = list(filter(
-            lambda x: os.path.splitext(os.path.basename(a))[-1] in [".png", ".jpg", ".jpeg", ".PNG", ".JPG"], 
+            lambda x: os.path.splitext(os.path.basename(x))[-1] in [".png", ".jpg", ".jpeg", ".PNG", ".JPG"], 
             files))
 
         self.transform = transform
