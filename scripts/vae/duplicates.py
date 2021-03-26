@@ -14,7 +14,8 @@ from tqdm import tqdm
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", type=str, help='input embeddings')
+    parser.add_argument("-i", type=str, help='Input embeddings')
+    parser.add_argument("-d", type=str, help='The distance in latent space arroud the sample that is pruned.')
 
     args = parser.parse_args()
 
@@ -24,12 +25,16 @@ def main():
     path_list = out_dict['path_list']
     latent_spaces_numpy = out_dict['latent']
     tree = out_dict['tree']
+    errors = out_dict['errors']
 
-    threshold = 30
+    error_threshold = errors.mean() + errors.std() * 1.64
+
+    print(np.where(errors >= error_threshold).shape)
+
+    # Add all ones where the autoencoder performed bad without checking for the density
+    finished_set = set(path_list[np.where(errors >= error_threshold)])
 
     path_set = set(path_list)
-
-    finished_set = set()
 
     print(len(path_set))
 
@@ -42,7 +47,7 @@ def main():
         idx = path_list.index(element)
 
         indices = tree.query_radius(
-            latent_spaces_numpy[idx].reshape(1,-1), r=threshold)[0]
+            latent_spaces_numpy[idx].reshape(1,-1), r=args.d)[0]
 
         for index in indices:
             if path_list[index] in path_set:
