@@ -4,7 +4,6 @@
 
 import argparse
 import os
-import glob
 
 import numpy as np
 import pickle
@@ -87,8 +86,12 @@ def main():
 
     print("Save embeddings!")
 
-    with open('embeddings.pickle', 'wb') as f:
+    out_dir = os.path.join(args.data_dir, 'embeddings.pickle')
+
+    with open(out_dir, 'wb') as f:
         pickle.dump(out_dict, f)
+
+    print(f"Written outputs to '{out_dir}'.")
 
     print("Finished!")
 
