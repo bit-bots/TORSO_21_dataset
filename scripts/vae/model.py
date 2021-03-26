@@ -97,9 +97,12 @@ class VAE(nn.Module):
         x = self.decoder_conv(x)
         return x
 
-    def forward(self, x):
+    def forward(self, x, sampling=True):
         mu_p, log_var_p = self.forward_encoder(x)
-        x = self.sampling(mu_p, log_var_p)
+        if sampling:
+            x = self.sampling(mu_p, log_var_p)
+        else:
+            x = mu_p
         images_p = self.forward_decoder(x)
         return [mu_p, log_var_p, images_p]
 
