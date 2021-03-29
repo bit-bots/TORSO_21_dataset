@@ -21,6 +21,7 @@ if __name__ == '__main__':
     all_images = os.listdir(INPUT_FOLDER)
     with ZipFile(IMAGES_ZIP_FILE, 'w') as f:
         for image in selection:
+            image = os.path.basename(image)
             if image not in all_images:
                 print(f'!!! Image {image} in selection but not in data folder !!!')
             else:
