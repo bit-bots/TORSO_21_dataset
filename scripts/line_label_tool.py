@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import sys
 import time
 import numpy as np
 import cv2
@@ -130,7 +131,7 @@ class LineLabelTool(object):
 
         for root,_,f_names in os.walk(self.path):
 
-            f_names = [f for f in f_names if f.endswith(".png") or f.endswith(".jpg")]
+            f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
 
             for f in f_names:
                 u+=1
@@ -152,9 +153,20 @@ class LineLabelTool(object):
 
                 self.segment()
 
-                cv2.waitKey(0)
+                key = cv2.waitKey(0) & 0xFF
 
-                self.edit()
+                # Increase selection box size
+                if key == ord("q"):
+                    sys.exit(0)
+                # Undo
+                if key == ord("s"):
+                    self.segmentation = np.zeros_like(self.segmentation)
+
+                if key == ord("a"):
+                    pass
+
+                if key == ord("w"):
+                    self.edit()
 
                 cv2.imwrite(os.path.join(self.out_path, mask_name), self.segmentation) 
 
