@@ -7,7 +7,8 @@ import cv2
 
 class LineLabelTool(object):
     def __init__(self):
-        self.path="/home/florian/Projekt/bitbots/YOEO/data/Superset 1"
+        self.path="/home/florian/Downloads/imageset/"
+        self.out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks/"
         self.titles = ['No Green', 'Adaptive Gaussian Thresholding']
 
         self.img = None
@@ -125,10 +126,9 @@ class LineLabelTool(object):
     def main_loop(self):
         u = 0
 
-        for root,_,f_names in os.walk(self.path):
-            if "masks" in root:
-                continue
+        labeled_images = os.listdir(self.out_path)
 
+        for root,_,f_names in os.walk(self.path):
 
             f_names = [f for f in f_names if f.endswith(".png") or f.endswith(".jpg")]
 
@@ -137,6 +137,12 @@ class LineLabelTool(object):
                 if (not u%100==0):
                     #continue
                     pass
+
+                mask_name = os.path.join(os.path.splitext(os.path.basename(f))[0] + '.png')
+                
+                if mask_name in labeled_images:
+                    print("Skipped labeled image")
+                    continue
                 
                 img_path = os.path.join(root, f)
 
@@ -150,7 +156,7 @@ class LineLabelTool(object):
 
                 self.edit()
 
-                cv2.imwrite(os.path.join('/tmp/', os.path.join(os.path.splitext(os.path.basename(f))[0] + '.png')), self.segmentation) 
+                cv2.imwrite(os.path.join(self.out_path, mask_name), self.segmentation) 
 
         cv2.destroyAllWindows()
 
