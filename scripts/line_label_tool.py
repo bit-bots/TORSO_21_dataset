@@ -18,7 +18,8 @@ class LineLabelTool(object):
         self.segmentation = None
         self._box_size = 20
         self._mouse_coord = (0,0)
-        self._left_click = False
+        self._left_down = False
+        self._mouse_moved = False
 
         cv2.namedWindow('Adaptive Gaussian Thresholding')
 
@@ -66,7 +67,7 @@ class LineLabelTool(object):
             box_max_y = min(int(y + self._box_size / 2), self.segmentation.shape[0])
 
             # Check for click event
-            if self._left_click:
+            if self._mouse_moved:
                 # Delete pixels in selection
                 canvas[
                     box_min_y : box_max_y,
@@ -79,7 +80,7 @@ class LineLabelTool(object):
                 history.append(self.segmentation)
 
                 # Reset events
-                self._left_click = False
+                self._mouse_moved = False
 
             # Draw selection area
             cv2.rectangle(canvas,
@@ -120,7 +121,13 @@ class LineLabelTool(object):
             :param flags: Callback flags
             :param param: Some unused parameter
             """
-            self._left_click = (event == cv2.EVENT_LBUTTONUP)
+            if event == cv2.EVENT_LBUTTONUP:
+                self._left_down = False
+            elif event == cv2.EVENT_LBUTTONDOWN:
+                self._left_down = True
+                self._mouse_moved = True
+            elif event == cv2.EVENT_MOUSEMOVE and self._left_down:
+                self._mouse_moved = True
 
             # Set self._mouse_coordinates
             self._mouse_coord = (x, y)
