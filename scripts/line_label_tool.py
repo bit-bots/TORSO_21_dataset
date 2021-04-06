@@ -159,20 +159,22 @@ class LineLabelTool(object):
 
                 self.segment()
 
-                key = cv2.waitKey(0) & 0xFF
+                while True:
+                    key = cv2.waitKey(0) & 0xFF
 
-                # Increase selection box size
-                if key == ord("q"):
-                    sys.exit(0)
-                # Undo
-                if key == ord("s"):
-                    self.segmentation = np.zeros_like(self.segmentation)
+                    if key == ord("q"):
+                        sys.exit(0)
 
-                if key == ord("a"):
-                    pass
+                    if key == ord("s"):
+                        self.segmentation = np.zeros_like(self.segmentation)
+                        break
 
-                if key == ord("w"):
-                    self.edit()
+                    if key == ord("a"):
+                        break
+
+                    if key == ord("w"):
+                        self.edit()
+                        break
 
                 cv2.imwrite(os.path.join(self.out_path, mask_name), self.segmentation) 
 
