@@ -4,13 +4,15 @@ import sys
 import time
 import numpy as np
 import cv2
+import re
 
 
 class LineLabelTool(object):
-    def __init__(self):
+    def __init__(self, image_set_id):
         self.path="/home/florian/Downloads/imageset/"
         self.out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks/"
         self.titles = ['No Green', 'Adaptive Gaussian Thresholding']
+        self.image_set_id = image_set_id
 
         self.img = None
         self.segmentation = None
@@ -31,7 +33,7 @@ class LineLabelTool(object):
 
     def segment(self):
         tresh = cv2.getTrackbarPos('Weight1','Adaptive Gaussian Thresholding')
-        roi = cv2.getTrackbarPos('ROI','Adaptive Gaussian Thresholding')
+        roi = cv2.getTrackbarPos('ROI','Adaptive Gaussian Thresholding') + 1
         min_val = cv2.getTrackbarPos('Min Value','Adaptive Gaussian Thresholding')
 
         normalized_roi = roi*10//2*2 + 1
@@ -131,7 +133,11 @@ class LineLabelTool(object):
 
         for root,_,f_names in os.walk(self.path):
 
-            f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
+            if self.image_set_id:
+                image_set_id_str = str(self.image_set_id) + '-'
+                f_names = sorted([f for f in f_names if f.startswith(image_set_id_str) and (f.endswith(".png") or f.endswith(".jpg"))])
+            else:
+                f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
 
             for f in f_names:
                 u+=1
@@ -174,5 +180,10 @@ class LineLabelTool(object):
 
 
 if __name__ == "__main__":
-    LineLabelTool().main_loop()
+    if len(sys.argv) > 1:
+        image_set_id = int(sys.argv[1])
+    else:
+        image_set_id = None
+
+    LineLabelTool(image_set_id=image_set_id).main_loop()
 
