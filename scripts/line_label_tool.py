@@ -105,7 +105,7 @@ class LineLabelTool(object):
             if key == ord("u") and len(history) > 1:
                 del history[-1]
             # Quit exit
-            elif key == ord('s'):
+            elif key == ord('w'):
                 break
 
             time.sleep(0.01)
@@ -176,10 +176,10 @@ class LineLabelTool(object):
                         self.segmentation = np.zeros_like(self.segmentation)
                         break
 
-                    if key == ord("a"):
+                    if key == ord("w"):
                         break
 
-                    if key == ord("w"):
+                    if key == ord("e"):
                         self.edit()
                         break
 
