@@ -61,11 +61,11 @@ class LineLabelTool(object):
             x, y = self._mouse_coord
 
             # Get the values for the selection box
-            box_min_x = max(int(x - self._box_size / 2), 0)
-            box_min_y = max(int(y - self._box_size / 2), 0)
-            box_max_x = min(int(x + self._box_size / 2), self.segmentation.shape[1])
-            box_max_y = min(int(y + self._box_size / 2), self.segmentation.shape[0])
-
+            box_min_x = max(min(int(x - self._box_size / 2), self.segmentation.shape[1]), 0)
+            box_min_y = max(min(int(y - self._box_size / 2), self.segmentation.shape[0]), 0)
+            box_max_x = max(min(int(x + self._box_size / 2), self.segmentation.shape[1]), 0)
+            box_max_y = max(min(int(y + self._box_size / 2), self.segmentation.shape[0]), 0)
+            
             # Check for click event
             if self._mouse_moved:
                 # Delete pixels in selection
