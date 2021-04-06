@@ -20,6 +20,7 @@ class LineLabelTool(object):
         self._mouse_coord = (0,0)
         self._left_down = False
         self._mouse_moved = False
+        self.padding = 100
 
         cv2.namedWindow('Adaptive Gaussian Thresholding')
 
@@ -39,7 +40,7 @@ class LineLabelTool(object):
 
         normalized_roi = roi*10//2*2 + 1
 
-        pad_img = np.pad(self.img[5:-5,5:-5], 100, mode="reflect")
+        pad_img = np.pad(self.img[5:-5,5:-5], self.padding, mode="reflect")
 
         image_without_green = (0.5 * pad_img[..., 0] + 0.5 * pad_img[..., 2]).astype(np.uint8)
 
@@ -47,8 +48,8 @@ class LineLabelTool(object):
         #blured_img = cv2.medianBlur(blured_img,3)
         segmentation = cv2.adaptiveThreshold(blured_img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
                     cv2.THRESH_BINARY,normalized_roi,-tresh) - (255 - cv2.threshold(blured_img,min_val,255,cv2.THRESH_BINARY)[1])
-        self.segmentation = cv2.medianBlur(segmentation[100:-100,100:-100], 3)
-        images = [image_without_green[100:-100,100:-100], self.segmentation]
+        self.segmentation = cv2.medianBlur(segmentation[self.padding:-self.padding,self.padding:-self.padding], 3)
+        images = [image_without_green[self.padding:-self.padding,self.padding:-self.padding], self.segmentation]
         for i in range(len(images)):
             cv2.imshow(self.titles[i], images[i])
 
