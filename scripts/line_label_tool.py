@@ -174,7 +174,18 @@ class LineLabelTool(object):
 
                 img_path = os.path.join(root, f)
 
-                self.img = cv2.imread(img_path)
+                img = cv2.imread(img_path)
+
+                original_shape = img.shape
+                r = 1
+                if img.shape[0] > 800:
+                    r = 800 / float(img.shape[0])
+                    img = cv2.resize(
+                        img, 
+                        (int(img.shape[1] * r), 800),
+                        interpolation = cv2.INTER_AREA)
+
+                self.img = img
 
                 cv2.imshow('Original', self.img)
 
@@ -196,6 +207,11 @@ class LineLabelTool(object):
                     if key == ord("e"):
                         self.edit()
                         break
+
+                if r != 1:
+                    self.segmentation = cv2.resize(
+                        self.segmentation, 
+                        (original_shape[1], original_shape[0]))
 
                 cv2.imwrite(os.path.join(self.out_path, mask_name), self.segmentation)
 
