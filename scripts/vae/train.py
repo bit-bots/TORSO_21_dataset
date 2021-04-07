@@ -13,6 +13,8 @@ import torch.optim as optim
 from torchvision import datasets, transforms, utils
 from tensorboardX import SummaryWriter
 
+from torchsummary import summary
+
 import argparse
 
 import model
@@ -66,7 +68,8 @@ def main():
     # create model
     input_shape = next(iter(trainloader))[0].shape
     vae = model.VAE(input_shape[-3:], args.z_dim).to(device)
-    print(vae)          # print for feedback
+
+    summary(vae, input_size=tuple(input_shape[1:]))          # print for feedback
 
     # load previous weights (if any)
     if args.load is not '':
