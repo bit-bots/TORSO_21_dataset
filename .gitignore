@@ -1,0 +1,3 @@
+masks/
+*.pyc
+__pycache__

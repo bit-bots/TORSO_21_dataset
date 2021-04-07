@@ -249,6 +249,14 @@ numpy = "*"
 typing-extensions = "*"
 
 [[package]]
+name = "torchsummary"
+version = "1.5.1"
+description = "Model summary in PyTorch similar to `model.summary()` in Keras"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "torchvision"
 version = "0.9.1"
 description = "image and video datasets and models for torch deep learning"
@@ -300,7 +308,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6.2"
-content-hash = "867410f8ecb08b5ace54867169d80a74831a978afaa0f6746f52a62f3de2012e"
+content-hash = "bc3094a5e96dc680c66a3e22b8065b9378d33beb771f9fc2dc46e88b4d40d849"
 
 [metadata.files]
 argparse = [
@@ -645,6 +653,10 @@ torch = [
     {file = "torch-1.8.1-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:a50ea8ed900927fb30cadb63aa7a32fdd59c7d7abe5012348dfbe35a8355c083"},
     {file = "torch-1.8.1-cp39-cp39-win_amd64.whl", hash = "sha256:dac4d10494e74f7e553c92d7263e19ea501742c4825ddd26c4decfa27be95981"},
     {file = "torch-1.8.1-cp39-none-macosx_10_9_x86_64.whl", hash = "sha256:225ee4238c019b28369c71977327deeeb2bd1c6b8557e6fcf631b8866bdc5447"},
+]
+torchsummary = [
+    {file = "torchsummary-1.5.1-py3-none-any.whl", hash = "sha256:10f41d1743fb918f83293f13183f532ab1bb8f6639a1b89e5f8592ec1919a976"},
+    {file = "torchsummary-1.5.1.tar.gz", hash = "sha256:981bf689e22e0cf7f95c746002f20a24ad26aa6b9d861134a14bc6ce92230590"},
 ]
 torchvision = [
     {file = "torchvision-0.9.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:da4c4f7363b60b0637354974ea0a29dbc301f66c9f25d92ed5f10637909f3500"},
