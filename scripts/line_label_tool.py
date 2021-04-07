@@ -70,8 +70,8 @@ class LineLabelTool(object):
 
             # Check for click event
             if self._middle_down:
-                # erase_mask = np.zeros((self.segmentation.shape[0] + 2, self.segmentation[1] + 2))
-                cv2.floodFill(canvas, None, (x, y), 0, 0, 0)
+                fill_color = 0 if int(canvas[y][x]) >= 128 else 255
+                cv2.floodFill(canvas, None, (x, y), fill_color, 0, 0)
                 # Append new color space to self._history
                 self.segmentation = canvas.copy()
                 history.append(self.segmentation)
