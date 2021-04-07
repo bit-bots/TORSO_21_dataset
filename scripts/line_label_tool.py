@@ -106,10 +106,10 @@ class LineLabelTool(object):
             key = cv2.waitKey(1) & 0xFF
 
             # Increase selection box size
-            if key == ord("+"):
+            if key == ord("+") or key == ord('x'):
                 self._box_size += int(self._box_size * 0.2) + 1
             # Reduce selection box size
-            if key == ord("-") and self._box_size > 1:
+            if (key == ord("-") or key == ord('y')) and self._box_size > 1:
                 self._box_size -= int(self._box_size * 0.2) - 1
             # Undo
             if key == ord("u") and len(history) > 1:
