@@ -21,7 +21,7 @@ class LineLabelTool(object):
         self._left_down = False
         self._middle_down = False
         self._mouse_moved = False
-        self.padding = 100
+        self.padding = 10
 
         cv2.namedWindow('Adaptive Gaussian Thresholding')
 
@@ -174,7 +174,19 @@ class LineLabelTool(object):
 
                 img_path = os.path.join(root, f)
 
-                self.img = cv2.imread(img_path)
+                img = cv2.imread(img_path)
+
+                original_shape = img.shape
+                r = 1
+                max_res = 600
+                if img.shape[0] > max_res:
+                    r = max_res / float(img.shape[0])
+                    img = cv2.resize(
+                        img, 
+                        (int(img.shape[1] * r), max_res),
+                        interpolation = cv2.INTER_AREA)
+
+                self.img = img
 
                 cv2.imshow('Original', self.img)
 
@@ -196,6 +208,11 @@ class LineLabelTool(object):
                     if key == ord("e"):
                         self.edit()
                         break
+
+                if r != 1:
+                    self.segmentation = cv2.resize(
+                        self.segmentation, 
+                        (original_shape[1], original_shape[0]))
 
                 cv2.imwrite(os.path.join(self.out_path, mask_name), self.segmentation)
 
