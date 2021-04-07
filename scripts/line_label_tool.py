@@ -19,6 +19,7 @@ class LineLabelTool(object):
         self._box_size = 20
         self._mouse_coord = (0,0)
         self._left_down = False
+        self._middle_down = False
         self._mouse_moved = False
         self.padding = 100
 
@@ -66,15 +67,23 @@ class LineLabelTool(object):
             box_min_y = max(min(int(y - self._box_size / 2), self.segmentation.shape[0]), 0)
             box_max_x = max(min(int(x + self._box_size / 2), self.segmentation.shape[1]), 0)
             box_max_y = max(min(int(y + self._box_size / 2), self.segmentation.shape[0]), 0)
-            
+
             # Check for click event
-            if self._mouse_moved:
+            if self._middle_down:
+                # erase_mask = np.zeros((self.segmentation.shape[0] + 2, self.segmentation[1] + 2))
+                cv2.floodFill(canvas, None, (x, y), 0, 0, 0)
+                # Append new color space to self._history
+                self.segmentation = canvas.copy()
+                history.append(self.segmentation)
+
+                self._middle_down = False  # Reset middle down
+            elif self._mouse_moved:
                 # Delete pixels in selection
                 canvas[
                     box_min_y : box_max_y,
                     box_min_x : box_max_x
                 ] = 0
-                
+
                 # Append new color space to self._history
                 self.segmentation = canvas.copy()
 
@@ -129,6 +138,10 @@ class LineLabelTool(object):
                 self._mouse_moved = True
             elif event == cv2.EVENT_MOUSEMOVE and self._left_down:
                 self._mouse_moved = True
+            elif event == cv2.EVENT_MBUTTONDOWN:
+                self._middle_down = True
+            elif event == cv2.EVENT_MBUTTONUP:
+                self._middle_down = False
 
             # Set self._mouse_coordinates
             self._mouse_coord = (x, y)
@@ -154,11 +167,11 @@ class LineLabelTool(object):
                     pass
 
                 mask_name = os.path.join(os.path.splitext(os.path.basename(f))[0] + '.png')
-                
+
                 if mask_name in labeled_images:
                     print("Skipped labeled image")
                     continue
-                
+
                 img_path = os.path.join(root, f)
 
                 self.img = cv2.imread(img_path)
@@ -184,7 +197,7 @@ class LineLabelTool(object):
                         self.edit()
                         break
 
-                cv2.imwrite(os.path.join(self.out_path, mask_name), self.segmentation) 
+                cv2.imwrite(os.path.join(self.out_path, mask_name), self.segmentation)
 
         cv2.destroyAllWindows()
 
@@ -196,4 +209,3 @@ if __name__ == "__main__":
         image_set_id = None
 
     LineLabelTool(image_set_id=image_set_id).main_loop()
-
