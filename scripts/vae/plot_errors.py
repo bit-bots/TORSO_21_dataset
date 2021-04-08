@@ -5,7 +5,9 @@ import seaborn as sns
 with open("embeddings.pickle", "rb") as f:
     data = pickle.load(f)
 
-sns.set_style("darkgrid")
+sns.set_style("whitegrid")
+sns.set_context("paper")
+
 
 N, bins, patches = plt.hist(data["errors"], bins=30)
 
@@ -21,4 +23,5 @@ for d in divisions:
 plt.xlabel("Reconstruction error")
 plt.ylabel("Number of images")
 plt.legend()
-plt.show() 
+plt.savefig("error_fig.pdf", format="pdf", bbox_inches = 'tight', pad_inches = 0)
+plt.show()
