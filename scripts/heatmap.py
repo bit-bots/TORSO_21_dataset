@@ -1,78 +1,113 @@
 #!/usr/bin/env python3
 import os
-import sys
 import numpy as np
 import cv2
-import yaml
+import time
 import pickle
-from tqdm import tqdm
+import functools
 import seaborn as sns
 import matplotlib.pyplot as plt
+import multiprocessing
+from tqdm import tqdm
+
+
+def render(root, annotations, annotation_type, size, canvas_template, f):
+    canvas = np.zeros_like(canvas_template)
+
+    img_path = os.path.join(root, f)
+
+    img = cv2.imread(img_path)
+
+    shape = img.shape
+
+    annotations_of_type_in_image = filter(
+        lambda annotation: 
+            annotation_type in annotation['type'].lower() and annotation['in_image'],
+        annotations[f])
+
+    for annotation in annotations_of_type_in_image:
+
+        vector = np.array(annotation['vector'], dtype = np.float64)
+
+        vector[:, 0] = vector[:, 0] / float(shape[1])
+        vector[:, 1] = vector[:, 1] / float(shape[0])
+
+        vector = np.multiply(vector, size).astype(np.int32)
+
+        if annotation_type == 'ball':
+            canvas += cv2.circle(
+                np.zeros_like(canvas), 
+                (
+                    (vector[0][0] + vector[1][0]) // 2, 
+                    (vector[0][1] + vector[1][1]) // 2
+                ), 
+                ((vector[1][0] - vector[0][0]) + (vector[1][1] - vector[0][1])) // 4,
+                1, -1)
+        if annotation_type == 'robot':
+            canvas += cv2.rectangle(np.zeros_like(canvas), tuple(vector[1].tolist()), tuple(vector[0].tolist()), 1, -1)
+        elif annotation_type == 'goalpost':
+            canvas += cv2.fillConvexPoly(np.zeros_like(canvas), vector, 1.0)
+        elif annotation_type == 'field edge':
+            canvas += cv2.fillConvexPoly(np.zeros_like(canvas), np.array([[0,size]] + vector.tolist() + [[size, size]]), 1.0)
+        elif 'intersection' in annotation_type:
+            canvas[vector[0][1], vector[0][0]] += 1
+    
+    return canvas
+
 
 
 class LineLabelTool(object):
     def __init__(self):
         self.path="/home/florian/Downloads/imageset/"
         self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels.pickle"
+        self.pool = multiprocessing.Pool()
 
-    def main_loop(self):
+    def calc_heatmap(self, annotation_type, size):
 
-        annotation_type = "robot"
-
-        size = 50
+        annotation_type = annotation_type.lower()
 
         canvas = np.zeros((size,size), dtype=np.float64)
-
-        annotation_count = 0
-
-        img_count = 0
 
         with open(self.annotation_path, 'rb') as f:
             annotations = pickle.load(f)
 
         for root,_,f_names in os.walk(self.path):
             
-            f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
+            f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])[100:110]
 
-            for f in tqdm(f_names):
-                img_path = os.path.join(root, f)
+            out_list = self.pool.map(
+                functools.partial(
+                    render, 
+                    root, 
+                    annotations['labels'], 
+                    annotation_type, 
+                    size, 
+                    canvas), 
+                f_names)
 
-                img = cv2.imread(img_path)
+            canvas += np.array(out_list).sum(axis=0)
 
-                shape = img.shape
-                
-                img_count += 1
+        return canvas / len(f_names)
 
-                annotations_of_type_in_image = filter(
-                    lambda annotation: annotation_type in annotation['type'] and annotation['in_image'],
-                     annotations['labels'][f])
+    def main(self):
+        classes = ['Ball', 'Goalpost', 'Robot', 'Field Edge', 'Intersection']
+        size = 50
 
-                for annotation in annotations_of_type_in_image:
-                    annotation_count += 1
+        plt.figure(figsize=(5,3))
+        sns.set_style("whitegrid")
+        sns.set_context("paper")
+        plt.rcParams["font.sans-serif"] = "arial"
+        plt.rcParams['pdf.fonttype'] = 42
+        plt.rcParams['ps.fonttype'] = 42
 
-                    vector = np.array(annotation['vector'], dtype = np.float64)
+        for idx, cls in enumerate(classes):
+            sub = plt.subplot(2, 3, idx + 1, xticks=[], yticks=[])
+            sub.set_title(f'Type {cls}')
+            heatmap = self.calc_heatmap(cls, size)
+            sns.heatmap(heatmap, xticklabels=False, yticklabels=False)
 
-                    vector[:, 0] = vector[:, 0] / float(shape[1])
-                    vector[:, 1] = vector[:, 1] / float(shape[0])
-
-                    vector = np.multiply(vector, size).astype(np.int32)
-
-                    if annotation_type in ['ball', 'robot']:
-                        canvas += cv2.rectangle(np.zeros_like(canvas), tuple(vector[1].tolist()), tuple(vector[0].tolist()), 1, -1)
-                    elif annotation_type in ['goalpost']:
-                        canvas += cv2.fillConvexPoly(np.zeros_like(canvas), vector, 1.0)
-                    elif annotation_type in ['field edge']:
-                        canvas += cv2.fillConvexPoly(np.zeros_like(canvas), np.array([[0,size]] + vector.tolist() + [[size, size]]), 1.0)
-                    elif 'Intersection' in annotation_type:
-                        canvas[vector[0][1], vector[0][0]] += 1
-
-                #if img_count > 2000:
-                #    break
-
-        sns.heatmap(canvas / img_count, xticklabels=False, yticklabels=False)
         plt.show()
-        print(canvas.astype(np.int32))
 
 
 if __name__ == "__main__":
-    LineLabelTool().main_loop()
+    LineLabelTool().main()
