@@ -50,8 +50,10 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
         elif annotation_type == 'field edge':
             canvas += cv2.fillConvexPoly(np.zeros_like(canvas), np.array([[0,size]] + vector.tolist() + [[size, size]]), 1.0)
         elif 'intersection' in annotation_type:
-            canvas[vector[0][1], vector[0][0]] += 1
-    
+            canvas += cv2.circle(
+                np.zeros_like(canvas), 
+                (vector[0][0], vector[0][1]), 
+                5, 1, -1)
     return canvas
 
 
@@ -73,7 +75,7 @@ class LineLabelTool(object):
 
         for root,_,f_names in os.walk(self.path):
             
-            f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])[100:110]
+            f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
 
             out_list = self.pool.map(
                 functools.partial(
@@ -90,10 +92,10 @@ class LineLabelTool(object):
         return canvas / len(f_names)
 
     def main(self):
-        classes = ['Ball', 'Goalpost', 'Robot', 'Field Edge', 'Intersection']
-        size = 50
+        classes = ['Ball', 'Goalpost', 'Robot', 'Field Edge', 'T-Intersection', 'L-Intersection', 'X-Intersection']
+        size = 100
 
-        plt.figure(figsize=(5,3))
+        plt.figure(figsize=(8,3))
         sns.set_style("whitegrid")
         sns.set_context("paper")
         plt.rcParams["font.sans-serif"] = "arial"
@@ -101,11 +103,13 @@ class LineLabelTool(object):
         plt.rcParams['ps.fonttype'] = 42
 
         for idx, cls in enumerate(classes):
-            sub = plt.subplot(2, 3, idx + 1, xticks=[], yticks=[])
-            sub.set_title(f'Type {cls}')
+            sub = plt.subplot(2, 4, idx + 1, xticks=[], yticks=[])
+            sub.set_title(f'{cls}')
             heatmap = self.calc_heatmap(cls, size)
-            sns.heatmap(heatmap, xticklabels=False, yticklabels=False)
+            sns.heatmap(heatmap, xticklabels=False, yticklabels=False, linewidths=0.0, rasterized=True)
 
+        plt.tight_layout()
+        plt.savefig("heatmaps.pdf", format="pdf", bbox_inches = 'tight', pad_inches = 0)
         plt.show()
 
 
