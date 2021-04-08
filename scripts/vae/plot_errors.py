@@ -8,6 +8,13 @@ with open("embeddings.pickle", "rb") as f:
 sns.set_style("whitegrid")
 sns.set_context("paper")
 
+fig = plt.figure(figsize=(4,3))
+
+plt.rcParams["font.sans-serif"] = "arial"
+plt.rcParams['pdf.fonttype'] = 42
+plt.rcParams['ps.fonttype'] = 42
+
+#plt.margins(0,0)
 
 N, bins, patches = plt.hist(data["errors"], bins=30)
 
