@@ -106,7 +106,9 @@ class LineLabelTool(object):
             sub = plt.subplot(2, 4, idx + 1, xticks=[], yticks=[])
             sub.set_title(f'{cls}')
             heatmap = self.calc_heatmap(cls, size)
-            sns.heatmap(heatmap, xticklabels=False, yticklabels=False, linewidths=0.0, rasterized=True)
+            vmax = 0.03
+            if cls == 'Field Edge': vmax = 0.6
+            sns.heatmap(heatmap, xticklabels=False, yticklabels=False, linewidths=0.0, rasterized=True, vmin=0.0, vmax=vmax)
 
         plt.tight_layout()
         plt.savefig("heatmaps.pdf", format="pdf", bbox_inches = 'tight', pad_inches = 0)
