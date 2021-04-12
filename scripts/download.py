@@ -168,7 +168,7 @@ if __name__ == '__main__':
                         help='Download the images separately instead of bundled in a ZIP file')
     parser.add_argument('-a', '--annotations', action='store_true', default=False,
                         help='Also download annotations')
-    parser.add_argument('-e', '--export-format', type=int,
+    parser.add_argument('-e', '--export-format', type=int, default=196,
                         help='Export format to use in the annotation download. '
                              f'Please visit {BASE_URL}/annotations/api/export_format/list/ while logged in '
                              'to find the id of your export format')
