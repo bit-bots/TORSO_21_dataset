@@ -143,3 +143,14 @@ More details are avalible by running `vae/reconstruct.py -h`.
 
 This script runs the vae recursivly on all image inside a given folder and saves their latent space representation inside a file.
 More details are avalible by running `vae/embeddings.py -h`.
+
+#### `add_metadata.py`
+
+Creates the file `data/annotations_with_metadata.yaml` from `data/annotations.yaml` and
+`data/metadata.csv`. `annotations.yaml` can be downloaded from the ImageTagger, `metadata.csv` has
+to be manually created.
+
+#### `annotation_statistics.py`
+
+Creates the file `data/annotation_statistics.yaml` from `data/annotations.yaml` and
+`data/metadata.csv`. (See above; TODO generate from `data/annotations_with_metadata.yaml`.)
