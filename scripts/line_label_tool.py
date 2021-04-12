@@ -41,7 +41,7 @@ class LineLabelTool(object):
 
         normalized_roi = roi*10//2*2 + 1
 
-        pad_img = np.pad(self.img[5:-5,5:-5], self.padding, mode="reflect")
+        pad_img = np.pad(self.img, self.padding, mode="reflect")
 
         image_without_green = (0.5 * pad_img[..., 0] + 0.5 * pad_img[..., 2]).astype(np.uint8)
 
