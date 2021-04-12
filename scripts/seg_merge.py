@@ -26,7 +26,6 @@ class SegmentationMerge(object):
             f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
 
             for f in tqdm(f_names):
-
                 mask_name = os.path.splitext(os.path.basename(f))[0] + '.png'
 
                 mask = cv2.imread(os.path.join(self.mask_path, mask_name))
@@ -72,7 +71,6 @@ class SegmentationMerge(object):
                         mask *= field
 
                     elif annotation['type'] == 'ball':
-                        #print(mask.dtype)
                         mask = cv2.circle(
                             mask.astype(np.int32), 
                             (
@@ -83,6 +81,9 @@ class SegmentationMerge(object):
                             (0,0,0), -1)
                     elif annotation['type'] == 'goalpost':
                         mask = cv2.fillConvexPoly(mask.astype(np.int32), vector, (0, 0, 0))
+                
+                if field is None:
+                    continue
 
                 seg = (field * (255 - mask)) + mask // 2 
 
