@@ -7,7 +7,7 @@ import pickle
 from tqdm import tqdm
 
 
-class LineLabelTool(object):
+class SegmentationMerge(object):
     def __init__(self):
         self.img_path="/home/florian/Downloads/imageset/"
         self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels.pickle"
@@ -92,4 +92,4 @@ class LineLabelTool(object):
 
 
 if __name__ == "__main__":
-    LineLabelTool().main()
+    SegmentationMerge().main()
