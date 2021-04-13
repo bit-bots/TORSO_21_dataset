@@ -4,13 +4,14 @@ import numpy as np
 import cv2
 import time
 import pickle
+import yaml
 from tqdm import tqdm
 
 
 class SegmentationMerge(object):
     def __init__(self):
         self.img_path="/home/florian/Downloads/imageset/"
-        self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels.pickle"
+        self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels(2).yaml"
         self.mask_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks/"
         self.out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks1/"
         self.line_out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks2/"
@@ -18,8 +19,8 @@ class SegmentationMerge(object):
 
     def main(self):
 
-        with open(self.annotation_path, 'rb') as f:
-            annotations = pickle.load(f)['labels']
+        with open(self.annotation_path, 'r') as f:
+            annotations = yaml.load(f)['labels']
         
         for root,_,f_names in os.walk(self.img_path):
             
@@ -83,13 +84,14 @@ class SegmentationMerge(object):
                         mask = cv2.fillConvexPoly(mask.astype(np.int32), vector, (0, 0, 0))
                 
                 if field is None:
+                    print("scipped image without fieldboundary")
+                    print(f)
                     continue
 
                 seg = (field * (255 - mask)) + mask // 2 
 
-
                 cv2.imwrite(os.path.join(self.out_path, mask_name), seg)
-                cv2.imwrite(os.path.join(self.line_out_path, mask_name), mask)
+                cv2.imwrite(os.path.join(self.line_out_path, mask_name), mask // 255)
 
 
 if __name__ == "__main__":
