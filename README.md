@@ -45,7 +45,7 @@ images:
             w: 0 
       - in_image: false
         type: ball
-    metadata: # Die Keys sollten sich an dem Beispiel hier orientieren, müssen aber nicht zwingend alle da sein für jedes Bild.
+    metadata: # The keys should be like this but do not need to be present for all images
       fov: 42
       location: "foobay"
       tags: ["natural_light", "telstar18", "do_not_use"]
@@ -91,6 +91,22 @@ poetry shell
 
 You can also use `poetry run <script>` to run scripts without sourcing.
 
+### Download Dataset and Labels
+
+TODO test if this really works like this. maybe also create just one bash script which calls all of these after each other
+
+Get dataset 
+`download.py -a`
+
+Add metadata to annotations
+`add_metadata.py`
+
+Optional create pickled version and visualize
+`pickle_annotations.py annotations_with_metadata.yaml `
+`viz_annotations.py`
+
+
+
 ### Scripts
 
 #### `download_and_merge_data.py`
@@ -125,6 +141,18 @@ This script can be used to label lines.
 
 This script converts labels from the Pascal VOC XML format to the `yaml` format as defined above.
 
+#### `add_metadata.py`
+
+Creates the file `data/annotations_with_metadata.yaml` from `data/annotations.yaml` and
+`data/metadata.csv`. `annotations.yaml` can be downloaded from the ImageTagger, `metadata.csv` has
+to be manually created.
+
+#### `annotation_statistics.py`
+
+Creates the file `data/annotation_statistics.yaml` from `data/annotations.yaml` and
+`data/metadata.csv`. (See above; TODO generate from `data/annotations_with_metadata.yaml`.)
+
+
 ### Variational Autoencoder
 
 The training code for the autoencoder is located in `scripts/vae/`.
@@ -144,13 +172,3 @@ More details are avalible by running `vae/reconstruct.py -h`.
 This script runs the vae recursivly on all image inside a given folder and saves their latent space representation inside a file.
 More details are avalible by running `vae/embeddings.py -h`.
 
-#### `add_metadata.py`
-
-Creates the file `data/annotations_with_metadata.yaml` from `data/annotations.yaml` and
-`data/metadata.csv`. `annotations.yaml` can be downloaded from the ImageTagger, `metadata.csv` has
-to be manually created.
-
-#### `annotation_statistics.py`
-
-Creates the file `data/annotation_statistics.yaml` from `data/annotations.yaml` and
-`data/metadata.csv`. (See above; TODO generate from `data/annotations_with_metadata.yaml`.)
