@@ -3,13 +3,14 @@ import cv2
 import numpy as np
 import os
 import pickle
+import sys
 
 MAIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.yaml')
 ANNOTATION_INPUT_FILE_PICKLED = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.pkl')
 with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
     annos = pickle.load(f)["images"]
-    print("Press 'a' and 'd' to move between images. 'A' and 'D' let you jump 100 images. 's' to save image. 'q' closes. 'n' toggles not in image text. 'o' to toggle showing obstacles")
+    print("Press 'a' and 'd' to move between images. 'A' and 'D' let you jump 100 images. 's' to save image. 'q' closes. 'n' toggles not in image text. 'o' to toggle showing obstacles\n")
     files = list(annos)
     files.sort()
     not_in_image = True
@@ -22,7 +23,21 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
         text_thickness = int(w/200)
         line_thickness = int(w/200)
         y = 20
-        for a in annos[f]["annotations"]:
+        image_annos = annos[f]["annotations"]
+        # sort lables to have them in the correct order. 
+        image_annos_sorted = []
+        correct_order = {"field edge": 0, "goalpost":1, "left_goalpost":2, "right_goalpost":3, "top_bar":4, "robot":5, "obstacle":6, "ball":7, "L-Intersection":8, "T-Intersection":9, "X-Intersection":10}
+        for a in image_annos:
+            appended= False
+            for a_sorted in image_annos_sorted:
+                if correct_order[a["type"]] < correct_order[a_sorted["type"]]:
+                    image_annos_sorted.append(a)
+                    appended = True
+                    break
+            if not appended:
+                image_annos_sorted.append(a)
+
+        for a in image_annos_sorted:
             if not a["in_image"]:
                 if not_in_image:
                     cv2.putText(img, f"{a['type']} not in image", (0, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), int(text_thickness/2))
@@ -115,6 +130,9 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
             cv2.imwrite(f"../viz_{f}",img)
         i = max(0, i)
         i = min(len(files), i)
+        sys.stdout.write("\x1b[A")
+        sys.stdout.write("\x1b[A")
+        print(f"Current image number {i} name {f}\n")
 
 
     cv2.destroyAllWindows()
