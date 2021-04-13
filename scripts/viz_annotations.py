@@ -10,7 +10,7 @@ ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadat
 ANNOTATION_INPUT_FILE_PICKLED = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.pkl')
 with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
     annos = pickle.load(f)["images"]
-    print("Press 'a' and 'd' to move between images. 'A' and 'D' let you jump 100 images. 's' to save image. 'q' closes. 'n' toggles not in image text. 'o' to toggle showing obstacles\n")
+    print("Press 'a' and 'd' to move between images. 'A' and 'D' let you jump 100 images.\n'c' to correct a label\n's' to save image.\n'q' closes.\n'n' toggles not in image text. 'o' to toggle showing obstacles\n")
     files = list(annos)
     files.sort()
     not_in_image = True
@@ -26,17 +26,10 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
         image_annos = annos[f]["annotations"]
         # sort lables to have them in the correct order. 
         image_annos_sorted = []
-        correct_order = {"field edge": 0, "goalpost":1, "left_goalpost":2, "right_goalpost":3, "top_bar":4, "robot":5, "obstacle":6, "ball":7, "L-Intersection":8, "T-Intersection":9, "X-Intersection":10}
+        correct_order = {"field edge": 0, "goalpost": 1, "left_goalpost": 2, "right_goalpost": 3, "top_bar": 4, "robot": 5, "obstacle": 6, "ball": 7, "L-Intersection": 8, "T-Intersection": 9, "X-Intersection": 10}
         for a in image_annos:
-            appended= False
-            for a_sorted in image_annos_sorted:
-                if correct_order[a["type"]] < correct_order[a_sorted["type"]]:
-                    image_annos_sorted.append(a)
-                    appended = True
-                    break
-            if not appended:
-                image_annos_sorted.append(a)
-
+            a["order"] = correct_order[a["type"]]
+        image_annos_sorted = sorted(image_annos, key=lambda a: a["order"])
         for a in image_annos_sorted:
             if not a["in_image"]:
                 if not_in_image:
@@ -128,6 +121,9 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
             show_obstacles = not show_obstacles
         elif key == 115: #s
             cv2.imwrite(f"../viz_{f}",img)
+        elif key == 99: #c
+            img_id = annos[f]['id']
+            os.system(f"firefox https://imagetagger.bit-bots.de/annotations/{img_id}/ &")
         i = max(0, i)
         i = min(len(files), i)
         sys.stdout.write("\x1b[A")
