@@ -10,7 +10,7 @@ ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadat
 ANNOTATION_INPUT_FILE_PICKLED = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.pkl')
 with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
     annos = pickle.load(f)["images"]
-    print("Press 'a' and 'd' to move between images. 'A' and 'D' let you jump 100 images.\n'c' to correct a label\n's' to save image.\n'q' closes.\n'n' toggles not in image text. 'o' to toggle showing obstacles\n")
+    print("Press 'a' and 's' to move between images. 'A' and 'S' let you jump 100 images.\n'c' to correct a label\n'v' to save image.\n'q' closes.\n'n' toggles not in image text. 'o' to toggle showing obstacles\n")
     files = list(annos)
     files.sort()
     not_in_image = True
@@ -105,13 +105,13 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
 
         cv2.imshow("img", img)
         key = cv2.waitKey(0)
-        if key in [83, 100] : #d
+        if key in [100] : #d
             i += 1
         elif key == 68: #D
             i += 100
-        elif key in [81, 97]: #a
+        elif key in [115]: #s
             i -= 1
-        elif key == 65: #A
+        elif key == 83: #S
             i -= 100
         elif key in [27, 113]:
             exit(0)
@@ -119,7 +119,7 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
             not_in_image = not not_in_image
         elif key == 111: #o
             show_obstacles = not show_obstacles
-        elif key == 115: #s
+        elif key == 118: #v
             cv2.imwrite(f"../viz_{f}",img)
         elif key == 99: #c
             img_id = annos[f]['id']
