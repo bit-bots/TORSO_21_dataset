@@ -27,10 +27,8 @@ if __name__ == '__main__':
 
     for image_name in annotations['images']:
         current_set = int(image_name.split('-')[0])
-        image_data = {}
-        image_data['id'] = annotations['images'][image_name]['id']
+        image_data = annotations['images'][image_name]
         image_data['metadata'] = metadata[current_set]
-        image_data['annotations'] = annotations['images'][image_name]['annotations']
         new_annotations[image_name] = image_data
 
     output = {}
