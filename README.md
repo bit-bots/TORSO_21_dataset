@@ -147,11 +147,21 @@ Creates the file `data/annotations_with_metadata.yaml` from `data/annotations.ya
 `data/metadata.csv`. `annotations.yaml` can be downloaded from the ImageTagger, `metadata.csv` has
 to be manually created.
 
+#### `metadata_statistics.py`
+
+Creates the file `data/metadata_statistics.yaml` from `data/annotations.yaml` and
+`data/metadata.csv`. (See above; TODO generate from `data/annotations_with_metadata.yaml`.)
+This file contains statistics regarding the metadata of the images.
+
 #### `annotation_statistics.py`
 
-Creates the file `data/annotation_statistics.yaml` from `data/annotations.yaml` and
-`data/metadata.csv`. (See above; TODO generate from `data/annotations_with_metadata.yaml`.)
+This script is used to generate statistics about the annotations, i.e. how often each annotation
+occurs per image. It reads `data/annotations.yaml` and writes to `data/annotation_statistics.py`.
 
+#### `sanity_check.py`
+
+Sanity-checks the annotations, i.e. checks if some labels are marked as in image and not in image
+and if the field boundary is contained.
 
 ### Variational Autoencoder
 
