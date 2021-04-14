@@ -8,7 +8,7 @@ import yaml
 MAIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 METADATA_FILE = os.path.join(MAIN_FOLDER, 'data/metadata.csv')
 ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations.yaml')
-STATISTICS_OUTPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotation_statistics.yaml')
+STATISTICS_OUTPUT_FILE = os.path.join(MAIN_FOLDER, 'data/metadata_statistics.yaml')
 
 if __name__ == '__main__':
     metadata = {}

@@ -25,13 +25,14 @@ if __name__ == '__main__':
 
     new_annotations = {}
 
-    for image_name, annotations in annotations['images'].items():
+    for image_name in annotations['images']:
         current_set = int(image_name.split('-')[0])
-        image_data = {}
+        image_data = annotations['images'][image_name]
         image_data['metadata'] = metadata[current_set]
-        image_data['annotations'] = annotations
         new_annotations[image_name] = image_data
 
+    output = {}
+    output["images"] = new_annotations
     with open(ANNOTATION_OUTPUT_FILE, 'w') as f:
-        f.write(yaml.dump(new_annotations))
+        f.write(yaml.dump(output))
 
