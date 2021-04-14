@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
     for image_name, image_data in annotations.items():
         image_annotations = image_data['annotations']
+        image_id = image_data['id']
         field_edge = False
         in_image = {}
         for annotation in image_annotations:
@@ -25,14 +26,14 @@ if __name__ == '__main__':
             if annotation['in_image']:
                 if in_image.get(at, True) == False:
                     # it was not in image but now in image
-                    print(f"{image_name}: {annotation['type']} not in image and in image")
+                    print(f"{image_id} ({image_id} ({image_name})): {annotation['type']} not in image and in image")
                     not_in_image += 1
                 else:
                     in_image[at] = True
             else:
                 if in_image.get(at, False) == True:
                     # it was in image and is now not in image
-                    print(f"{image_name}: {annotation['type']} not in image and in image")
+                    print(f"{image_id} ({image_name}): {annotation['type']} not in image and in image")
                     not_in_image += 1
                 else:
                     in_image[at] = False
@@ -42,16 +43,16 @@ if __name__ == '__main__':
                 if not all(0 <= x <= image_data['width'] and
                            0 <= y <= image_data['height']
                            for x, y in annotation['vector']):
-                    print(f"{image_name} has an invalid {annotation['type']} annotation (vector: {annotation['vector']}, size: {image_data['width']}x{image_data['height']})")
+                    print(f"{image_id} ({image_name}) has an invalid {annotation['type']} annotation (vector: {annotation['vector']}, size: {image_data['width']}x{image_data['height']})")
                     invalid_vector += 1
 
             if at == 'field edge' and not annotation['in_image']:
-                print(f"{image_name}: field edge should be in image!")
+                print(f"{image_id} ({image_name}): field edge should be in image!")
                 field_edge_not_in_image += 1
 
         types_in_image = set(map(lambda a: a['type'], image_annotations))
         if not types_in_image.issuperset(ALL_TYPES):
-            print(f"{image_name} is missing annotations for {' and '.join(ALL_TYPES - types_in_image)}")
+            print(f"{image_id} ({image_name}) is missing annotations for {' and '.join(ALL_TYPES - types_in_image)}")
             missing_types += 1
 
     error_count = sum((not_in_image, invalid_vector, field_edge_not_in_image, missing_types))
