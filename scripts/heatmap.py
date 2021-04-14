@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 import time
 import pickle
+import yaml
 import functools
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -61,7 +62,7 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
 class LineLabelTool(object):
     def __init__(self):
         self.path="/home/florian/Downloads/imageset/"
-        self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels.pickle"
+        self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels(2).yaml"
         self.pool = multiprocessing.Pool()
 
     def calc_heatmap(self, annotation_type, size):
@@ -70,8 +71,8 @@ class LineLabelTool(object):
 
         canvas = np.zeros((size,size), dtype=np.float64)
 
-        with open(self.annotation_path, 'rb') as f:
-            annotations = pickle.load(f)
+        with open(self.annotation_path, 'r') as f:
+            annotations = yaml.load(f)
 
         for root,_,f_names in os.walk(self.path):
             
@@ -104,10 +105,16 @@ class LineLabelTool(object):
 
         for idx, cls in enumerate(classes):
             sub = plt.subplot(2, 4, idx + 1, xticks=[], yticks=[])
-            sub.set_title(f'{cls}')
             heatmap = self.calc_heatmap(cls, size)
             vmax = 0.03
-            if cls == 'Field Edge': vmax = 0.6
+            if cls == 'Field Edge': 
+                vmax = 1.0
+                cls = "Field Area"
+            if cls == 'Robot':
+                vmax = 0.1
+            if cls == 'Ball':
+                vmax = 0.06
+            sub.set_title(f'{cls}')
             sns.heatmap(heatmap, xticklabels=False, yticklabels=False, linewidths=0.0, rasterized=True, vmin=0.0, vmax=vmax)
 
         plt.tight_layout()
