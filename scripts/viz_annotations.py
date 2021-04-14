@@ -8,6 +8,9 @@ import sys
 MAIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.yaml')
 ANNOTATION_INPUT_FILE_PICKLED = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.pkl')
+
+MAX_DIMENSIONS = (1778,1000)
+
 with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
     annos = pickle.load(f)["images"]
     print("Press 'a' and 's' to move between images. 'A' and 'S' let you jump 100 images.\n'c' to correct a label\n'v' to save image.\n'q' closes.\n'n' toggles not in image text. 'o' to toggle showing obstacles\n'e' to toggle all annotations")
@@ -103,8 +106,9 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
                             exit(1)
                         txt_size = cv2.getTextSize(txt, cv2.FONT_HERSHEY_COMPLEX, 1, text_thickness)
                         cv2.putText(img, txt, (int(a["vector"][0][0]-(txt_size[0][0]/2)), int(a["vector"][0][1]+(txt_size[0][1]/2))), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), text_thickness)
-
-
+        if h > MAX_DIMENSIONS[1]:
+            scaling = MAX_DIMENSIONS[1] / h
+            img = cv2.resize(img, (int(w*scaling), int(h*scaling)))
         cv2.imshow("img", img)
         key = cv2.waitKey(0)
         if key in [100] : #d
@@ -125,7 +129,7 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
             cv2.imwrite(f"../viz_{f}",img)
         elif key == 99: #c
             img_id = annos[f]['id']
-            os.system(f"firefox https://imagetagger.bit-bots.de/annotations/{img_id}/ &")
+            os.system(f"firefox --new-tab https://imagetagger.bit-bots.de/annotations/{img_id}/")
         elif key == 101:
             show_annotations = not show_annotations
         i = max(0, i)
