@@ -129,11 +129,12 @@ class YoloEvalOpenCV():
                     annotation_segmentation[class_idx] = cv2.fillConvexPoly(annotation_segmentation[class_idx], vector, 255.0)
                 # Keypoint
                 elif 'Intersection' in annotation_type:
-                    size = int((self._height + self._width) / 2 * 0.025)
+                    size_h = int(self._height * 0.03)
+                    size_w = int(self._width * 0.03)
                     annotation_segmentation[class_idx] = cv2.rectangle(
                         annotation_segmentation[class_idx], 
-                        (vector[0][0]-size, vector[0][1]-size),
-                        (vector[0][0]+size, vector[0][1]+size), 255, -1)
+                        (vector[0][0]-size_w, vector[0][1]-size_h),
+                        (vector[0][0]+size_w, vector[0][1]+size_h), 255, -1)
         
         return annotation_segmentation
 
@@ -152,7 +153,6 @@ class YoloEvalOpenCV():
 
     def run(self):
         ious_for_class = defaultdict(list)
-        count =1 
         for name, annotations in tqdm(self.annotations['images'].items()):
 
             annotations = annotations['annotations']
@@ -181,6 +181,8 @@ class YoloEvalOpenCV():
                 iou = self._match_masks(annotation_segmentation[class_idx], prediction_segmentation[class_idx])
                 if iou is not None:
                     ious_for_class[cls_name].append(iou)
+                else:
+                    ious_for_class[cls_name].append(1.0)
 
         miou_for_class = {class_name: (np.array(ious).mean(), np.array(ious).std()) for class_name, ious in ious_for_class.items()}
 
