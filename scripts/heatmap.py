@@ -22,7 +22,7 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
     shape = img.shape
 
     annotations_of_type_in_image = filter(
-        lambda annotation: 
+        lambda annotation:
             annotation_type in annotation['type'].lower() and annotation['in_image'],
         annotations[f])
 
@@ -37,11 +37,11 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
 
         if annotation_type == 'ball':
             canvas += cv2.circle(
-                np.zeros_like(canvas), 
+                np.zeros_like(canvas),
                 (
-                    (vector[0][0] + vector[1][0]) // 2, 
+                    (vector[0][0] + vector[1][0]) // 2,
                     (vector[0][1] + vector[1][1]) // 2
-                ), 
+                ),
                 ((vector[1][0] - vector[0][0]) + (vector[1][1] - vector[0][1])) // 4,
                 1, -1)
         if annotation_type == 'robot':
@@ -52,8 +52,8 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
             canvas += cv2.fillConvexPoly(np.zeros_like(canvas), np.array([[0,size]] + vector.tolist() + [[size, size]]), 1.0)
         elif 'intersection' in annotation_type:
             canvas += cv2.circle(
-                np.zeros_like(canvas), 
-                (vector[0][0], vector[0][1]), 
+                np.zeros_like(canvas),
+                (vector[0][0], vector[0][1]),
                 5, 1, -1)
     return canvas
 
@@ -75,17 +75,17 @@ class LineLabelTool(object):
             annotations = yaml.load(f)
 
         for root,_,f_names in os.walk(self.path):
-            
+
             f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
 
             out_list = self.pool.map(
                 functools.partial(
-                    render, 
-                    root, 
-                    annotations['labels'], 
-                    annotation_type, 
-                    size, 
-                    canvas), 
+                    render,
+                    root,
+                    annotations['labels'],
+                    annotation_type,
+                    size,
+                    canvas),
                 f_names)
 
             canvas += np.array(out_list).sum(axis=0)
@@ -107,7 +107,7 @@ class LineLabelTool(object):
             sub = plt.subplot(2, 4, idx + 1, xticks=[], yticks=[])
             heatmap = self.calc_heatmap(cls, size)
             vmax = 0.03
-            if cls == 'Field Edge': 
+            if cls == 'Field Edge':
                 vmax = 1.0
                 cls = "Field Area"
             if cls == 'Robot':
