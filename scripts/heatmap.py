@@ -24,7 +24,7 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
     annotations_of_type_in_image = filter(
         lambda annotation:
             annotation_type in annotation['type'].lower() and annotation['in_image'],
-        annotations[f])
+        annotations[f]["annotations"])
 
     for annotation in annotations_of_type_in_image:
 
@@ -59,10 +59,10 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
 
 
 
-class LineLabelTool(object):
-    def __init__(self):
-        self.path="/home/florian/Downloads/imageset/"
-        self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels(2).yaml"
+class Heatmapper(object):
+    def __init__(self, image_path, annotation_path):
+        self.image_path = image_path
+        self.annotation_path = annotation_path
         self.pool = multiprocessing.Pool()
 
     def calc_heatmap(self, annotation_type, size):
@@ -74,7 +74,7 @@ class LineLabelTool(object):
         with open(self.annotation_path, 'r') as f:
             annotations = yaml.load(f)
 
-        for root,_,f_names in os.walk(self.path):
+        for root,_,f_names in os.walk(self.image_path):
 
             f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
 
@@ -82,7 +82,7 @@ class LineLabelTool(object):
                 functools.partial(
                     render,
                     root,
-                    annotations['labels'],
+                    annotations['images'],
                     annotation_type,
                     size,
                     canvas),
@@ -123,4 +123,6 @@ class LineLabelTool(object):
 
 
 if __name__ == "__main__":
-    LineLabelTool().main()
+    image_path = "/home/florian/Downloads/imageset/"
+    annotation_path = "/home/florian/Downloads/vision_dataset_2021_labels(2).yaml"
+    Heatmapper(image_path, annotation_path).main()
