@@ -16,13 +16,14 @@ The repository structure is as follows:
 ```
 
 TODO: Define image folders in collections
-TODO: Was ist mit den dimensionen der Bilddatei?
 
 The annotations are in the following format:
 
 ```yaml
 images:
   130-16_02_2018__11_16_34_0000_upper.png:
+    width: 1920
+    height: 1080
     annotations:
       - blurred: true
         concealed: true
