@@ -22,9 +22,9 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
     shape = img.shape
 
     annotations_of_type_in_image = filter(
-        lambda annotation: 
+        lambda annotation:
             annotation_type in annotation['type'].lower() and annotation['in_image'],
-        annotations[f])
+        annotations[f]["annotations"])
 
     for annotation in annotations_of_type_in_image:
 
@@ -37,11 +37,11 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
 
         if annotation_type == 'ball':
             canvas += cv2.circle(
-                np.zeros_like(canvas), 
+                np.zeros_like(canvas),
                 (
-                    (vector[0][0] + vector[1][0]) // 2, 
+                    (vector[0][0] + vector[1][0]) // 2,
                     (vector[0][1] + vector[1][1]) // 2
-                ), 
+                ),
                 ((vector[1][0] - vector[0][0]) + (vector[1][1] - vector[0][1])) // 4,
                 1, -1)
         if annotation_type == 'robot':
@@ -52,17 +52,28 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
             canvas += cv2.fillConvexPoly(np.zeros_like(canvas), np.array([[0,size]] + vector.tolist() + [[size, size]]), 1.0)
         elif 'intersection' in annotation_type:
             canvas += cv2.circle(
-                np.zeros_like(canvas), 
-                (vector[0][0], vector[0][1]), 
+                np.zeros_like(canvas),
+                (vector[0][0], vector[0][1]),
                 5, 1, -1)
     return canvas
 
+def render_lines(lines_root, canvas_template, f):
+    line_path = os.path.join(lines_root, f)
+    line = cv2.imread(line_path)
+    if line is not None:
+        line = cv2.resize(line, dsize=canvas_template.shape, interpolation=cv2.INTER_NEAREST)
+        return line[:,:,0]
+    else:
+        print(f"Warning: Line annotation does not exist: '{line_path}'")
+        return np.zeros_like(canvas_template)
 
 
-class LineLabelTool(object):
-    def __init__(self):
-        self.path="/home/florian/Downloads/imageset/"
-        self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels(2).yaml"
+
+class Heatmapper(object):
+    def __init__(self, image_path, annotation_path, lines_path):
+        self.image_path = image_path
+        self.annotation_path = annotation_path
+        self.lines_path = lines_path
         self.pool = multiprocessing.Pool()
 
     def calc_heatmap(self, annotation_type, size):
@@ -71,29 +82,41 @@ class LineLabelTool(object):
 
         canvas = np.zeros((size,size), dtype=np.float64)
 
-        with open(self.annotation_path, 'r') as f:
-            annotations = yaml.load(f)
+        annotations = None
+        if self.annotation_path.endswith('yaml') or self.annotation_path.endswith('yml'):
+            with open(self.annotation_path, 'r') as f:
+                annotations = yaml.safe_load(f)
+        elif self.annotation_path.endswith('pkl'):
+            with open(self.annotation_path, 'rb') as f:
+                annotations = pickle.load(f)
+        else:
+            print("Unknown file type")
 
-        for root,_,f_names in os.walk(self.path):
-            
+        for root,_,f_names in os.walk(self.image_path):
             f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
-
-            out_list = self.pool.map(
-                functools.partial(
-                    render, 
-                    root, 
-                    annotations['labels'], 
-                    annotation_type, 
-                    size, 
-                    canvas), 
-                f_names)
+            if not annotation_type == 'lines':
+                out_list = self.pool.map(
+                    functools.partial(
+                        render,
+                        root,
+                        annotations['images'],
+                        annotation_type,
+                        size,
+                        canvas),
+                    f_names)
+            else:
+                out_list = self.pool.map(
+                    functools.partial(
+                        render_lines,
+                        self.lines_path,
+                        canvas),
+                    f_names)
 
             canvas += np.array(out_list).sum(axis=0)
-
         return canvas / len(f_names)
 
     def main(self):
-        classes = ['Ball', 'Goalpost', 'Robot', 'Field Edge', 'T-Intersection', 'L-Intersection', 'X-Intersection']
+        classes = ['Ball', 'Goalpost', 'Robot', 'Field Edge', 'T-Intersection', 'L-Intersection', 'X-Intersection', 'Lines']
         size = 100
 
         plt.figure(figsize=(8,3))
@@ -107,13 +130,15 @@ class LineLabelTool(object):
             sub = plt.subplot(2, 4, idx + 1, xticks=[], yticks=[])
             heatmap = self.calc_heatmap(cls, size)
             vmax = 0.03
-            if cls == 'Field Edge': 
+            if cls == 'Field Edge':
                 vmax = 1.0
                 cls = "Field Area"
             if cls == 'Robot':
                 vmax = 0.1
             if cls == 'Ball':
                 vmax = 0.06
+            if cls == 'Lines':
+                vmax = 0.02
             sub.set_title(f'{cls}')
             sns.heatmap(heatmap, xticklabels=False, yticklabels=False, linewidths=0.0, rasterized=True, vmin=0.0, vmax=vmax)
 
@@ -123,4 +148,7 @@ class LineLabelTool(object):
 
 
 if __name__ == "__main__":
-    LineLabelTool().main()
+    image_path = "/home/jan/Schreibtisch/imageset1069/"
+    annotation_path = "/home/jan/Downloads/vision_dataset_2021_labels.pkl"
+    lines_path ="/home/jan/Schreibtisch/lines_out/"
+    Heatmapper(image_path, annotation_path, lines_path).main()

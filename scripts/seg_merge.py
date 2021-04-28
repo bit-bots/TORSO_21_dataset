@@ -18,12 +18,11 @@ class SegmentationMerge(object):
 
 
     def main(self):
-
         with open(self.annotation_path, 'r') as f:
-            annotations = yaml.load(f)['labels']
-        
+            annotations = yaml.load(f)['images']
+
         for root,_,f_names in os.walk(self.img_path):
-            
+
             f_names = sorted([f for f in f_names if f.endswith(".png") or f.endswith(".jpg")])
 
             for f in tqdm(f_names):
@@ -44,9 +43,9 @@ class SegmentationMerge(object):
                 shape = mask.shape
 
                 annotations_of_type_in_image = filter(
-                    lambda annotation: 
+                    lambda annotation:
                         annotation['type'] in ['field edge', 'ball', "goalpost"] and annotation['in_image'],
-                    annotations[f])
+                    annotations[f]["annotations"])
 
                 field = None
 
@@ -65,7 +64,7 @@ class SegmentationMerge(object):
                             if vector[i, 1] < 20:
                                 vector[i, 1] = 0
                             if vector[i, 1] > (shape[0] - 20):
-                                vector[i, 1] = shape[0] 
+                                vector[i, 1] = shape[0]
 
                         field = cv2.fillConvexPoly(np.zeros_like(mask), vector, (255, 255, 255)) // 255
 
@@ -73,22 +72,22 @@ class SegmentationMerge(object):
 
                     elif annotation['type'] == 'ball':
                         mask = cv2.circle(
-                            mask.astype(np.int32), 
+                            mask.astype(np.int32),
                             (
-                                (vector[0][0] + vector[1][0]) // 2, 
+                                (vector[0][0] + vector[1][0]) // 2,
                                 (vector[0][1] + vector[1][1]) // 2
-                            ), 
+                            ),
                             ((vector[1][0] - vector[0][0]) + (vector[1][1] - vector[0][1])) // 4,
                             (0,0,0), -1)
                     elif annotation['type'] == 'goalpost':
                         mask = cv2.fillConvexPoly(mask.astype(np.int32), vector, (0, 0, 0))
-                
+
                 if field is None:
                     print("scipped image without fieldboundary")
                     print(f)
                     continue
 
-                seg = (field * (255 - mask)) + mask // 2 
+                seg = (field * (255 - mask)) + mask // 2
 
                 cv2.imwrite(os.path.join(self.seg_out_path, mask_name), seg)
                 cv2.imwrite(os.path.join(self.line_out_path, mask_name), mask // 255)
