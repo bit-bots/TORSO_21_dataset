@@ -7,29 +7,23 @@ The images can be downloaded here: https://cloud.crossmodal-learning.org/s/3wt3S
 The repository structure is as follows:
 
 ```
-├── data                           # Download the dataset here
-|   ├── reality/                   # Collection of real world data
-|   │   ├── test/                  # Test split
-|   │   │   ├── annotations.yaml   # Contains annotations
-|   │   │   ├── images/            # Original images
-|   │   │   └── segmentation/      # Corresponding segmentations (field, lines)
-|   │   └── train/                 # Train split
-|   │       ├── annotations.yaml
-|   │       ├── images/
-|   │       └── segmentation/
-|   └── simulation/                # Collection of simulated data
-|       ├── test/
-|       │   ├── annotations.yaml
-|       │   ├── depth/             # Depth images
-|       │   ├── images/
-|       │   └── segmentation/
-|       └── train/
-|           ├── annotations.yaml
-|           ├── depth/
-|           ├── images/
-|           └── segmentation/
-└── scripts                        # Some useful scripts
-    └── example_script.py
+├── data                          # contains the annotations and images
+│   ├── reality                   # the images recorded in reality
+│   │   ├── train                 # the training set
+│   │   │   ├── annotations.yaml  # the annotations in yaml format
+│   │   │   ├── images/           # a folder containing all the images of the training set
+│   │   │   └── segmentations/    # a folder containing all the segmentation masks of the training set
+│   │   └── test                  # the test set
+│   │       └── ...               # it is structured in the same way as the training set 
+│   └── simulation                # the images recorded in simulation
+│       ├── train                 # the training set
+│       │   ├── annotations.yaml  # the annotations in yaml format
+│       │   └── depth/            # a folder containing all the depth images of the training set
+│       │   ├── images/           # a folder containing all the images of the training set
+│       │   └── segmentations/    # a folder containing all the segmentation masks of the training set
+│       └── test                  # the test set
+│           └── ...               # it is structured in the same way as the training set 
+└── scripts                       # some useful scripts, see below for details
     └── ...
 ```
 
@@ -50,7 +44,7 @@ images:
           - 26 # y value
         - - 81
           - 98
-        pose: # Sim only
+        pose: # The pose of the camera, only available in simulation
           position:
             x: 0
             y: 0
@@ -79,11 +73,26 @@ images:
           w: 0
 ```
 
+
+## Download Dataset and Labels
+
+TODO test if this really works like this. maybe also create just one bash script which calls all of these after each other
+
+Get dataset 
+`./scripts/download_dataset.py --all`
+
+Add metadata to annotations
+`add_metadata.py`
+
+Optional create pickled version and visualize
+`pickle_annotations.py annotations_with_metadata.yaml `
+`viz_annotations.py`
+
 ## Documentation of the scripts
 
 ### Installation
 
-Follow these instructions setup the dependencies for the dataset scripts and the autoencoder.
+Follow these instructions to set up the dependencies for the dataset scripts and the autoencoder.
 
 ```
 # Clone the repository
@@ -108,22 +117,6 @@ poetry shell
 
 You can also use `poetry run <script>` to run scripts without sourcing.
 
-### Download Dataset and Labels
-
-TODO test if this really works like this. maybe also create just one bash script which calls all of these after each other
-
-Get dataset
-`download.py -a`
-
-Add metadata to annotations
-`add_metadata.py`
-
-Optional create pickled version and visualize
-`pickle_annotations.py annotations_with_metadata.yaml `
-`viz_annotations.py`
-
-
-
 ### Scripts
 
 #### `download_and_merge_data.py`
@@ -135,7 +128,7 @@ To avoid conflicting names, every filename is prepended with its dataset id.
 Additionally, a file `annotations.yaml` is created that contains a dict mapping set ids to their
 metadata and a dict mapping image names to their labels.
 
-#### `download.py`
+#### `download_from_imagetagger.py`
 
 This is just a verbatim copy of the ImageTagger download script. Its API is used by
 `download_and_merge_data.py`, it it not necessary to use this script directly.
