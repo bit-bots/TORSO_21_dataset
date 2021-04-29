@@ -44,7 +44,7 @@ if __name__ == '__main__':
         tmp_file = os.path.join(DATA_FOLDER, 'dataset.zip')
         params = {}
         folder = DATA_FOLDER
-        approx_size = 200
+        approx_size = 190
     elif args.real and args.test:
         tmp_file = os.path.join(DATA_FOLDER, 'reality', 'test.zip')
         params = {
@@ -52,7 +52,7 @@ if __name__ == '__main__':
             'files': 'test',
         }
         folder = os.path.join(DATA_FOLDER, 'reality')
-        approx_size = 10
+        approx_size = 2
     elif args.real and args.train:
         tmp_file = os.path.join(DATA_FOLDER, 'reality', 'train.zip')
         params = {
@@ -70,7 +70,7 @@ if __name__ == '__main__':
             'files': 'reality',
         }
         folder = DATA_FOLDER
-        approx_size = 10
+        approx_size = 11
     elif args.sim and args.test:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'test.zip')
         params = {
@@ -78,7 +78,7 @@ if __name__ == '__main__':
             'files': 'test',
         }
         folder = os.path.join(DATA_FOLDER, 'simulation')
-        approx_size = 180
+        approx_size = 28
     elif args.sim and args.train:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'train.zip')
         params = {
@@ -86,7 +86,7 @@ if __name__ == '__main__':
             'files': 'test',
         }
         folder = os.path.join(DATA_FOLDER, 'simulation')
-        approx_size = 180
+        approx_size = 152
     elif args.sim and args.annotations:
         pass  # TODO
     elif args.sim:
