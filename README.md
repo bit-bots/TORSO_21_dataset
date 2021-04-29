@@ -183,6 +183,6 @@ More details are avalible by running `vae/reconstruct.py -h`.
 This script runs the vae recursivly on all image inside a given folder and saves their latent space representation inside a file.
 More details are avalible by running `vae/embeddings.py -h`.
 
+#### Architecture
 
-![](misc/vae.png)
-
+<img src="misc/vae.png" alt="drawing" width="400"/>
