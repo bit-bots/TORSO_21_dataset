@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import yaml
 import cv2
 import numpy as np
@@ -6,14 +7,13 @@ import pickle
 import sys
 
 MAIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.yaml')
 ANNOTATION_INPUT_FILE_PICKLED = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.pkl')
 
 MAX_DIMENSIONS = (1778,1000)
 
 with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
     annos = pickle.load(f)["images"]
-    print("Press 'a' and 's' to move between images. 'A' and 'S' let you jump 100 images.\n'c' to correct a label\n'v' to save image.\n'q' closes.\n'n' toggles not in image text. 'o' to toggle showing obstacles\n'e' to toggle all annotations")
+    print("Press 's' and 'd' to move between images. 'A' and 'S' let you jump 100 images.\n'c' to correct a label\n'v' to save image.\n'q' closes.\n'n' toggles not in image text. 'o' to toggle showing obstacles\n'e' to toggle all annotations")
     files = list(annos)
     files.sort()
     not_in_image = True
@@ -28,15 +28,18 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
         line_thickness = int(w/200)
         y = 20
         image_annos = annos[f]["annotations"]
-        # sort lables to have them in the correct order. 
+        # sort lables to have them in the correct order.
         image_annos_sorted = []
-        correct_order = {"field edge": 0, "goalpost": 1, "left_goalpost": 2, "right_goalpost": 3, "top_bar": 4, "robot": 5, "obstacle": 6, "ball": 7, "L-Intersection": 8, "T-Intersection": 9, "X-Intersection": 10}
+        correct_order = {"field edge": 0, "goalpost": 1, "left_goalpost": 2, "right_goalpost": 3, "crossbar": 4, "robot": 5, "obstacle": 6, "ball": 7, "L-Intersection": 8, "T-Intersection": 9, "X-Intersection": 10}
         for a in image_annos:
             a["order"] = correct_order[a["type"]]
         image_annos_sorted = sorted(image_annos, key=lambda a: a["order"])
         for a in image_annos_sorted:
             if show_annotations:
-                if not a["in_image"]:
+                if not a["in_image"] and "vector" in a:
+                    cv2.putText(img, f"{a['type']} completely concealed in image", (0, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), int(text_thickness/2))
+                    y += 20
+                elif not a["in_image"]:
                     if not_in_image:
                         cv2.putText(img, f"{a['type']} not in image", (0, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), int(text_thickness/2))
                         y += 20
@@ -51,7 +54,7 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
                         color = (255,0,255)
                     elif a["type"] == "right_goalpost":
                         color = (0,255,255)
-                    elif a["type"] == "top_bar":
+                    elif a["type"] == "crossbar":
                         color = (0,0,255)
                     elif a["type"] == "field edge":
                         color = (0,255,0)
@@ -75,7 +78,7 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
                         contours[3][0] = x_stop
                         contours[3][1] = y_start
                         cv2.drawContours(img, [contours], -1, color, line_thickness)
-                    elif a["type"] == "goalpost" or a["type"] == "left_goalpost" or a["type"] == "right_goalpost" or a["type"] == "top_bar":
+                    elif a["type"] == "goalpost" or a["type"] == "left_goalpost" or a["type"] == "right_goalpost" or a["type"] == "crossbar":
                         contours = np.ndarray((4, 2), dtype=int)
                         contours[0][0] = int(a["vector"][0][0])
                         contours[0][1] = int(a["vector"][0][1])
@@ -137,6 +140,5 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
         sys.stdout.write("\x1b[A")
         sys.stdout.write("\x1b[A")
         print(f"Current image number {i} name {f}\n")
-
 
     cv2.destroyAllWindows()
