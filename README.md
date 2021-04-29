@@ -76,14 +76,29 @@ images:
 
 ## Download Dataset and Labels
 
-TODO test if this really works like this. maybe also create just one bash script which calls all of these after each other
-
 Get dataset 
 `./scripts/download_dataset.py --all`
 
 Optional create pickled version and visualize
 `./scripts/pickle_annotations.py data/reality/train/annotations.yaml`
 `./scripts/viz_annotations.py data/reality/train/annotations.pkl`
+
+## Statistics and checks
+
+#### `metadata_statistics.py`
+
+Generates metadata statistics from an annotations file and `data/metadata.csv`.
+
+#### `annotation_statistics.py`
+
+This script is used to generate statistics about the annotations, i.e. how often each annotation
+occurs per image. Its first argument is the annotation file to generate annotations for.
+
+#### `sanity_check.py`
+
+Sanity-checks the annotations, i.e. checks if some labels are marked as in image and not in image
+and if the field boundary is contained.
+
 
 ## Documentation of the scripts
 
@@ -153,22 +168,6 @@ This script converts labels from the Pascal VOC XML format to the `yaml` format 
 Creates the file `data/annotations_with_metadata.yaml` from `data/annotations.yaml` and
 `data/metadata.csv`. `annotations.yaml` can be downloaded from the ImageTagger, `metadata.csv` has
 to be manually created.
-
-#### `metadata_statistics.py`
-
-Creates the file `data/metadata_statistics.yaml` from `data/annotations.yaml` and
-`data/metadata.csv`. (See above; TODO generate from `data/annotations_with_metadata.yaml`.)
-This file contains statistics regarding the metadata of the images.
-
-#### `annotation_statistics.py`
-
-This script is used to generate statistics about the annotations, i.e. how often each annotation
-occurs per image. It reads `data/annotations.yaml` and writes to `data/annotation_statistics.py`.
-
-#### `sanity_check.py`
-
-Sanity-checks the annotations, i.e. checks if some labels are marked as in image and not in image
-and if the field boundary is contained.
 
 ### Variational Autoencoder
 

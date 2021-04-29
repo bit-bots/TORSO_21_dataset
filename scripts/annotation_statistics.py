@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 from collections import Counter, defaultdict
 import os
+import sys
 import yaml
 
-MAIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations.yaml')
-STATISTICS_OUTPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotation_statistics.yaml')
+if len(sys.argv) != 2:
+    sys.exit(f'Usage: {sys.argv[0]} annotations.yaml')
+
+ANNOTATION_INPUT_FILE = sys.argv[1]
+STATISTICS_OUTPUT_FILE = os.path.join(os.path.dirname(sys.argv[1]), 'annotation_statistics.yaml')
 
 if __name__ == '__main__':
     with open(ANNOTATION_INPUT_FILE) as f:

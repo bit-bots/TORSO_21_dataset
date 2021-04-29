@@ -10,7 +10,7 @@ MAIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 METADATA_FILE = os.path.join(MAIN_FOLDER, 'data/metadata.csv')
 
 if len(sys.argv) != 2:
-    print('Usage:', sys.argv[0], 'annotations.yaml')
+    sys.exit(f'Usage: {sys.argv[0]} annotations.yaml')
 
 ANNOTATION_INPUT_FILE = sys.argv[1]
 STATISTICS_OUTPUT_FILE = os.path.join(os.path.dirname(sys.argv[1]), 'metadata_statistics.yaml')
