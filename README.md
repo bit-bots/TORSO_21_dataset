@@ -1,21 +1,37 @@
 ## TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
 
-This repository contains the scripts for the Hamburg Bit-Bots Vision Dataset 2021.
+This repository contains the scripts for the TORSO-21 Dataset.
 
 The images can be downloaded here: https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT
 
 The repository structure is as follows:
 
 ```
-├── data                     # contains the labels
-│   ├── collection_a         # a collection of images
-│   │   └── labels.yaml      # the labels in yaml format
-│   └── ...
-└── scripts                  # some useful scripts
+├── data                           # Download the dataset here
+|   ├── reality/                   # Collection of real world data
+|   │   ├── test/                  # Test split
+|   │   │   ├── annotations.yaml   # Contains annotations
+|   │   │   ├── images/            # Original images
+|   │   │   └── segmentation/      # Corresponding segmentations (field, lines)
+|   │   └── train/                 # Train split
+|   │       ├── annotations.yaml
+|   │       ├── images/
+|   │       └── segmentation/
+|   └── simulation/                # Collection of simulated data
+|       ├── test/
+|       │   ├── annotations.yaml
+|       │   ├── depth/             # Depth images
+|       │   ├── images/
+|       │   └── segmentation/
+|       └── train/
+|           ├── annotations.yaml
+|           ├── depth/
+|           ├── images/
+|           └── segmentation/
+└── scripts                        # Some useful scripts
     └── example_script.py
+    └── ...
 ```
-
-TODO: Define image folders in collections
 
 The annotations are in the following format:
 
@@ -43,7 +59,7 @@ images:
             x: 0
             y: 0
             z: 0
-            w: 0 
+            w: 0
       - in_image: false
         type: ball
     metadata: # The keys should be like this but do not need to be present for all images
@@ -96,7 +112,7 @@ You can also use `poetry run <script>` to run scripts without sourcing.
 
 TODO test if this really works like this. maybe also create just one bash script which calls all of these after each other
 
-Get dataset 
+Get dataset
 `download.py -a`
 
 Add metadata to annotations
