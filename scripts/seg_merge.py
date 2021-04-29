@@ -13,8 +13,8 @@ class SegmentationMerge(object):
         self.img_path="/home/florian/Downloads/imageset/"
         self.annotation_path="/home/florian/Downloads/vision_dataset_2021_labels(2).yaml"
         self.mask_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks/"
-        self.out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks1/"
-        self.line_out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks2/"
+        self.seg_out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/segmentations/"
+        self.line_out_path = "/home/florian/Projekt/bitbots/vision_dataset_2021/masks_lines/"
 
 
     def main(self):
@@ -96,7 +96,7 @@ class SegmentationMerge(object):
 
                 seg = (field * (255 - mask)) + mask // 2
 
-                cv2.imwrite(os.path.join(self.out_path, mask_name), seg)
+                cv2.imwrite(os.path.join(self.seg_out_path, mask_name), seg)
                 cv2.imwrite(os.path.join(self.line_out_path, mask_name), mask // 255)
 
 

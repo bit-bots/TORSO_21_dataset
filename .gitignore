@@ -1,3 +1,4 @@
 masks*
+segmentation*
 *.pyc
 __pycache__
