@@ -1,0 +1,48 @@
+Set-ID,Location,Camera Type,Natural light,League,Ingame,Perspective,Robot recorded
+156,Nagoya,unknown,False,HSL,False,Field,False
+614,German Open 2019,C920,False,HSL,True,Field,True
+615,German Open 2019,C920,False,HSL,True,Field,True
+205,BitBots Lab,C920,True,HSL,False,Field,False
+375,Montreal,C920,False,HSL,False,Field,False
+153,Nagoya,unknown,False,HSL,True,Outside,False
+627,BitBots Lab,unknown,False,HSL,False,Field,False
+616,German Open 2019,C920,False,HSL,True,Field,True
+180,Iran Open 2018,C920,False,HSL,False,Field,True
+154,Nagoya,unknown,False,HSL,False,Field,False
+81,Nagoya,unknown,False,HSL,True,Outside,False
+258,Montreal,unknown,False,HSL,False,Field,False
+827,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,True,HSL,False,Field,True
+289,Nao Devils Lab,NAO Upper,True,SPL,True,Field,True
+151,Nao Devils Lab,NAO Upper,False,SPL,False,Field,True
+150,Nao Devils Lab,NAO Upper,True,SPL,False,Outside,True
+149,Nao Devils Lab,NAO Upper,False,SPL,True,Field,True
+228,Nao Devils Lab,NAO Upper,True,SPL,True,Field,True
+131,Nao Devils Lab,NAO Upper,False,SPL,True,Field,True
+138,Nao Devils Lab,NAO Upper,False,SPL,True,Field,True
+232,Nao Devils Lab,NAO Lower,False,SPL,True,Field,True
+130,Nao Devils Lab,NAO Upper,True,SPL,True,Field,True
+97,Nao Devils Lab,NAO Upper,False,SPL,True,Field,True
+45,Robo Fei Lab,C920,False,HSL,False,Field,True
+21,WF Wolves Lab,unknown,False,HSL,False,Field,False
+242,Nao Devils Lab,NAO Upper,True,SPL,True,Field,True
+243,Nao Devils Lab,NAO Lower,True,SPL,True,Field,True
+689,Sydney,unknown,False,HSL,True,Field,True
+1037,RoHOW,unknown,True,N/A,True,Field,True
+1039,RoHOW,unknown,True,N/A,True,Field,True
+1066,RoHOW,unknown,True,N/A,True,Field,True
+1042,FUB Lab,unknown,False,HSL,False,Field,True
+1044,FUB Lab,unknown,False,HSL,False,Field,True
+1045,FUB Lab,unknown,False,HSL,False,Field,True
+1048,FUB Lab,unknown,False,HSL,False,Field,True
+1051,FUB Lab,unknown,False,HSL,False,Field,True
+1052,FUB Lab,unknown,False,HSL,False,Field,True
+1067,Starkit Lab,unknown,False,HSL,False,Field,True
+1028,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,False,HSL,True,Outside,True
+1029,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,False,HSL,True,Goalie,True
+1030,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,True,HSL,True,Goalie,True
+1031,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,False,HSL,True,Goalie,True
+1032,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,True,HSL,False,Field,True
+1033,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,True,HSL,False,Field,True
+1034,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,True,HSL,False,Field,True
+1035,Sydney,Basler ace acA2040-35gc + Computar M0814-MP2,True,HSL,False,Field,True
+1066,RoHOW,unknown,True,N/A,False,Field,True
