@@ -2,7 +2,20 @@
 
 This repository contains the scripts for the TORSO-21 Dataset.
 
+## Download Dataset and Labels
+
 The images can be downloaded here: https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT
+
+Or, an automated script can be used: `./scripts/download_dataset.py --all`
+
+To visualize the annotations, run the following two commands to pickle and show the annotations:
+
+```
+./scripts/pickle_annotations.py data/reality/train/annotations.yaml
+./scripts/viz_annotations.py data/reality/train/annotations.pkl
+```
+
+## Structure
 
 The repository structure is as follows:
 
@@ -77,15 +90,6 @@ images:
       ...
 ```
 
-
-## Download Dataset and Labels
-
-Get dataset 
-`./scripts/download_dataset.py --all`
-
-Optional create pickled version and visualize
-`./scripts/pickle_annotations.py data/reality/train/annotations.yaml`
-`./scripts/viz_annotations.py data/reality/train/annotations.pkl`
 
 ## Statistics and checks
 
