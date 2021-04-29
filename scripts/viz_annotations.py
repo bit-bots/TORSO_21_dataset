@@ -6,10 +6,14 @@ import os
 import pickle
 import sys
 
-MAIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-ANNOTATION_INPUT_FILE_PICKLED = os.path.join(MAIN_FOLDER, 'data/annotations_with_metadata.pkl')
 
 MAX_DIMENSIONS = (1778,1000)
+
+if len(sys.argv) != 2:
+    sys.exit('Usage:', sys.argv[0], 'annotations.pkl')
+
+ANNOTATION_INPUT_FILE_PICKLED = sys.argv[1]
+IMAGE_FOLDER = os.path.join(os.path.dirname(sys.argv[1]), 'images')
 
 with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
     annos = pickle.load(f)["images"]
@@ -22,7 +26,7 @@ with open(ANNOTATION_INPUT_FILE_PICKLED, "rb") as f:
     i = 0
     while True:
         f = files[i]
-        img = cv2.imread(f)
+        img = cv2.imread(os.path.join(IMAGE_FOLDER, f))
         h, w, c = img.shape
         text_thickness = int(w/200)
         line_thickness = int(w/200)

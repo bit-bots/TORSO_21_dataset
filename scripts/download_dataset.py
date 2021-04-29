@@ -12,6 +12,7 @@ DOWNLOAD_LINK = 'https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT'
 
 def download(filename, params, folder, approx_size):
     print(f'Downloading dataset... This might take a lot of time and take up to {approx_size} GB of disk space')
+    os.makedirs(folder, exist_ok=True)
     with requests.get(DOWNLOAD_LINK + '/download', params=params, stream=True) as r:
         r.raise_for_status()
         with open(filename, 'wb') as f:

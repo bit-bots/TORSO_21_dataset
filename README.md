@@ -81,12 +81,9 @@ TODO test if this really works like this. maybe also create just one bash script
 Get dataset 
 `./scripts/download_dataset.py --all`
 
-Add metadata to annotations
-`add_metadata.py`
-
 Optional create pickled version and visualize
-`pickle_annotations.py annotations_with_metadata.yaml `
-`viz_annotations.py`
+`./scripts/pickle_annotations.py data/reality/train/annotations.yaml`
+`./scripts/viz_annotations.py data/reality/train/annotations.pkl`
 
 ## Documentation of the scripts
 
