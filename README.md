@@ -87,7 +87,7 @@ Optional create pickled version and visualize
 
 #### `metadata_statistics.py`
 
-Generates metadata statistics from an annotations file and `data/metadata.csv`.
+Generates metadata statistics from an annotations file, i.e. how often which metadata type occurs.
 
 #### `annotation_statistics.py`
 
