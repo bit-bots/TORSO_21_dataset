@@ -1,6 +1,9 @@
+#! /usr/bin/env python3
+
 import yaml
 import pickle
 import sys
+
 
 with open(sys.argv[1]) as f:
     yaml_data = yaml.load(f, Loader=yaml.Loader)

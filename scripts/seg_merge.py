@@ -18,8 +18,17 @@ class SegmentationMerge(object):
 
 
     def main(self):
-        with open(self.annotation_path, 'r') as f:
-            annotations = yaml.load(f)['images']
+        annotations = None
+        if self.annotation_path.endswith('yaml') or self.annotation_path.endswith('yml'):
+            with open(self.annotation_path, 'r') as f:
+                annotations = yaml.safe_load(f)
+        elif self.annotation_path.endswith('pkl'):
+            with open(self.annotation_path, 'rb') as f:
+                annotations = pickle.load(f)
+        else:
+            print("Unknown file type")
+
+        annotations = annotations['images']
 
         for root,_,f_names in os.walk(self.img_path):
 
@@ -27,16 +36,14 @@ class SegmentationMerge(object):
 
             for f in tqdm(f_names):
                 mask_name = os.path.splitext(os.path.basename(f))[0] + '.png'
-
                 mask = cv2.imread(os.path.join(self.mask_path, mask_name))
-
                 if mask is None:
                     continue
 
+                # Check shapes as some masks may be smaller due to old bug in line label tool
                 image = cv2.imread(os.path.join(root, f))
-
                 if image.shape != mask.shape:
-                    mask = np.pad(mask, (5,5))[:,:,5:-5]
+                    mask = np.pad(mask, (5,5))[:,:,5:-5]  # Pad masks
 
                 mask[mask < 2] == 0
 
