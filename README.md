@@ -44,7 +44,7 @@ images:
           - 26 # y value
         - - 81
           - 98
-        pose: # The pose of the camera, only available in simulation
+        pose: # The pose of the annotated object, only available in simulation
           position:
             x: 0
             y: 0
@@ -54,6 +54,7 @@ images:
             y: 0
             z: 0
             w: 0
+          motion: standing
       - in_image: false
         type: ball
     metadata: # The keys should be like this but do not need to be present for all images
@@ -61,7 +62,7 @@ images:
       location: "foobay"
       tags: ["natural_light", "telstar18", "do_not_use"]
       imageset_id: 130
-      camera_pose: # Sim only
+      camera_pose: # The pose of the annotated object, only available in simulation
         position:
           x: 0
           y: 0
@@ -71,6 +72,9 @@ images:
           y: 0
           z: 0
           w: 0
+      Natural light: False
+      League: HSL
+      ...
 ```
 
 
