@@ -242,8 +242,35 @@ More details are avalible by running `vae/reconstruct.py -h`.
 
 #### `vae/embeddings.py`
 
-This script runs the vae recursivly on all image inside a given folder and saves their latent space representation inside a file.
+This script runs the vae recursivly on all image inside a given folder and saves their latent space representation und reconstruction errors inside a file.
 More details are avalible by running `vae/embeddings.py -h`.
+
+#### `vae/distances.py`
+
+Plots n'th neigbours in the latent space of a given image.
+More details are avalible by running `vae/distances.py -h`.
+
+#### `vae/duplicates.py`
+
+Creates a yaml file containing three lists containing:
+
+* The images that survived the pruning
+* The images that got selected due to the high reconstruction error
+* The images that will be removed from the dataset
+
+More details are avalible by running `vae/duplicates.py -h`.
+
+#### `vae/plot_error.py`
+
+Loads an embeddings file and plots the reconstruction errors.
+
+#### `vae/model.py`
+
+The PyTorch model definition.
+
+#### `vae/dataset.py`
+
+The PyTorch dataset definition.
 
 #### Architecture
 
