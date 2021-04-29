@@ -185,7 +185,45 @@ More details are avalible by running `vae/embeddings.py -h`.
 
 #### Architecture
 
-<img src="misc/vae.png" alt="drawing" width="400"/>
+| #  | Layer (type)        | Output Shape   | Param #   |
+|----|---------------------|----------------|-----------|
+|    | Input               | (3, 128, 112)  | 0         |
+| 1  | Conv2d              | (32, 64, 56)   | 896       |
+| 2  | BatchNorm2d         | (32, 64, 56)   | 64        |
+| 3  | LeakyReLU           | (32, 64, 56)   | 0         |
+| 4  | Conv2d              | (64, 32, 28)   | 18,496    |
+| 5  | BatchNorm2d         | (64, 32, 28)   | 128       |
+| 6  | LeakyReLU           | (64, 32, 28)   | 0         |
+| 7  | Conv2d              | (64, 16, 14)   | 36,928    |
+| 8  | BatchNorm2d         | (64, 16, 14)   | 128       |
+| 9  | LeakyReLU           | (64, 16, 14)   | 0         |
+| 10 | Conv2d              | (64, 8, 7)     | 36,928    |
+| 11 | BatchNorm2d         | (64, 8, 7)     | 128       |
+| 12 | LeakyReLU           | (64, 8, 7)     | 0         |
+| 13 | Linear              | (300)          | 1,075,500 |
+| 14 | LeakyReLU           | (300)          | 0         |
+| 15 | Dropout             | (300)          | 0         |
+| 16 | Linear              | (300)          | 1,075,500 |
+| 17 | LeakyReLU           | (300)          | 0         |
+| 18 | Dropout             | (300)          | 0         |
+| 19 | Linear              | (3584)         | 1,078,784 |
+| 20 | LeakyReLU           | (3584)         | 0         |
+| 21 | Dropout             | (3584)         | 0         |
+| 22 | UpsamplingNearest2d | (64, 16, 14)   | 0         |
+| 23 | ConvTranspose2d     | (64, 16, 14)   | 36,928    |
+| 24 | BatchNorm2d         | (64, 16, 14)   | 128       |
+| 25 | LeakyReLU           | (64, 16, 14)   | 0         |
+| 26 | psamplingNearest2d  | (64, 32, 28)   | 0         |
+| 27 | ConvTranspose2d     | (64, 32, 28)   | 36,928    |
+| 28 | BatchNorm2d         | (64, 32, 28)   | 128       |
+| 29 | LeakyReLU           | (64, 32, 28)   | 0         |
+| 30 | UpsamplingNearest2d | (64, 64, 56)   | 0         |
+| 31 | ConvTranspose2d     | (32, 64, 56)   | 18,464    |
+| 32 | BatchNorm2d         | (32, 64, 56)   | 64        |
+| 33 | LeakyReLU           | (32, 64, 56)   | 0         |
+| 34 | UpsamplingNearest2d | (32, 128, 112) | 0         |
+| 35 | ConvTranspose2d     | (3, 128, 112)  | 867       |
+| 36 | Sigmoid             | (3, 128, 112)  | 0         |
 
 ### Generation of Simulation Data
 
