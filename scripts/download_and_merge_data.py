@@ -3,7 +3,7 @@ import getpass
 import os
 import sys
 import yaml
-from download import login, download_zip, download_annotations
+from download_from_imagetagger import login, download_zip, download_annotations
 
 SETS = [156, 614, 615, 205, 375, 153, 627, 616, 180, 154, 81, 258, 827, 289, 151, 150, 149, 228, 131, 138, 232, 130, 97, 45, 21, 242, 243, 689, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035]
 EXPORT_FORMAT = 196
