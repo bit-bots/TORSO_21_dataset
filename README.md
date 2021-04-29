@@ -183,3 +183,11 @@ More details are avalible by running `vae/reconstruct.py -h`.
 This script runs the vae recursivly on all image inside a given folder and saves their latent space representation inside a file.
 More details are avalible by running `vae/embeddings.py -h`.
 
+
+<object data="misc/vae.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="misc/vae.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="misc/vae.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
+
+
