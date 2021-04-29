@@ -166,6 +166,8 @@ and if the field boundary is contained.
 
 ### Variational Autoencoder
 
+The variational autoencoder, we have used, is based on [noctrog's conv-vae](https://github.com/noctrog/conv-vae).
+
 The training code for the autoencoder is located in `scripts/vae/`.
 
 #### `vae/train.py`
