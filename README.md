@@ -5,7 +5,13 @@ This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of
 
 ### Example images
 #### Real-World
-<img src="example_images/viz_81-test_nagoya_game_d_00095.png" alt="example_image" width="200"/><img src="example_images/viz_130-16_02_2018__11_16_34_0060_upper.png" alt="example_image" width="200"/><img src="example_images/viz_1067-frame1090.jpg" alt="example_image" width="200"/>
+
+<img src="example_images/viz_689-1530140457.8499236frame09549.jpg" alt="example_image" width="200"/><img src="example_images/viz_614-frame1586.jpg" alt="example_image" width="200"/><img src="example_images/viz_627-frame0089.jpg" alt="example_image" width="200"/><img src="example_images/viz_615-frame8359.jpg" alt="example_image" width="200"/>
+<img src="example_images/viz_689-1530140787.8317411frame12225.jpg" alt="example_image" width="200"/><img src="example_images/viz_689-15301478649828563frame02102_merel.jpg" alt="example_image" width="200"/><img src="example_images/viz_827-img00920.png" alt="example_image" width="200"/><img src="example_images/viz_97-26_01_2018__18_40_34_1036_upper.png" alt="example_image" width="200"/>
+
+With annotations marked
+
+<img src="example_images/viz_81-test_nagoya_game_d_00095.png" alt="example_image" width="200"/><img src="example_images/viz_130-16_02_2018__11_16_34_0060_upper.png" alt="example_image" width="200"/><img src="example_images/viz_1067-frame1090.jpg" alt="example_image" width="200"/><img src="example_images/viz_289-27_07_2018__16_11_04_0358_upper.png" alt="example_image" width="200"/>
 
 #### Simulation
 <img src="example_images/img_fake_cam_000800.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000737.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000530.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000096.PNG" alt="example_image" width="200"/>
