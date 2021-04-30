@@ -1,6 +1,7 @@
 ## TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
 
-This repository contains the scripts for the TORSO-21 Dataset.
+This repository contains the scripts and addtional information for the TORSO-21 Dataset.
+This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of the Humanoid League as well as the Standard Platform League. We provide two image collections. The first one consists of images from various real-world locations, recorded by different robots. It includes annotations for the ball, goalposts, robots, lines, field edge, and three types of line intersections. The second collection is generated in the Webots simulator which is used for the official RoboCup Virtual Humanoid Soccer Competition. Additionally to the labels of the first collection, labels for the complete goal, depth images, 6D poses for all labels, as well as the camera location in the field of play, are provided.
 
 ## Download Dataset and Labels
 
