@@ -25,9 +25,44 @@ With annotations, segmentation mask and depth image
 
 ## Download Dataset and Labels
 
-The images can be downloaded here: https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT
+### Manual Download
 
-Or, an automated script can be used: `./scripts/download_dataset.py --all`
+The images and annotations can be downloaded here: https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT
+
+### Automated Download and Installation
+
+Follow these instructions to set up the dependencies for the scripts used for download, visualization and creation of the dataset.
+
+```
+# Clone the repository
+git clone https://github.com/bit-bots/TORSO_21_dataset.git
+cd TORSO_21_dataset/scripts
+
+# Install poetry
+pip3 install poetry --user
+
+# Install dependencies
+poetry install --no-dev
+
+# Install dependencies including dependencies for the dataset creation
+poetry install
+```
+
+#### Usage
+
+To run the tools you need to source the poetry environment in your shell.
+
+```
+# Source the virtualenv
+poetry shell
+```
+
+#### Automated Download
+Execute the following command in your poetry environment:
+
+```
+./scripts/download_dataset.py --all
+```
 
 To visualize the annotations, run the following two commands to pickle and show the annotations:
 
@@ -48,7 +83,7 @@ The repository structure is as follows:
 │   │   │   ├── images/           # a folder containing all the images of the training set
 │   │   │   └── segmentations/    # a folder containing all the segmentation masks of the training set
 │   │   └── test                  # the test set
-│   │       └── ...               # it is structured in the same way as the training set 
+│   │       └── ...               # it is structured in the same way as the training set
 │   └── simulation                # the images recorded in simulation
 │       ├── train                 # the training set
 │       │   ├── annotations.yaml  # the annotations in yaml format
@@ -56,7 +91,7 @@ The repository structure is as follows:
 │       │   ├── images/           # a folder containing all the images of the training set
 │       │   └── segmentations/    # a folder containing all the segmentation masks of the training set
 │       └── test                  # the test set
-│           └── ...               # it is structured in the same way as the training set 
+│           └── ...               # it is structured in the same way as the training set
 └── scripts                       # some useful scripts, see below for details
     └── ...
 ```
@@ -130,31 +165,6 @@ and if the field boundary is contained.
 
 
 ## Documentation of the scripts
-
-### Installation
-
-Follow these instructions to set up the dependencies for the dataset scripts and the autoencoder.
-
-```
-# Clone the repository
-git clone https://github.com/bit-bots/vision_dataset_2021.git
-cd vision_dataset_2021/scripts
-
-# Install poetry
-pip3 install poetry --user
-
-# Install dependencies
-poetry install
-```
-
-### Usage
-
-To run the tools you need to source the poetry environment in your shell.
-
-```
-# Source the virtualenv
-poetry shell
-```
 
 You can also use `poetry run <script>` to run scripts without sourcing.
 
@@ -266,3 +276,7 @@ More details are avalible by running `vae/embeddings.py -h`.
 The code for generating the simulation data can be found here https://github.com/bit-bots/wolfgang_robot/blob/feature/recognition/wolfgang_webots_sim/src/wolfgang_webots_sim/webots_camera_controller.py
 
 TODO better documentation
+
+## Citation
+
+TODO
