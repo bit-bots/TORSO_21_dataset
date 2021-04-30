@@ -122,7 +122,7 @@ Follow these instructions to set up the dependencies for the scripts used for vi
 ```
 # Clone the repository
 git clone https://github.com/bit-bots/TORSO_21_dataset.git
-cd TORSO_21_dataset/scripts
+cd TORSO_21_dataset
 
 # Install poetry
 pip3 install poetry --user
@@ -130,7 +130,7 @@ pip3 install poetry --user
 # Install dependencies
 poetry install --no-dev
 
-# Install dependencies including dependencies for the dataset creation
+# Optionally install dependencies including those for the dataset creation
 poetry install
 ```
 
@@ -173,6 +173,8 @@ and if the field boundary is contained.
 
 
 ### Further scripts
+
+To use these scripts, make sure to install all dependencies with `poetry install`.
 
 #### `download_and_merge_data.py`
 
