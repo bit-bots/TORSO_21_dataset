@@ -3,8 +3,8 @@ import argparse
 import os
 import sys
 import zipfile
-
-import requests
+from urllib.parse import urlencode
+from urllib.request import urlretrieve
 
 DATA_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data'))
 DOWNLOAD_LINK = 'https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT'
@@ -13,11 +13,8 @@ DOWNLOAD_LINK = 'https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT'
 def download(filename, params, folder, approx_size):
     print(f'Downloading dataset... This might take a lot of time and take up to {approx_size} GB of disk space')
     os.makedirs(folder, exist_ok=True)
-    with requests.get(DOWNLOAD_LINK + '/download', params=params, stream=True) as r:
-        r.raise_for_status()
-        with open(filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=None):
-                f.write(chunk)
+    query = urlencode(params)
+    urlretrieve(DOWNLOAD_LINK + '/download?' + query, filename)
     print('Download finished, extracting data...')
     with zipfile.ZipFile(filename) as f:
         f.extractall(folder)

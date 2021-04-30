@@ -30,46 +30,12 @@ With annotations, segmentation mask and depth image
 
 The images and annotations can be downloaded here: https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT
 
-### Automated Download and Installation
+### Automated Download
 
-Follow these instructions to set up the dependencies for the scripts used for download, visualization and creation of the dataset.
-
-```
-# Clone the repository
-git clone https://github.com/bit-bots/TORSO_21_dataset.git
-cd TORSO_21_dataset/scripts
-
-# Install poetry
-pip3 install poetry --user
-
-# Install dependencies
-poetry install --no-dev
-
-# Install dependencies including dependencies for the dataset creation
-poetry install
-```
-
-#### Usage
-
-To run the tools you need to source the poetry environment in your shell.
-
-```
-# Source the virtualenv
-poetry shell
-```
-
-#### Automated Download
-Execute the following command in your poetry environment:
+The data can also be downloaded with the following script (use `--help` for further options):
 
 ```
 ./scripts/download_dataset.py --all
-```
-
-To visualize the annotations, run the following two commands to pickle and show the annotations:
-
-```
-./scripts/pickle_annotations.py data/reality/train/annotations.yaml
-./scripts/viz_annotations.py data/reality/train/annotations.pkl
 ```
 
 ## Structure
@@ -147,8 +113,49 @@ images:
       ...
 ```
 
+## Scripts
 
-## Statistics and checks
+### Set up environment
+
+Follow these instructions to set up the dependencies for the scripts used for visualization and creation of the dataset.
+
+```
+# Clone the repository
+git clone https://github.com/bit-bots/TORSO_21_dataset.git
+cd TORSO_21_dataset/scripts
+
+# Install poetry
+pip3 install poetry --user
+
+# Install dependencies
+poetry install --no-dev
+
+# Install dependencies including dependencies for the dataset creation
+poetry install
+```
+
+### Usage
+
+To run the tools you need to source the poetry environment in your shell.
+
+```
+# Source the virtualenv
+poetry shell
+```
+
+Instead, you can also use `poetry run ./scripts/...` to run the scripts without sourcing.
+
+### Visualize annotations
+
+To visualize the annotations, run the following two commands to pickle and show the annotations in
+the poetry environment:
+
+```
+./scripts/pickle_annotations.py data/reality/train/annotations.yaml
+./scripts/viz_annotations.py data/reality/train/annotations.pkl
+```
+
+### Statistics and checks
 
 #### `metadata_statistics.py`
 
@@ -165,11 +172,7 @@ Sanity-checks the annotations, i.e. checks if some labels are marked as in image
 and if the field boundary is contained.
 
 
-## Documentation of the scripts
-
-You can also use `poetry run <script>` to run scripts without sourcing.
-
-### Scripts
+### Further scripts
 
 #### `download_and_merge_data.py`
 
