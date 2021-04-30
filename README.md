@@ -4,15 +4,11 @@ This repository contains the scripts and addtional information for the TORSO-21 
 This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of the Humanoid League as well as the Standard Platform League. We provide two image collections. The first one consists of images from various real-world locations, recorded by different robots. It includes annotations for the ball, goalposts, robots, lines, field edge, and three types of line intersections. The second collection is generated in the Webots simulator which is used for the official RoboCup Virtual Humanoid Soccer Competition. Additionally to the labels of the first collection, labels for the complete goal, depth images, 6D poses for all labels, as well as the camera location in the field of play, are provided.
 
 ### Example images
-<img src="example_images/viz_81-test_nagoya_game_d_00095.png" alt="example_image" width="200"/>
-<img src="example_images/viz_130-16_02_2018__11_16_34_0060_upper.png" alt="example_image" width="200"/>
-<img src="example_images/viz_1067-frame1090.jpg" alt="example_image" width="200"/>
+#### Real-World
+<img src="example_images/viz_81-test_nagoya_game_d_00095.png" alt="example_image" width="200"/><img src="example_images/viz_130-16_02_2018__11_16_34_0060_upper.png" alt="example_image" width="200"/><img src="example_images/viz_1067-frame1090.jpg" alt="example_image" width="200"/>
 
-
-<img src="example_images/img_fake_cam_000059.PNG" alt="example_image" width="200"/>
-<img src="example_images/viz_img_fake_cam_000059.PNG" alt="example_image" width="200"/>
-<img src="example_images/img_fake_cam_000059_seg.PNG" alt="example_image" width="200"/>
-<img src="example_images/img_fake_cam_000059_depth.PNG" alt="example_image" width="200"/>
+#### Simulation
+<img src="example_images/img_fake_cam_000059.PNG" alt="example_image" width="200"/><img src="example_images/viz_img_fake_cam_000059.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000059_seg.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000059_depth.PNG" alt="example_image" width="200"/>
 
 
 
