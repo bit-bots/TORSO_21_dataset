@@ -76,7 +76,7 @@ if __name__ == '__main__':
         }
         folder = os.path.join(DATA_FOLDER, 'simulation')
         approx_size = 28
-    elif args.sim and args.train:
+    elif args.simulation and args.train:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'train.zip')
         params = {
             'path': '/simulation',
@@ -84,9 +84,9 @@ if __name__ == '__main__':
         }
         folder = os.path.join(DATA_FOLDER, 'simulation')
         approx_size = 152
-    elif args.sim and args.annotations:
+    elif args.simulation and args.annotations:
         pass  # TODO
-    elif args.sim:
+    elif args.simulation:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation.zip')
         params = {
             'path': '/',

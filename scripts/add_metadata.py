@@ -8,8 +8,8 @@ ANNOTATION_INPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations.yaml')
 ANNOTATION_TRAIN_OUTPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations_train.yaml')
 ANNOTATION_TEST_OUTPUT_FILE = os.path.join(MAIN_FOLDER, 'data/annotations_test.yaml')
 METADATA_FILE = os.path.join(MAIN_FOLDER, 'data/metadata.csv')
-TRAIN_LIST = os.path.join(MAIN_FOLDER, 'data/train_images.txt')
-TEST_LIST = os.path.join(MAIN_FOLDER, 'data/test_images.txt')
+TRAIN_LIST = os.path.join(MAIN_FOLDER, 'data/reality/train_images.txt')
+TEST_LIST = os.path.join(MAIN_FOLDER, 'data/reality/test_images.txt')
 
 if __name__ == '__main__':
     print(f'Adding metadata from {METADATA_FILE} to {ANNOTATION_INPUT_FILE}')
