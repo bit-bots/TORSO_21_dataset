@@ -7,7 +7,6 @@ authors = ["Hamburg Bit-Bots <info@bit-bots.de>", "Florian <florian@flova.de>"]
 [tool.poetry.dependencies]
 python = ">=3.6.2"
 numpy = "1.19.5"
-scipy = "1.5.4"
 tqdm = "^4.59.0"
 requests = "^2.25.1"
 opencv-python = "^4.5.1"
@@ -16,6 +15,7 @@ PyYAML = "^5.4.1"
 [tool.poetry.dev-dependencies]
 matplotlib = "^3.3.4"
 Pillow = "^8.1.2"
+scipy = "1.5.4"
 seaborn = "^0.11.1"
 sklearn = "^0.0"
 torch = "^1.8.1"
