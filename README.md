@@ -14,6 +14,10 @@ With annotations marked
 
 <img src="example_images/viz_81-test_nagoya_game_d_00095.png" alt="example_image" width="200"/><img src="example_images/viz_130-16_02_2018__11_16_34_0060_upper.png" alt="example_image" width="200"/><img src="example_images/viz_1067-frame1090.jpg" alt="example_image" width="200"/><img src="example_images/viz_289-27_07_2018__16_11_04_0358_upper.png" alt="example_image" width="200"/>
 
+With segmentations of lines and field
+
+<img src="example_images/segmentation_1_1.png" alt="example_image" width="200"/><img src="example_images/segmentation_1_0.png" alt="example_image" width="200"/><img src="example_images/segmentation_2_1.png" alt="example_image" width="200"/><img src="example_images/segmentation_2_0.png" alt="example_image" width="200"/>
+
 #### Simulation
 <img src="example_images/img_fake_cam_000800.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000737.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000530.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000096.PNG" alt="example_image" width="200"/>
 
