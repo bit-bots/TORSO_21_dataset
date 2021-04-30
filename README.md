@@ -6,8 +6,9 @@ This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of
 ### Example images
 #### Real-World
 
-<img src="example_images/viz_689-1530140457.8499236frame09549.jpg" alt="example_image" width="200"/><img src="example_images/viz_614-frame1586.jpg" alt="example_image" width="200"/><img src="example_images/viz_627-frame0089.jpg" alt="example_image" width="200"/><img src="example_images/viz_615-frame8359.jpg" alt="example_image" width="200"/>
-<img src="example_images/viz_689-1530140787.8317411frame12225.jpg" alt="example_image" width="200"/><img src="example_images/viz_689-15301478649828563frame02102_merel.jpg" alt="example_image" width="200"/><img src="example_images/viz_827-img00920.png" alt="example_image" width="200"/><img src="example_images/viz_97-26_01_2018__18_40_34_1036_upper.png" alt="example_image" width="200"/>
+<img src="example_images/viz_689-1530140457.8499236frame09549.jpg" alt="example_image" height="120"/><img src="example_images/viz_614-frame1586.jpg" alt="example_image" height="120"/><img src="example_images/viz_627-frame0089.jpg" alt="example_image" height="120"/><img src="example_images/viz_615-frame8359.jpg" alt="example_image" height="120"/>
+
+<img src="example_images/viz_689-1530140787.8317411frame12225.jpg" alt="example_image" height="129"/><img src="example_images/viz_689-15301478649828563frame02102_merel.jpg" alt="example_image" height="129"/><img src="example_images/viz_827-img00920.png" alt="example_image" height="129"/><img src="example_images/viz_97-26_01_2018__18_40_34_1036_upper.png" alt="example_image" height="129"/>
 
 With annotations marked
 
