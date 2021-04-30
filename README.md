@@ -172,6 +172,12 @@ Sanity-checks the annotations, i.e. checks if some labels are marked as in image
 and if the field boundary is contained.
 
 
+### YOLO Evaluation
+
+Simple script that runs a YOLO model against the test dataset and calculates the IOU metrics.
+
+`./scripts/yolo_eval.py --yolo-path /path/to/yolo_folder --collection data/reality/test`
+
 ### Further scripts
 
 To use these scripts, make sure to install all dependencies with `poetry install`.
