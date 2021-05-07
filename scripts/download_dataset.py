@@ -12,7 +12,7 @@ DOWNLOAD_LINK = 'https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT'
 
 def download(filename, params, folder, approx_size):
     print(f'Downloading dataset to {folder}... '
-          'This might take a lot of time and take up to {approx_size} GB of disk space')
+          f'This might take a lot of time and take up to {approx_size} GB of disk space')
     os.makedirs(folder, exist_ok=True)
     query = urlencode(params)
     urlretrieve(DOWNLOAD_LINK + '/download?' + query, filename)
