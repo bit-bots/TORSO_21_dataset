@@ -320,6 +320,12 @@ The code for generating the simulation data can be found here https://github.com
 
 TODO better documentation
 
+## Evaluation
+
+Visualization of the position density of the respective annotations in the imagespace over all images of the real-world collection:
+
+<img src="example_images/heatmaps.png" alt="heatmaps"/>
+
 ## Citation
 
 TODO
