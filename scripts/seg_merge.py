@@ -40,10 +40,18 @@ class SegmentationMerge(object):
                 if mask is None:
                     continue
 
-                # Check shapes as some masks may be smaller due to old bug in line label tool
+                # Check shapes as some masks may be smaller due to old bug in line label tool or due to being labeled by yolo
                 image = cv2.imread(os.path.join(root, f))
                 if image.shape != mask.shape:
-                    mask = np.pad(mask, (5,5))[:,:,5:-5]  # Pad masks
+                    print(f"Shape missmatch {mask.shape} != {image.shape} on: '{f}'")
+                    if image.shape[0] - 10 == mask.shape[0] and image.shape[1] - 10 == mask.shape[1]:  # Caused by bug, pad masks  # TODO check for offset
+                        print(f"Padding: '{f}'")
+                        mask = np.pad(mask, (5,5))[:,:,5:-5]
+                    else:  # Yolo output, resize to original shape
+                        print(f"Resizing from {mask.shape} to {image.shape}: '{f}'")
+                        mask = cv2.resize(mask, (image.shape[1], image.shape[0]))
+                if mask.shape != image.shape:
+                    print(f"Something went wrong on '{f}'")
 
                 mask[mask < 2] == 0
 
@@ -90,8 +98,7 @@ class SegmentationMerge(object):
                         mask = cv2.fillConvexPoly(mask.astype(np.int32), vector, (0, 0, 0))
 
                 if field is None:
-                    print("scipped image without fieldboundary")
-                    print(f)
+                    print(f"skipped image without fieldboundary: '{f}'")
                     continue
 
                 seg = (field * (255 - mask)) + mask // 2

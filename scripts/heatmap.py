@@ -59,7 +59,7 @@ def render(root, annotations, annotation_type, size, canvas_template, f):
 
 def render_lines(lines_root, canvas_template, f):
     line_path = os.path.join(lines_root, f)
-    line = cv2.imread(line_path)
+    line = cv2.imread(line_path[:-3] + "png")
     if line is not None:
         line = cv2.resize(line, dsize=canvas_template.shape, interpolation=cv2.INTER_NEAREST)
         return line[:,:,0]
@@ -138,7 +138,7 @@ class Heatmapper(object):
             if cls == 'Ball':
                 vmax = 0.06
             if cls == 'Lines':
-                vmax = 0.02
+                vmax = None
             sub.set_title(f'{cls}')
             sns.heatmap(heatmap, xticklabels=False, yticklabels=False, linewidths=0.0, rasterized=True, vmin=0.0, vmax=vmax)
 
@@ -149,6 +149,6 @@ class Heatmapper(object):
 
 if __name__ == "__main__":
     image_path = "/home/jan/Schreibtisch/imageset1069/"
-    annotation_path = "/home/jan/Downloads/vision_dataset_2021_labels.pkl"
-    lines_path ="/home/jan/Schreibtisch/lines_out/"
+    annotation_path = "/home/jan/Downloads/vision_dataset_2021_labels.yaml"
+    lines_path ="/home/jan/Schreibtisch/output/line_out"
     Heatmapper(image_path, annotation_path, lines_path).main()
