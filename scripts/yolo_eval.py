@@ -30,7 +30,7 @@ class YoloEvalOpenCV():
         # Build paths
         weightpath = model_path / "yolo_weights.weights"
         configpath = model_path / "config.cfg"
-        self._classes = ["ball", "goalpost", "robot", "L-Intersection", "T-Intersection", "X-Intersection"]
+        self._classes = ["ball", "goalpost", "robot", "L-Intersection", "T-Intersection", "X-Intersection", "top_bar"]
         # Setup neural network
         self._net = cv2.dnn.readNet(str(weightpath), str(configpath))
 
@@ -119,32 +119,32 @@ class YoloEvalOpenCV():
 
             for annotation in annotations_of_type_in_image:
                 vector = np.array(annotation['vector'], dtype=np.int32)
+                if annotation['in_image']: 
+                    # Bbox
+                    if annotation_type in ['robot', 'ball']:
+                        annotation_segmentation[class_idx] = cv2.rectangle(
+                            annotation_segmentation[class_idx],
+                            tuple(vector[1].tolist()),
+                            tuple(vector[0].tolist()),
+                            255, -1)
 
-                # Bbox
-                if annotation_type in ['robot', 'ball']:
-                    annotation_segmentation[class_idx] = cv2.rectangle(
-                        annotation_segmentation[class_idx],
-                        tuple(vector[1].tolist()),
-                        tuple(vector[0].tolist()),
-                        255, -1)
+                    # Polygon
+                    elif annotation_type in['goalpost', 'top_bar']:
+                        annotation_segmentation[class_idx] = cv2.fillConvexPoly(
+                            annotation_segmentation[class_idx],
+                            vector,
+                            255.0)
 
-                # Polygon
-                elif annotation_type == 'goalpost':
-                    annotation_segmentation[class_idx] = cv2.fillConvexPoly(
-                        annotation_segmentation[class_idx],
-                        vector,
-                        255.0)
-
-                # Keypoint
-                elif 'Intersection' in annotation_type:
-                    size_h = int(self._height * 0.03)
-                    size_w = int(self._width * 0.03)
-                    annotation_segmentation[class_idx] = cv2.rectangle(
-                        annotation_segmentation[class_idx],
-                        (vector[0][0] - size_w, vector[0][1] - size_h),
-                        (vector[0][0] + size_w, vector[0][1] + size_h),
-                        255,
-                        -1)
+                    # Keypoint
+                    elif 'Intersection' in annotation_type:
+                        size_h = int(self._height * 0.03)
+                        size_w = int(self._width * 0.03)
+                        annotation_segmentation[class_idx] = cv2.rectangle(
+                            annotation_segmentation[class_idx],
+                            (vector[0][0] - size_w, vector[0][1] - size_h),
+                            (vector[0][0] + size_w, vector[0][1] + size_h),
+                            255,
+                            -1)
 
         return annotation_segmentation
 
