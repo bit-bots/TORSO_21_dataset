@@ -43,7 +43,7 @@ The data can also be downloaded with the following script (use `--help` for furt
 ```
 
 ### YOLO Labelform
-If you want to train a YOLO, you can use the script provided in [this repository](https://github.com/bit-bots/AutoImageLabeler#create-labels-for-training)
+If you want to train a YOLO, you can use the script provided in [this repository](https://github.com/bit-bots/AutoImageLabeler#create-labels-for-training) to generate the labels.
 
 ## Structure
 
