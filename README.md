@@ -345,4 +345,18 @@ Visualization of the position density of the respective annotations in the image
 
 ## Citation
 
-TODO
+_When you use our dataset, please cite it as follows:_
+
+This dataset is published together with our publication during the RoboCup Symposium 2021.
+
+[TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021](https://www.researchgate.net/publication/352384714_TORSO-21_Dataset_Typical_Objects_in_RoboCup_Soccer_2021)
+```
+@inproceedings{TORSO2021,
+author = {Bestmann, Marc and Engelke, Timon and Fiedler, Niklas and Güldenstein, Jasper and Gutsche, Jan and Hagge, Jonas and Vahl, Florian},
+year = {2021},
+month = {06},
+pages = {},
+title = {TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021}
+booktitle={RoboCup 2021},
+}
+```
