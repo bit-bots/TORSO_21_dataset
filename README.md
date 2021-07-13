@@ -368,7 +368,10 @@ booktitle={RoboCup 2021},
 
 ## Changelog
 
-| Date                | Comment                                        |
-|---------------------|------------------------------------------------|
-| June, 27 2021       | Publication                                    |
-| July, 12 2021       | Replacement of the segmentations in the reality collection (using the `fix_segmentations.py`). The update towards the publication introduced incorrect color values of the field class in the segmentation images. |
+### July 12, 2021
+
+* Replacement of the segmentations in the reality collection (using the `fix_segmentations.py`). The update towards the publication introduced incorrect color values of the field class in the segmentation images.
+
+### June 27, 2021
+
+* Publication
