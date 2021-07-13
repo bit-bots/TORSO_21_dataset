@@ -5,15 +5,15 @@ This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of
 
 ### Meta Data
 | # of real-world Images   | 10464 |
-|-------------------------|-------|
-| # of Balls              | 10959 |
-| # of Robots             | 14383 |
-| # of Goalposts          | 12780 |
-| # of Field edges        | 10464 |
-| # of L-Intersections    | 15458 |
-| # of T-Intersection     | 13479 |
-| # of X-Intersections    | 13447 |
-| # of Line Segmentations | 10464 |
+|--------------------------|-------|
+| # of Balls               | 10959 |
+| # of Robots              | 14383 |
+| # of Goalposts           | 12780 |
+| # of L-Intersections     | 15458 |
+| # of T-Intersection      | 13479 |
+| # of X-Intersections     | 13447 |
+| # of Field Segmentations | 10464 |
+| # of Line Segmentations  | 10464 |
 
 **\# of simulated images: 24.000**
 
@@ -241,6 +241,11 @@ Creates the file `data/annotations_with_metadata.yaml` from `data/annotations.ya
 `data/metadata.csv`. `annotations.yaml` can be downloaded from the ImageTagger, `metadata.csv` has
 to be manually created.
 
+#### `fix_segmentations.py`
+
+This script was used to resolve an issue regarding the segmentation images of the reality collection.
+This fixes the issue of incorrect color values of the class `field` caused by anti-aliasing and a old bug in the `line_label_tool`.
+
 ### Variational Autoencoder
 
 The variational autoencoder, we have used, is based on [noctrog's conv-vae](https://github.com/noctrog/conv-vae).
@@ -360,3 +365,10 @@ title = {TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021}
 booktitle={RoboCup 2021},
 }
 ```
+
+## Changelog
+
+| Date                | Comment                                        |
+|---------------------|------------------------------------------------|
+| June, 27 2021       | Publication                                    |
+| July, 12 2021       | Replacement of the segmentations in the reality collection (using the `fix_segmentations.py`). The update towards the publication introduced incorrect color values of the field class in the segmentation images. |
