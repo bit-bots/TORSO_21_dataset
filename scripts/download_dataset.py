@@ -112,7 +112,7 @@ if __name__ == '__main__':
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'train.zip')
         params = {
             'path': '/simulation',
-            'files': 'test',
+            'files': 'train',
         }
         folder = os.path.join(DATA_FOLDER, 'simulation')
         approx_size = 152
