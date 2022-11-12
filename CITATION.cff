@@ -2,13 +2,11 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: >-
-  TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
-message: >-
-  If you use this dataset or its related software, please cite it using the
-  metadata from this file.
+title: "TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021"
+message: "If you use this dataset or its related software, please cite it using the metadata from this file."
 type: dataset
 license: MIT
+date-released: "2021-06-28"
 authors:
   - given-names: Marc
     family-names: Bestmann
@@ -70,6 +68,7 @@ keywords:
   - Vision dataset
   - Deep learning
 preferred-citation:
+  title: "TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021"
   type: conference-paper
   authors:
     - given-names: Marc
@@ -105,4 +104,3 @@ preferred-citation:
       email: florian.vahl@uni-hamburg.de
       affiliation: Universität Hamburg
 doi: "10.1007/978-3-030-98682-7_6"
-year: 2021
