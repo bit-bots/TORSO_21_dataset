@@ -5,7 +5,7 @@ cff-version: 1.2.0
 title: >-
   TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
 message: >-
-  If you use this dataset, please cite it using the
+  If you use this dataset or its related software, please cite it using the
   metadata from this file.
 type: dataset
 license: MIT
@@ -69,3 +69,40 @@ keywords:
   - Computer vision
   - Vision dataset
   - Deep learning
+preferred-citation:
+  type: conference-paper
+  authors:
+    - given-names: Marc
+      family-names: Bestmann
+      email: marc.bestmann@uni-hamburg.de
+      affiliation: Universität Hamburg
+      orcid: 'https://orcid.org/0000-0002-7857-793X'
+    - given-names: Engelke
+      family-names: Timon
+      affiliation: Universität Hamburg
+      email: timon.engelke@uni-hamburg.de
+    - given-names: Fiedler
+      family-names: Niklas
+      email: niklas.fiedler@uni-hamburg.de
+      affiliation: Universität Hamburg
+      orcid: 'https://orcid.org/0000-0002-0856-5087'
+    - given-names: Güldenstein
+      family-names: Jasper
+      email: jasper.gueldenstein@uni-hamburg.de
+      affiliation: Universität Hamburg
+      orcid: 'https://orcid.org/0000-0002-5416-5850'
+    - given-names: Gutsche
+      family-names: Jan
+      email: jan.gutsche@uni-hamburg.de
+      affiliation: Universität Hamburg
+      orcid: 'https://orcid.org/0000-0002-0868-8589'
+    - given-names: Hagge
+      family-names: Jonas
+      email: jonas.hagge@uni-hamburg.de
+      affiliation: Universität Hamburg
+    - given-names: Vahl
+      family-names: Florian
+      email: florian.vahl@uni-hamburg.de
+      affiliation: Universität Hamburg
+doi: "10.1007/978-3-030-98682-7_6"
+year: 2021
