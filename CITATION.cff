@@ -6,7 +6,7 @@ title: "TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021"
 message: "If you use this dataset or its related software, please cite it using the metadata from this file."
 type: dataset
 license: MIT
-date-released: "2021-06-28"
+date-released: "2021-06-27"
 authors:
   - given-names: Marc
     family-names: Bestmann

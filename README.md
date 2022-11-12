@@ -348,22 +348,32 @@ Visualization of the position density of the respective annotations in the image
 
 <img src="example_images/heatmaps.png" alt="heatmaps"/>
 
-## Citation
+## Publication
 
-_When you use our dataset, please cite it as follows:_
+_When you use our dataset or related software, please cite it as follows:_
 
-This dataset is published together with our publication during the RoboCup Symposium 2021.
+### TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
 
-[TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021](https://www.researchgate.net/publication/352384714_TORSO-21_Dataset_Typical_Objects_in_RoboCup_Soccer_2021)
+**Abstract**<br>
+We present a dataset specifically designed to be used as a benchmark to compare vision systems in the RoboCup Humanoid Soccer domain.
+The dataset is composed of a collection of images taken in various real-world locations as well as a collection of simulated images.
+It enables comparing vision approaches with a meaningful and expressive metric.
+The contributions of this paper consist of providing a comprehensive and annotated dataset, an overview of the recent approaches to vision in RoboCup, methods to generate vision training data in a simulated environment, and an approach to increase the variety of a dataset by automatically selecting a diverse set of images from a larger pool.
+Additionally , we provide a baseline of YOLOv4 and YOLOv4-tiny on this dataset.
 
-```
+[[ResearchGate]](https://www.researchgate.net/publication/352384714_TORSO-21_Dataset_Typical_Objects_in_RoboCup_Soccer_2021)
+[[Download]](https://www.researchgate.net/profile/Niklas-Fiedler/publication/352384714_TORSO-21_Dataset_Typical_Objects_in_RoboCup_Soccer_2021/links/60c7cd23299bf108abd953d5/TORSO-21-Dataset-Typical-Objects-in-RoboCup-Soccer-2021.pdf)
+
+```bib
 @inproceedings{TORSO2021,
 author = {Bestmann, Marc and Engelke, Timon and Fiedler, Niklas and Güldenstein, Jasper and Gutsche, Jan and Hagge, Jonas and Vahl, Florian},
 year = {2021},
-title = {TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021},
+title = {{TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021}},
 booktitle={RoboCup 2021: Robot World Cup XXIV}
 }
 ```
+
+_NOTE: You can get various citation types in the right sidebar on GitHub "Cite this repository"..._
 
 ## Changelog
 
