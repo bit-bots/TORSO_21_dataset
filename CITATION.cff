@@ -13,31 +13,31 @@ authors:
     email: marc.bestmann@uni-hamburg.de
     affiliation: Universität Hamburg
     orcid: 'https://orcid.org/0000-0002-7857-793X'
-  - given-names: Engelke
-    family-names: Timon
+  - given-names: Timon
+    family-names: Engelke
     affiliation: Universität Hamburg
     email: timon.engelke@uni-hamburg.de
-  - given-names: Fiedler
-    family-names: Niklas
+  - given-names: Niklas
+    family-names: Fiedler
     email: niklas.fiedler@uni-hamburg.de
     affiliation: Universität Hamburg
     orcid: 'https://orcid.org/0000-0002-0856-5087'
-  - given-names: Güldenstein
-    family-names: Jasper
+  - given-names: Jasper
+    family-names: Güldenstein
     email: jasper.gueldenstein@uni-hamburg.de
     affiliation: Universität Hamburg
     orcid: 'https://orcid.org/0000-0002-5416-5850'
-  - given-names: Gutsche
-    family-names: Jan
+  - given-names: Jan
+    family-names: Gutsche
     email: jan.gutsche@uni-hamburg.de
     affiliation: Universität Hamburg
     orcid: 'https://orcid.org/0000-0002-0868-8589'
-  - given-names: Hagge
-    family-names: Jonas
+  - given-names: Jonas
+    family-names: Hagge
     email: jonas.hagge@uni-hamburg.de
     affiliation: Universität Hamburg
-  - given-names: Vahl
-    family-names: Florian
+  - given-names: Florian
+    family-names: Vahl
     email: florian.vahl@uni-hamburg.de
     affiliation: Universität Hamburg
 identifiers:
@@ -76,31 +76,31 @@ preferred-citation:
       email: marc.bestmann@uni-hamburg.de
       affiliation: Universität Hamburg
       orcid: 'https://orcid.org/0000-0002-7857-793X'
-    - given-names: Engelke
-      family-names: Timon
+    - given-names: Timon
+      family-names: Engelke
       affiliation: Universität Hamburg
       email: timon.engelke@uni-hamburg.de
-    - given-names: Fiedler
-      family-names: Niklas
+    - given-names: Niklas
+      family-names: Fiedler
       email: niklas.fiedler@uni-hamburg.de
       affiliation: Universität Hamburg
       orcid: 'https://orcid.org/0000-0002-0856-5087'
-    - given-names: Güldenstein
-      family-names: Jasper
+    - given-names: Jasper
+      family-names: Güldenstein
       email: jasper.gueldenstein@uni-hamburg.de
       affiliation: Universität Hamburg
       orcid: 'https://orcid.org/0000-0002-5416-5850'
-    - given-names: Gutsche
-      family-names: Jan
+    - given-names: Jan
+      family-names: Gutsche
       email: jan.gutsche@uni-hamburg.de
       affiliation: Universität Hamburg
       orcid: 'https://orcid.org/0000-0002-0868-8589'
-    - given-names: Hagge
-      family-names: Jonas
+    - given-names: Jonas
+      family-names: Hagge
       email: jonas.hagge@uni-hamburg.de
       affiliation: Universität Hamburg
-    - given-names: Vahl
-      family-names: Florian
+    - given-names: Florian
+      family-names: Vahl
       email: florian.vahl@uni-hamburg.de
       affiliation: Universität Hamburg
 doi: "10.1007/978-3-030-98682-7_6"
