@@ -46,7 +46,7 @@ With annotations, segmentation mask and depth image
 
 ### Manual Download
 
-The images and annotations can be downloaded here: https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT
+The images and annotations can be downloaded here: https://data.bit-bots.de/TORSO-21/
 
 ### Automated Download
 
