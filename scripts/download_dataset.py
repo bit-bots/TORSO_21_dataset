@@ -7,15 +7,14 @@ from urllib.parse import urlencode
 from urllib.request import urlretrieve
 
 DATA_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data'))
-DOWNLOAD_LINK = 'https://cloud.crossmodal-learning.org/s/3wt3Sgyxc7pC5QT'
+DOWNLOAD_LINK = 'https://data.bit-bots.de/TORSO-21'
 
 
-def download(filename, params, folder, approx_size):
+def download_and_extract_zip(filename, file_url, folder, approx_size):
     print(f'Downloading dataset to {folder}... '
           f'This might take a lot of time and take up to {approx_size} GB of disk space')
     os.makedirs(folder, exist_ok=True)
-    query = urlencode(params)
-    urlretrieve(DOWNLOAD_LINK + '/download?' + query, filename)
+    urlretrieve(f'{DOWNLOAD_LINK}/{file_url}', filename)
     print('Download finished, extracting data...')
     with zipfile.ZipFile(filename) as f:
         f.extractall(folder)
@@ -23,11 +22,10 @@ def download(filename, params, folder, approx_size):
     print('Extraction finished.')
 
 
-def download_file(filename, params):
+def download_file(filename, file_url):
     print(f'Downloading annotations file to {filename}...')
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    query = urlencode(params)
-    urlretrieve(DOWNLOAD_LINK + '/download?' + query, filename)
+    urlretrieve(f'{DOWNLOAD_LINK}/{file_url}', filename)
     print('Download finished.')
 
 
@@ -51,92 +49,56 @@ if __name__ == '__main__':
 
     if args.all:
         tmp_file = os.path.join(DATA_FOLDER, 'dataset.zip')
-        params = {}
+        file_url = 'TORSO-21.zip'
         folder = DATA_FOLDER
         approx_size = 190
-        download(tmp_file, params, folder, approx_size)
+        download_and_extract_zip(tmp_file, file_url, folder, approx_size)
     elif args.real and args.test and args.annotations:
-        download_file(os.path.join(DATA_FOLDER, 'reality', 'test', 'annotations.yaml'),
-                      {'path': '/reality/test', 'files': 'annotations.yaml'})
+        download_file(os.path.join(DATA_FOLDER, 'reality', 'test', 'annotations.yaml'), 'reality/test/annotations.yaml')
     elif args.real and args.test:
         tmp_file = os.path.join(DATA_FOLDER, 'reality', 'test.zip')
-        params = {
-            'path': '/reality',
-            'files': 'test',
-        }
         folder = os.path.join(DATA_FOLDER, 'reality')
         approx_size = 2
-        download(tmp_file, params, folder, approx_size)
+        download_and_extract_zip(tmp_file, 'reality/test.zip', folder, approx_size)
     elif args.real and args.train and args.annotations:
-        download_file(os.path.join(DATA_FOLDER, 'reality', 'train', 'annotations.yaml'),
-                      {'path': '/reality/train', 'files': 'annotations.yaml'})
+        download_file(os.path.join(DATA_FOLDER, 'reality', 'train', 'annotations.yaml'), 'reality/train/annotations.yaml')
     elif args.real and args.train:
         tmp_file = os.path.join(DATA_FOLDER, 'reality', 'train.zip')
-        params = {
-            'path': '/reality',
-            'files': 'train',
-        }
         folder = os.path.join(DATA_FOLDER, 'reality')
         approx_size = 10
-        download(tmp_file, params, folder, approx_size)
+        download_and_extract_zip(tmp_file, 'reality/train.zip', folder, approx_size)
     elif args.real and args.annotations:
-        download_file(os.path.join(DATA_FOLDER, 'reality', 'train', 'annotations.yaml'),
-                      {'path': '/reality/train', 'files': 'annotations.yaml'})
-        download_file(os.path.join(DATA_FOLDER, 'reality', 'test', 'annotations.yaml'),
-                      {'path': '/reality/test', 'files': 'annotations.yaml'})
+        download_file(os.path.join(DATA_FOLDER, 'reality', 'train', 'annotations.yaml'), 'reality/train/annotations.yaml')
+        download_file(os.path.join(DATA_FOLDER, 'reality', 'test', 'annotations.yaml'), 'reality/test/annotations.yaml')
     elif args.real:
         tmp_file = os.path.join(DATA_FOLDER, 'reality.zip')
-        params = {
-            'path': '/',
-            'files': 'reality',
-        }
         folder = DATA_FOLDER
         approx_size = 11
-        download(tmp_file, params, folder, approx_size)
+        download_and_extract_zip(tmp_file, 'reality.zip', folder, approx_size)
     elif args.simulation and args.test and args.annotations:
-        download_file(os.path.join(DATA_FOLDER, 'simulation', 'test', 'annotations.yaml'),
-                      {'path': '/simulation/test', 'files': 'annotations.yaml'})
+        download_file(os.path.join(DATA_FOLDER, 'simulation', 'test', 'annotations.yaml'), 'simulation/test/annotations.yaml')
     elif args.simulation and args.test:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'test.zip')
-        params = {
-            'path': '/simulation',
-            'files': 'test',
-        }
-        folder = os.path.join(DATA_FOLDER, 'simulation')
+        folder = os.path.join(DATA_FOLDER, 'simulation/test/test.zip')
         approx_size = 28
-        download(tmp_file, params, folder, approx_size)
+        download_and_extract_zip(tmp_file, 'simulation/test/test.zip', folder, approx_size)
     elif args.simulation and args.train and args.annotations:
-        download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'),
-                      {'path': '/simulation/train', 'files': 'annotations.yaml'})
+        download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'), 'simulation/train/annotations.yaml')
     elif args.simulation and args.train:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'train.zip')
-        params = {
-            'path': '/simulation',
-            'files': 'train',
-        }
         folder = os.path.join(DATA_FOLDER, 'simulation')
         approx_size = 152
-        download(tmp_file, params, folder, approx_size)
+        download_and_extract_zip(tmp_file, 'simulation/train/train.zip', folder, approx_size)
     elif args.simulation and args.annotations:
-        download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'),
-                      {'path': '/simulation/train', 'files': 'annotations.yaml'})
-        download_file(os.path.join(DATA_FOLDER, 'simulation', 'test', 'annotations.yaml'),
-                      {'path': '/simulation/test', 'files': 'annotations.yaml'})
+        download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'), 'simulation/train/annotations.yaml')
+        download_file(os.path.join(DATA_FOLDER, 'simulation', 'test', 'annotations.yaml'), 'simulation/test/annotations.yaml')
     elif args.simulation:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation.zip')
-        params = {
-            'path': '/',
-            'files': 'simulation',
-        }
         folder = DATA_FOLDER
         approx_size = 180
-        download(tmp_file, params, folder, approx_size)
+        download_and_extract_zip(tmp_file, 'simulation.zip', folder, approx_size)
     elif args.annotations:
-        download_file(os.path.join(DATA_FOLDER, 'reality', 'train', 'annotations.yaml'),
-                      {'path': '/reality/train', 'files': 'annotations.yaml'})
-        download_file(os.path.join(DATA_FOLDER, 'reality', 'test', 'annotations.yaml'),
-                      {'path': '/reality/test', 'files': 'annotations.yaml'})
-        download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'),
-                      {'path': '/simulation/train', 'files': 'annotations.yaml'})
-        download_file(os.path.join(DATA_FOLDER, 'simulation', 'test', 'annotations.yaml'),
-                      {'path': '/simulation/test', 'files': 'annotations.yaml'})
+        download_file(os.path.join(DATA_FOLDER, 'reality', 'train', 'annotations.yaml'), 'reality/train/annotations.yaml')
+        download_file(os.path.join(DATA_FOLDER, 'reality', 'test', 'annotations.yaml'), 'reality/test/annotations.yaml')
+        download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'), 'simulation/train/annotations.yaml')
+        download_file(os.path.join(DATA_FOLDER, 'simulation', 'test', 'annotations.yaml'), 'simulation/test/annotations.yaml')
