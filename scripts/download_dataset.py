@@ -81,14 +81,14 @@ if __name__ == '__main__':
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'test.zip')
         folder = os.path.join(DATA_FOLDER, 'simulation/test/test.zip')
         approx_size = 28
-        download_and_extract_zip(tmp_file, 'simulation/test/test.zip', folder, approx_size)
+        download_and_extract_zip(tmp_file, 'simulation/test.zip', folder, approx_size)
     elif args.simulation and args.train and args.annotations:
         download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'), 'simulation/train/annotations.yaml')
     elif args.simulation and args.train:
         tmp_file = os.path.join(DATA_FOLDER, 'simulation', 'train.zip')
         folder = os.path.join(DATA_FOLDER, 'simulation')
         approx_size = 152
-        download_and_extract_zip(tmp_file, 'simulation/train/train.zip', folder, approx_size)
+        download_and_extract_zip(tmp_file, 'simulation/train.zip', folder, approx_size)
     elif args.simulation and args.annotations:
         download_file(os.path.join(DATA_FOLDER, 'simulation', 'train', 'annotations.yaml'), 'simulation/train/annotations.yaml')
         download_file(os.path.join(DATA_FOLDER, 'simulation', 'test', 'annotations.yaml'), 'simulation/test/annotations.yaml')
