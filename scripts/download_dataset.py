@@ -48,11 +48,12 @@ if __name__ == '__main__':
         parser.error('--all cannot be used with other options.')
 
     if args.all:
-        tmp_file = os.path.join(DATA_FOLDER, 'dataset.zip')
-        file_url = 'TORSO-21.zip'
-        folder = DATA_FOLDER
-        approx_size = 190
-        download_and_extract_zip(tmp_file, file_url, folder, approx_size)
+        tmp_file = os.path.join(DATA_FOLDER, 'reality.zip')
+        approx_size = 11
+        download_and_extract_zip(tmp_file, 'reality.zip', DATA_FOLDER, approx_size)
+        tmp_file = os.path.join(DATA_FOLDER, 'simulation.zip')
+        approx_size = 180
+        download_and_extract_zip(tmp_file, 'simulation.zip', DATA_FOLDER, approx_size)
     elif args.real and args.test and args.annotations:
         download_file(os.path.join(DATA_FOLDER, 'reality', 'test', 'annotations.yaml'), 'reality/test/annotations.yaml')
     elif args.real and args.test:
