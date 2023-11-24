@@ -1,9 +1,10 @@
-## TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
+# TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
 
-This repository contains the scripts and addtional information for the TORSO-21 Dataset.
+This repository contains the scripts and additional information for the TORSO-21 Dataset.
 This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of the Humanoid League as well as the Standard Platform League. We provide two image collections. The first one consists of images from various real-world locations, recorded by different robots. It includes annotations for the ball, goalposts, robots, lines, field edge, and three types of line intersections. The second collection is generated in the Webots simulator which is used for the official RoboCup Virtual Humanoid Soccer Competition. Additionally to the labels of the first collection, labels for the complete goal, depth images, 6D poses for all labels, as well as the camera location in the field of play, are provided.
 
-### Meta Data
+## Meta Data
+
 | # of real-world Images   | 10464 |
 |--------------------------|-------|
 | # of Balls               | 10959 |
@@ -17,8 +18,9 @@ This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of
 
 **\# of simulated images: 24.000**
 
-### Example images
-#### Real-World
+## Example images
+
+### Real-World
 
 <img src="example_images/viz_689-1530140457.8499236frame09549.jpg" alt="example_image" height="120"/><img src="example_images/viz_614-frame1586.jpg" alt="example_image" height="120"/><img src="example_images/viz_627-frame0089.jpg" alt="example_image" height="120"/><img src="example_images/viz_615-frame8359.jpg" alt="example_image" height="120"/>
 
@@ -32,38 +34,36 @@ With segmentations of lines and field
 
 <img src="example_images/segmentation_1_1.png" alt="example_image" width="200"/><img src="example_images/segmentation_1_0.png" alt="example_image" width="200"/><img src="example_images/segmentation_2_1.png" alt="example_image" width="200"/><img src="example_images/segmentation_2_0.png" alt="example_image" width="200"/>
 
-#### Simulation
+### Simulation
 <img src="example_images/img_fake_cam_000800.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000737.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000530.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000096.PNG" alt="example_image" width="200"/>
 
 With annotations, segmentation mask and depth image
 
 <img src="example_images/img_fake_cam_000059.PNG" alt="example_image" width="200"/><img src="example_images/viz_img_fake_cam_000059.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000059_seg.PNG" alt="example_image" width="200"/><img src="example_images/img_fake_cam_000059_depth.PNG" alt="example_image" width="200"/>
 
-
-
-
 ## Download Dataset and Labels
 
 ### Manual Download
 
-The images and annotations can be downloaded here: https://data.bit-bots.de/TORSO-21/
+The images and annotations can be downloaded here: <https://data.bit-bots.de/TORSO-21/>
 
 ### Automated Download
 
 The data can also be downloaded with the following script (use `--help` for further options):
 
-```
+```shell
 ./scripts/download_dataset.py --all
 ```
 
-### YOLO Labelform
+### YOLO Label Format
+
 If you want to train a YOLO, you can use the script provided in [this repository](https://github.com/bit-bots/AutoImageLabeler#create-labels-for-training) to generate the labels.
 
 ## Structure
 
 The repository structure is as follows:
 
-```
+```raw
 ├── data                          # contains the annotations and images
 │   ├── reality                   # the images recorded in reality
 │   │   ├── train                 # the training set
@@ -140,38 +140,44 @@ images:
 
 Follow these instructions to set up the dependencies for the scripts used for visualization and creation of the dataset.
 
-```
-# Clone the repository
-git clone https://github.com/bit-bots/TORSO_21_dataset.git
-cd TORSO_21_dataset
+1. Install the package manager Poetry as described [here](https://python-poetry.org/docs/#installation). This prevents dependency conflicts and ensures that the correct versions of the dependencies are installed.
 
-# Install poetry
-pip3 install poetry --user
+2. Clone the repository:
 
-# Install dependencies
-poetry install --no-dev
+    ```shell
+    git clone https://github.com/bit-bots/TORSO_21_dataset.git
+    ```
 
-# Optionally install dependencies including those for the dataset creation
-poetry install
-```
+3. Move into the repository and install the dependencies
 
-### Usage
+    - without optional dependencies (for dataset creation):
 
-To run the tools you need to source the poetry environment in your shell.
+        ```shell
+        cd TORSO_21_dataset && poetry install --without=dev --no-root
+        ```
 
-```
-# Source the virtualenv
+    - with optional dependencies (for dataset creation):
+
+        ```shell
+        cd TORSO_21_dataset && poetry install --no-root
+        ```
+
+## Usage
+
+To run the tools you need to enter the poetry environment:
+
+```shell
 poetry shell
 ```
 
-Instead, you can also use `poetry run ./scripts/...` to run the scripts without sourcing.
+Alternatively, you can use `poetry run ./scripts/<file>` to run the scripts without sourcing.
 
 ### Visualize annotations
 
 To visualize the annotations, run the following two commands to pickle and show the annotations in
 the poetry environment:
 
-```
+```shell
 ./scripts/pickle_annotations.py data/reality/train/annotations.yaml
 ./scripts/viz_annotations.py data/reality/train/annotations.pkl
 ```
@@ -192,7 +198,6 @@ occurs per image. Its first argument is the annotation file to generate annotati
 Sanity-checks the annotations, i.e. checks if some labels are marked as in image and not in image
 and if the field boundary is contained.
 
-
 ### YOLO Evaluation
 
 Simple script that runs a YOLO model against the test dataset and calculates the IOU metrics.
@@ -201,7 +206,7 @@ Simple script that runs a YOLO model against the test dataset and calculates the
 
 ### Further scripts
 
-To use these scripts, make sure to install all dependencies with `poetry install`.
+To use these scripts, make sure to install all dependencies with `poetry install` (see [Set up environment](#set-up-environment)).
 
 #### `download_and_merge_data.py`
 
@@ -259,18 +264,18 @@ More details are avalible by running `vae/train.py -h`.
 
 #### `vae/reconstruct.py`
 
-This script runs the autoencoder on a given input and shows the recnstruction of the image.
-More details are avalible by running `vae/reconstruct.py -h`.
+This script runs the autoencoder on a given input and shows the reconstruction of the image.
+More details are available by running `vae/reconstruct.py -h`.
 
 #### `vae/embeddings.py`
 
-This script runs the vae recursivly on all image inside a given folder and saves their latent space representation und reconstruction errors inside a file.
-More details are avalible by running `vae/embeddings.py -h`.
+This script runs the vae recursively on all image inside a given folder and saves their latent space representation und reconstruction errors inside a file.
+More details are available by running `vae/embeddings.py -h`.
 
 #### `vae/distances.py`
 
-Plots n'th neigbours in the latent space of a given image.
-More details are avalible by running `vae/distances.py -h`.
+Plots n'th neighbors in the latent space of a given image.
+More details are available by running `vae/distances.py -h`.
 
 #### `vae/duplicates.py`
 
@@ -280,7 +285,7 @@ Creates a yaml file containing three lists containing:
 * The images that got selected due to the high reconstruction error
 * The images that will be removed from the dataset
 
-More details are avalible by running `vae/duplicates.py -h`.
+More details are available by running `vae/duplicates.py -h`.
 
 #### `vae/plot_error.py`
 
@@ -338,13 +343,11 @@ The PyTorch dataset definition.
 
 ### Generation of Simulation Data
 
-The code for generating the simulation data can be found here https://github.com/bit-bots/wolfgang_robot/blob/feature/recognition/wolfgang_webots_sim/src/wolfgang_webots_sim/webots_camera_controller.py
-
-TODO better documentation
+The code for generating the simulation data can be found here <https://github.com/bit-bots/wolfgang_robot/blob/feature/recognition/wolfgang_webots_sim/src/wolfgang_webots_sim/webots_camera_controller.py>
 
 ## Evaluation
 
-Visualization of the position density of the respective annotations in the imagespace over all images of the real-world collection:
+Visualization of the position density of the respective annotations in the image space over all images of the real-world collection:
 
 <img src="example_images/heatmaps.png" alt="heatmaps"/>
 
@@ -379,8 +382,8 @@ _NOTE: You can get various citation types in the right sidebar on GitHub "Cite t
 
 ### July 12, 2021
 
-* Replacement of the segmentations in the reality collection (using the `fix_segmentations.py`). The update towards the publication introduced incorrect color values of the field class in the segmentation images.
+- Replacement of the segmentations in the reality collection (using the `fix_segmentations.py`). The update towards the publication introduced incorrect color values of the field class in the segmentation images.
 
 ### June 27, 2021
 
-* Publication
+- Publication
