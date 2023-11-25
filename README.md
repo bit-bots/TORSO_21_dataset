@@ -22,7 +22,7 @@ This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of
 | # of Red Robots          |  1917 |
 | # of Unknown Robots      |  4447 |
 
-| Robot Player Numbers     |  7641 |
+| Robot Player Numbers     |       |
 |--------------------------|-------|
 | # of Robots w/out #      |  6526 |
 | # of Robots with #1      |   229 |
