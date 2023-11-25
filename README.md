@@ -110,8 +110,10 @@ images:
     height: 1080
     annotations:
       - blurred: true
-        concealed: true
+        color: unknown # possible values {blue, red, unknown}
+        concealed: false
         in_image: true
+        number: null # possible values {null, 1, 2, 3, 4, 5, 6}
         type: robot
         vector:
         - - 42 # x value
