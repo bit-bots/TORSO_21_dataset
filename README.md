@@ -1,20 +1,37 @@
 # TORSO-21 Dataset: Typical Objects in RoboCup Soccer 2021
 
 This repository contains the scripts and additional information for the TORSO-21 Dataset.
-This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of the Humanoid League as well as the Standard Platform League. We provide two image collections. The first one consists of images from various real-world locations, recorded by different robots. It includes annotations for the ball, goalposts, robots, lines, field edge, and three types of line intersections. The second collection is generated in the Webots simulator which is used for the official RoboCup Virtual Humanoid Soccer Competition. Additionally to the labels of the first collection, labels for the complete goal, depth images, 6D poses for all labels, as well as the camera location in the field of play, are provided.
+This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of the Humanoid League as well as the Standard Platform League. We provide two image collections. The first one consists of images from various real-world locations, recorded by different robots. It includes annotations for the ball, goalposts, robots (including team color and player number), lines, field edge, and three types of line intersections. The second collection is generated in the Webots simulator which is used for the official RoboCup Virtual Humanoid Soccer Competition. Additionally to the labels of the first collection, labels for the complete goal, depth images, 6D poses for all labels, as well as the camera location in the field of play, are provided.
 
 ## Meta Data
 
 | # of real-world Images   | 10464 |
 |--------------------------|-------|
-| # of Balls               | 10959 |
-| # of Robots              | 14383 |
-| # of Goalposts           | 12780 |
-| # of L-Intersections     | 15458 |
-| # of T-Intersection      | 13479 |
-| # of X-Intersections     | 13447 |
+| # of Balls               |  6081 |
+| # of Robots              |  7641 |
+| # of Goalposts           |  7888 |
+| # of L-Intersections     | 10375 |
+| # of T-Intersection      |  8659 |
+| # of X-Intersections     |  7268 |
 | # of Field Segmentations | 10464 |
 | # of Line Segmentations  | 10464 |
+
+| Robot Team Colors        |       |
+|--------------------------|-------|
+| # of Blue Robots         |  1277 |
+| # of Red Robots          |  1917 |
+| # of Unknown Robots      |  4447 |
+
+| Robot Player Numbers     |  7641 |
+|--------------------------|-------|
+| # of Robots w/out #      |  6526 |
+| # of Robots with #1      |   229 |
+| # of Robots with #2      |   162 |
+| # of Robots with #3      |   276 |
+| # of Robots with #4      |   309 |
+| # of Robots with #5      |    42 |
+| # of Robots with #6      |    97 |
+
 
 **\# of simulated images: 24.000**
 
