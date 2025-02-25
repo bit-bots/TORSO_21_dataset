@@ -50,15 +50,6 @@ def process_yaml(yaml_file, output_yaml):
             print(f"Could not load image {image_path}. Skipping.")
             continue
 
-        # Get original dimensions
-        orig_height, orig_width = image.shape[:2]
-
-        # Scale the image to a height of 800px while maintaining aspect ratio
-        target_height = 800
-        scale_factor = target_height / orig_height
-        new_width = int(orig_width * scale_factor)
-        resized_image = cv2.resize(image, (new_width, target_height))
-
         # Process each annotation
         for annotation in image_info.get("annotations", []):
             # Process only robot annotations
@@ -78,17 +69,20 @@ def process_yaml(yaml_file, output_yaml):
             # Compute the bounding box in the original image
             x_min, y_min, x_max, y_max = get_bounding_box(annotation["vector"])
 
-            # Scale bounding box coordinates to match the resized image
-            x_min_scaled = int(x_min * scale_factor)
-            y_min_scaled = int(y_min * scale_factor)
-            x_max_scaled = int(x_max * scale_factor)
-            y_max_scaled = int(y_max * scale_factor)
-
-            # Crop the robot region in the scaled image
-            cropped_robot = resized_image[y_min_scaled:y_max_scaled, x_min_scaled:x_max_scaled].copy()
+            # Crop the robot region from the original image
+            cropped_robot = image[y_min:y_max, x_min:x_max].copy()
             if cropped_robot.size == 0:
                 print("Empty crop encountered. Skipping this annotation.")
                 continue
+
+            # Get original dimensions of the cropped region
+            orig_height, orig_width = cropped_robot.shape[:2]
+
+            # Scale the cropped robot region to a height of 800px while maintaining aspect ratio
+            target_height = 800
+            scale_factor = target_height / orig_height
+            new_width = int(orig_width * scale_factor)
+            resized_robot = cv2.resize(cropped_robot, (new_width, target_height))
 
             # Reset the clicked point for this robot
             clicked_point = None
@@ -104,7 +98,7 @@ def process_yaml(yaml_file, output_yaml):
 
             # Display loop
             while True:
-                cv2.imshow(window_name, cropped_robot)
+                cv2.imshow(window_name, resized_robot)
                 key = cv2.waitKey(1) & 0xFF
 
                 if key == ord("q"):
@@ -128,13 +122,9 @@ def process_yaml(yaml_file, output_yaml):
 
                 # If a click has been recorded, transform the coordinates
                 if clicked_point is not None:
-                    # clicked_point is in cropped image coordinates (scaled)
-                    base_x_scaled = clicked_point[0] + x_min_scaled
-                    base_y_scaled = clicked_point[1] + y_min_scaled
-
                     # Transform back to original image coordinates
-                    base_x = int(base_x_scaled / scale_factor)
-                    base_y = int(base_y_scaled / scale_factor)
+                    base_x = int(clicked_point[0] / scale_factor) + x_min
+                    base_y = int(clicked_point[1] / scale_factor) + y_min
 
                     annotation["base_footprint"] = (base_x, base_y)
                     print(f"Recorded base_footprint at source image coordinate: ({base_x}, {base_y})")
