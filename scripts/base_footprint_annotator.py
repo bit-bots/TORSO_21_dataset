@@ -3,7 +3,7 @@ import yaml
 import os
 import argparse
 
-# Global variable to store the clicked point in the cropped image coordinate system.
+# Global variable to store the clicked point in the scaled image coordinate system.
 clicked_point = None
 
 def on_mouse(event, x, y, flags, param):
@@ -50,6 +50,15 @@ def process_yaml(yaml_file, output_yaml):
             print(f"Could not load image {image_path}. Skipping.")
             continue
 
+        # Get original dimensions
+        orig_height, orig_width = image.shape[:2]
+
+        # Scale the image to a height of 800px while maintaining aspect ratio
+        target_height = 800
+        scale_factor = target_height / orig_height
+        new_width = int(orig_width * scale_factor)
+        resized_image = cv2.resize(image, (new_width, target_height))
+
         # Process each annotation
         for annotation in image_info.get("annotations", []):
             # Process only robot annotations
@@ -66,11 +75,17 @@ def process_yaml(yaml_file, output_yaml):
                 print("Skipping robot annotation without a valid vector.")
                 continue
 
-            # Compute the bounding box
+            # Compute the bounding box in the original image
             x_min, y_min, x_max, y_max = get_bounding_box(annotation["vector"])
 
-            # Crop the robot region
-            cropped_robot = image[y_min:y_max, x_min:x_max].copy()
+            # Scale bounding box coordinates to match the resized image
+            x_min_scaled = int(x_min * scale_factor)
+            y_min_scaled = int(y_min * scale_factor)
+            x_max_scaled = int(x_max * scale_factor)
+            y_max_scaled = int(y_max * scale_factor)
+
+            # Crop the robot region in the scaled image
+            cropped_robot = resized_image[y_min_scaled:y_max_scaled, x_min_scaled:x_max_scaled].copy()
             if cropped_robot.size == 0:
                 print("Empty crop encountered. Skipping this annotation.")
                 continue
@@ -113,9 +128,14 @@ def process_yaml(yaml_file, output_yaml):
 
                 # If a click has been recorded, transform the coordinates
                 if clicked_point is not None:
-                    # clicked_point is in cropped image coordinates
-                    base_x = clicked_point[0] + x_min
-                    base_y = clicked_point[1] + y_min
+                    # clicked_point is in cropped image coordinates (scaled)
+                    base_x_scaled = clicked_point[0] + x_min_scaled
+                    base_y_scaled = clicked_point[1] + y_min_scaled
+
+                    # Transform back to original image coordinates
+                    base_x = int(base_x_scaled / scale_factor)
+                    base_y = int(base_y_scaled / scale_factor)
+
                     annotation["base_footprint"] = (base_x, base_y)
                     print(f"Recorded base_footprint at source image coordinate: ({base_x}, {base_y})")
                     break
