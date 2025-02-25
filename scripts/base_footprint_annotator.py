@@ -159,7 +159,7 @@ def process_yaml(yaml_file, output_yaml, start_image):
                     base_x = int(clicked_point[0] / scale_factor) + x_min
                     base_y = int(clicked_point[1] / scale_factor) + y_min
 
-                    annotation["base_footprint"] = (base_x, base_y)
+                    annotation["base_footprint"] = [base_x, base_y]
                     print(f"Recorded base_footprint at source image coordinate: ({base_x}, {base_y})")
                     break
 
