@@ -3,6 +3,7 @@ name = "TORSO-21 Dataset"
 version = "0.1.1"
 description = "This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of the Humanoid League as well as the Standard Platform League. We provide two image collections. The first one consists of images from various real-world locations, recorded by different robots. It includes annotations for the ball, goalposts, robots, lines, field edge, and three types of line intersections. The second collection is generated in the Webots simulator which is used for the official RoboCup Virtual Humanoid Soccer Competition. Additionally to the labels of the first collection, labels for the complete goal, depth images, 6D poses for all labels, as well as the camera location in the field of play, are provided."
 authors = ["Hamburg Bit-Bots <info@bit-bots.de>", "Florian <florian@flova.de>"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
