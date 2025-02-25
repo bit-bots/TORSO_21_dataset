@@ -58,6 +58,23 @@ def process_yaml(yaml_file, output_yaml, start_image):
     # Get the list of images in the YAML file
     image_keys = list(data["images"].keys())
 
+    num_annotations_todo = 0
+    for i in range(start_image, len(image_keys)):
+        image_filename = image_keys[i]
+        image_info = data["images"][image_filename]
+        for annotation in image_info.get("annotations", []):
+            if annotation.get("type") != "robot":
+                continue
+            if "base_footprint" in annotation:
+                continue
+            if "vector" not in annotation or not annotation["vector"]:
+                continue
+            num_annotations_todo += 1
+    
+    num_annotations_done = 0
+
+
+
     # Process each image in the YAML
     for i in range(start_image, len(image_keys)):
         # Get the image filename and image info
@@ -116,6 +133,7 @@ def process_yaml(yaml_file, output_yaml, start_image):
             clicked_point = None
 
             print(f"Displaying robot in {image_filename}.")
+            print(f"Annotation {num_annotations_done + 1} of {num_annotations_todo}.")
             print("Click on the base footprint of the robot, press 's' if no base footprint is visible,")
             print("press 'q' to exit without saving changes, or press 'w' to save and exit.")
 
