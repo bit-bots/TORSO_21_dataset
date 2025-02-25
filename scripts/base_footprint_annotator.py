@@ -59,19 +59,21 @@ def process_yaml(yaml_file, output_yaml, start_image):
     image_keys = list(data["images"].keys())
 
     num_annotations_todo = 0
+    num_annotations_done = 0
     for i in range(start_image, len(image_keys)):
         image_filename = image_keys[i]
         image_info = data["images"][image_filename]
         for annotation in image_info.get("annotations", []):
             if annotation.get("type") != "robot":
                 continue
-            if "base_footprint" in annotation:
-                continue
             if "vector" not in annotation or not annotation["vector"]:
                 continue
-            num_annotations_todo += 1
+            if "base_footprint" in annotation:
+                num_annotations_todo += 1
+                num_annotations_done += 1
+            else:
+                num_annotations_todo += 1
     
-    num_annotations_done = 0
 
 
 
