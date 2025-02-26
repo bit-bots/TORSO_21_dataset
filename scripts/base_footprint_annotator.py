@@ -61,8 +61,7 @@ def process_yaml(yaml_file, output_yaml, start_image):
     # Estimate the number of annotations to be done
     num_annotations_todo = 0
     num_annotations_done = 0
-    for i in range(start_image, len(image_keys)):
-        image_filename = image_keys[i]
+    for image_filename in image_keys:
         image_info = data["images"][image_filename]
         for annotation in image_info.get("annotations", []):
             if annotation.get("type") != "robot":
