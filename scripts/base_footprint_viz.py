@@ -72,6 +72,8 @@ def visualize_annotations(yaml_file, start_image=None):
             print(f"Could not load image {image_path}. Skipping.")
             continue
 
+        print(f"Current image: {image_filename}")
+
         while True:
             display_image = image.copy()
             draw_annotations(display_image, image_info.get("annotations", []))
