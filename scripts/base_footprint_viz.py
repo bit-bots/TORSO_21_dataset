@@ -10,11 +10,20 @@ def draw_annotations(image, annotations):
         if annotation.get("type") != "robot":
             continue
 
-        if "vector" in annotation and annotation["vector"]:
+        # Check if annotation has a vector
+        if "vector" in annotation:
             x_min, y_min = min(p[0] for p in annotation["vector"]), min(p[1] for p in annotation["vector"])
             x_max, y_max = max(p[0] for p in annotation["vector"]), max(p[1] for p in annotation["vector"])
-            cv2.rectangle(image, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
 
+            # Determine color based on base_footprint status
+            if "base_footprint" in annotation:
+                color = (0, 255, 255) if annotation["base_footprint"] is None else (0, 255, 0)  # Yellow / Green
+            else:
+                color = (0, 0, 255)  # Red (no base footprint info)
+
+            cv2.rectangle(image, (x_min, y_min), (x_max, y_max), color, 2)
+
+        # Draw base footprint only if it's defined
         if "base_footprint" in annotation and annotation["base_footprint"] is not None:
             base_x, base_y = annotation["base_footprint"]
             cv2.circle(image, (base_x, base_y), 5, (0, 0, 255), -1)
@@ -49,7 +58,8 @@ def visualize_annotations(yaml_file, start_image=None):
         image_filename = image_keys[i]
         image_info = data["images"][image_filename]
 
-        if not any(a.get("type") == "robot" for a in image_info.get("annotations", [])):
+        # Skip images where no robots have a "vector"
+        if not any("vector" in a for a in image_info.get("annotations", []) if a.get("type") == "robot"):
             continue
 
         image_path = os.path.join(image_dir, image_filename)
@@ -72,9 +82,9 @@ def visualize_annotations(yaml_file, start_image=None):
             if key == ord(" "):
                 break  # Next image
             elif key == ord("d"):
-                # Delete all base_footprint annotations
+                # Delete all base_footprint annotations for robots
                 for annotation in image_info.get("annotations", []):
-                    if annotation.get("type") == "robot":
+                    if annotation.get("type") == "robot" and "base_footprint" in annotation:
                         del annotation["base_footprint"]
                 print(f"Cleared base footprints for {image_filename}.")
                 save_yaml(yaml_file, data)  # Save after deleting
