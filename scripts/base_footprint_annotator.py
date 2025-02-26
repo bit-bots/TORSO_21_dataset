@@ -59,7 +59,7 @@ def process_yaml(yaml_file, output_yaml, start_image):
     image_keys = list(data["images"].keys())
 
     # Estimate the number of annotations to be done
-    num_annotations_todo = 0
+    num_annotations_total = 0
     num_annotations_done = 0
     for image_filename in image_keys:
         image_info = data["images"][image_filename]
@@ -68,11 +68,9 @@ def process_yaml(yaml_file, output_yaml, start_image):
                 continue
             if "vector" not in annotation or not annotation["vector"]:
                 continue
+            num_annotations_total += 1
             if "base_footprint" in annotation:
-                num_annotations_todo += 1
                 num_annotations_done += 1
-            else:
-                num_annotations_todo += 1
 
 
     # Process each image in the YAML
@@ -136,7 +134,7 @@ def process_yaml(yaml_file, output_yaml, start_image):
             num_annotations_done += 1
 
             print(f"Displaying robot in {image_filename}.")
-            print(f"Annotation {num_annotations_done} of {num_annotations_todo}.")
+            print(f"Annotation {num_annotations_done} of {num_annotations_total}.")
             print("Click on the base footprint of the robot, press 's' if no base footprint is visible,")
             print("press 'q' to exit without saving changes, or press 'w' to save and exit.")
 
