@@ -6,12 +6,12 @@ authors = ["Hamburg Bit-Bots <info@bit-bots.de>", "Florian <florian@flova.de>"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
-numpy = "^1.21.1"
+python = ">=3.10,<4.0"
 opencv-python = "^4.5.2"
 PyYAML = "^6.0"
 requests = "^2.25.1"
 tqdm = "^4.64.1"
+numpy = "^2.2.3"
 
 [poetry.group.dev.dependencies]
 matplotlib = "^3.3.3"
