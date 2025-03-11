@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import os
 import yaml
+from tqdm import tqdm
 
 def draw_annotations(image, annotations):
     """ Draws bounding boxes and base footprint points on the image. """
@@ -54,7 +55,12 @@ def visualize_annotations(yaml_file, start_image=None):
     else:
         start_index = 0
 
-    for i in range(start_index, len(image_keys)):
+    for i in tqdm(range(0, len(image_keys))):
+        # Skip images before the start image, but still loop so the progress bar is accurate
+        if i < start_index:
+            continue
+
+        # Get the data
         image_filename = image_keys[i]
         image_info = data["images"][image_filename]
 
@@ -89,7 +95,9 @@ def visualize_annotations(yaml_file, start_image=None):
                     if annotation.get("type") == "robot" and "base_footprint" in annotation:
                         del annotation["base_footprint"]
                 print(f"Cleared base footprints for {image_filename}.")
-                save_yaml(yaml_file, data)  # Save after deleting
+            elif key == ord("w"):
+                print(f"Saving YAML file {yaml_file}. This may take a moment...")
+                save_yaml(yaml_file, data)
             elif key == ord("q"):
                 cv2.destroyAllWindows()
                 return
