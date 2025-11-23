@@ -1,6 +1,7 @@
-data/
+/data/*
+/data/**/*
+!/data/**/
+!/data/**/annotations.yaml
 
-masks*
-segmentation*
 *.pyc
 __pycache__
