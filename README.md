@@ -109,21 +109,24 @@ The annotations are in the following format:
 ```yaml
 images:
   130-16_02_2018__11_16_34_0000_upper.png:
-    width: 1920
-    height: 1080
+    width: 640
+    height: 480
     annotations:
-      - blurred: true
-        color: unknown # possible values {blue, red, unknown}
+      - base_footprint:  # null or base footprint point of the annotated object
+        - 67  # x value
+        - 92  # y value
+        blurred: false
+        color: unknown  # possible values {blue, red, unknown}
         concealed: false
         in_image: true
-        number: null # possible values {null, 1, 2, 3, 4, 5, 6}
+        number: null  # possible values {null, 1, 2, 3, 4, 5, 6}
         type: robot
-        vector:
-        - - 42 # x value
-          - 26 # y value
+        vector:  # Bounding box of the annotated object
+        - - 42  # x value
+          - 26  # y value
         - - 81
           - 98
-        pose: # The pose of the annotated object, only available in simulation
+        pose:  # The pose of the annotated object, only available in simulation
           position:
             x: 0
             y: 0
@@ -136,12 +139,12 @@ images:
           motion: standing
       - in_image: false
         type: ball
-    metadata: # The keys should be like this but do not need to be present for all images
+    metadata:  # The keys should be like this but do not need to be present for all images
       fov: 42
       location: "foobay"
       tags: ["natural_light", "telstar18", "do_not_use"]
       imageset_id: 130
-      camera_pose: # The pose of the annotated object, only available in simulation
+      camera_pose:  # The pose of the annotated object, only available in simulation
         position:
           x: 0
           y: 0
@@ -152,7 +155,7 @@ images:
           z: 0
           w: 0
       Natural light: False
-      League: HSL
+      League: HSL  # RoboCup League
       ...
 ```
 
