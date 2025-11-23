@@ -1,17 +1,20 @@
 import argparse
+import os
+
 import cv2
 import numpy as np
-import os
 import yaml
 
 # Global variable to store the clicked point in the scaled image coordinate system.
 clicked_point = None
 
+
 def on_mouse(event, x, y, flags, param):
-    """ Callback function to capture mouse clicks on the displayed image. """
+    """Callback function to capture mouse clicks on the displayed image."""
     global clicked_point
     if event == cv2.EVENT_LBUTTONDOWN:
         clicked_point = (x, y)
+
 
 def get_bounding_box(vector):
     """
@@ -22,13 +25,17 @@ def get_bounding_box(vector):
     ys = [pt[1] for pt in vector]
     return min(xs), min(ys), max(xs), max(ys)
 
+
 def show_wait(window_name: str):
-    """ Display a wait message on the image window. """
+    """Display a wait message on the image window."""
     img = np.zeros((800, 800, 3), dtype=np.uint8)
-    cv2.putText(img, "Wait...", (300, 400), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+    cv2.putText(
+        img, "Wait...", (300, 400), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2
+    )
     cv2.imshow(window_name, img)
     cv2.waitKey(50)
     return
+
 
 def process_yaml(yaml_file, output_yaml, start_image):
     global clicked_point
@@ -71,7 +78,6 @@ def process_yaml(yaml_file, output_yaml, start_image):
             num_annotations_total += 1
             if "base_footprint" in annotation:
                 num_annotations_done += 1
-
 
     # Process each image in the YAML
     for i in range(start_image, len(image_keys)):
@@ -135,14 +141,19 @@ def process_yaml(yaml_file, output_yaml, start_image):
 
             print(f"Displaying robot in {image_filename}.")
             print(f"Annotation {num_annotations_done} of {num_annotations_total}.")
-            print("Click on the base footprint of the robot, press 's' if no base footprint is visible,")
-            print("press 'q' to exit without saving changes, or press 'w' to save and exit.")
-
+            print(
+                "Click on the base footprint of the robot, press 's' if no base footprint is visible,"
+            )
+            print(
+                "press 'q' to exit without saving changes, or press 'w' to save and exit."
+            )
 
             # Show context window
             display_height = 400
             display_width = int(image.shape[1] * display_height / image.shape[0])
-            context_img = cv2.rectangle(image.copy(), (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
+            context_img = cv2.rectangle(
+                image.copy(), (x_min, y_min), (x_max, y_max), (0, 255, 0), 2
+            )
             context_img = cv2.resize(context_img, (display_width, display_height))
             cv2.imshow(context_window_name, context_img)
 
@@ -158,7 +169,9 @@ def process_yaml(yaml_file, output_yaml, start_image):
 
                 if key == ord("w"):
                     print("Saving and exiting.")
-                    show_wait(main_window_name) # Signal the user that we are not finished yet
+                    show_wait(
+                        main_window_name
+                    )  # Signal the user that we are not finished yet
                     show_wait(context_window_name)
                     with open(output_yaml, "w") as f:
                         yaml.dump(data, f)
@@ -179,7 +192,9 @@ def process_yaml(yaml_file, output_yaml, start_image):
                     base_y = int(clicked_point[1] / scale_factor) + y_min
 
                     annotation["base_footprint"] = [base_x, base_y]
-                    print(f"Recorded base_footprint at source image coordinate: ({base_x}, {base_y})")
+                    print(
+                        f"Recorded base_footprint at source image coordinate: ({base_x}, {base_y})"
+                    )
                     break
 
     # Signal the user that we are not finished yet
@@ -194,11 +209,22 @@ def process_yaml(yaml_file, output_yaml, start_image):
 
     print(f"Updated YAML saved as {output_yaml}")
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Annotate robot base footprints in images based on YAML metadata.")
-    parser.add_argument("yaml_file", help="Path to the YAML file containing image annotations.")
+    parser = argparse.ArgumentParser(
+        description="Annotate robot base footprints in images based on YAML metadata."
+    )
+    parser.add_argument(
+        "yaml_file", help="Path to the YAML file containing image annotations."
+    )
     parser.add_argument("output_yaml", help="Path to save the updated YAML file.")
-    parser.add_argument("--start_image", "-n", type=int, default=0, help="Start from the Nth image in the YAML file.")
+    parser.add_argument(
+        "--start_image",
+        "-n",
+        type=int,
+        default=0,
+        help="Start from the Nth image in the YAML file.",
+    )
     args = parser.parse_args()
 
     if not os.path.exists(args.yaml_file):
@@ -206,6 +232,7 @@ def main():
         return
 
     process_yaml(args.yaml_file, args.output_yaml, args.start_image)
+
 
 if __name__ == "__main__":
     main()
