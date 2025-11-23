@@ -34,13 +34,13 @@ for image_path in os.listdir(folder_dir):
     rgb_image = rgba_image.convert('RGB')
     #image = Image.open(rgb_image)
     inference_state = processor.set_image(rgb_image)
-    # prompts = ["white lines",
-    #            "white intersecting lines on grass",
-    #            "white line marks on grass",
-    #            "far away white line marks on grass",
-    #            "white lines on grass",
-    #            "white lines on grass at the edge of the image"]
-    prompts = ["robot on the field", "humanoid robot", "soccer robot", "robot"]
+    prompts = ["white lines",
+               "white intersecting lines on grass",
+               "white line marks on grass",
+               "far away white line marks on grass",
+               "white lines on grass",
+               "white lines on grass at the edge of the image"]
+    #prompts = ["robot on the field", "humanoid robot", "soccer robot", "robot"]
 
 
     output = processor.set_text_prompt(state=inference_state, prompt= prompts[0])
