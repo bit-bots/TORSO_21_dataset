@@ -1,3 +1,4 @@
+from matplotlib import patches
 import torch
 import os
 from os import listdir
@@ -15,11 +16,16 @@ model = build_sam3_image_model()
 processor = Sam3Processor(model)
 # Load an image
 #folder_dir = "/homes/25kelmend/testPic/"
-folder_dir = "/homes/25kelmend/testimg/"
+#folder_dir = "/homes/25kelmend/Downloads/sam3_images/testimg_large_prompt2/"
+#folder_dir = "/homes/25kelmend/Downloads/sam3_images/testimg_mainprompt_overlay/"
+folder_dir = "/homes/25kelmend/Downloads/sam3_images/testimg_large_robot/"
+#folder_dir = "/homes/25kelmend/Downloads/sam3_images/testimg_large_mainprompt/"
+#folder_dir = "/homes/25kelmend/Downloads/sam3_images/testimg_prompt2/"
 
 folder = "path/to/images"
-#        #line marks, particularly side lines, also notice fine lines far away, intersections, white markers
-
+#prompts:
+#main prompt: ["white lines","white intersecting lines on grass","white line marks on grass","far away white line marks on grass","white lines on grass","white lines on grass at the edge of the image"]  
+#prompt2: ["white intersecting lines on grass","white line marks on grass","far away white line marks on grass","white lines on grass","white lines on grass at the edge of the image"]]
 
 for image_path in os.listdir(folder_dir):
     if "mask" in image_path.lower():
@@ -28,7 +34,13 @@ for image_path in os.listdir(folder_dir):
     rgb_image = rgba_image.convert('RGB')
     #image = Image.open(rgb_image)
     inference_state = processor.set_image(rgb_image)
-    prompts = ["white lines", "white intersecting lines on grass", "white line marks on grass", "far away white line marks on grass", "white lines on grass", "white lines on grass at the edge of the image"]
+    # prompts = ["white lines",
+    #            "white intersecting lines on grass",
+    #            "white line marks on grass",
+    #            "far away white line marks on grass",
+    #            "white lines on grass",
+    #            "white lines on grass at the edge of the image"]
+    prompts = ["robot on the field", "humanoid robot", "soccer robot", "robot"]
 
 
     output = processor.set_text_prompt(state=inference_state, prompt= prompts[0])
@@ -45,15 +57,22 @@ for image_path in os.listdir(folder_dir):
         mask_np = masks.detach().cpu().numpy()
         mask_np = np.any(mask_np, axis=0).squeeze(0)
         comb_mask = mask_np | comb_mask
+
         """
         plt.imshow(mask_np, cmap='gray')
         plt.title("Mask")
         plt.show()
         plt.imsave(folder_dir + image_path + line_prompt + "_mask.png", mask_np, cmap='gray')
         """
+
     print("")
 
-    plt.imshow(comb_mask, cmap='gray')
-    plt.title("Mask")
+    orange_mark = patches.Patch(color='orange', label='mask lines')
+    plt.legend(handles = [orange_mark])
+    plt.imshow(rgb_image, cmap='gray')
+    plt.imshow(comb_mask, cmap="jet", alpha=0.5)
+    plt.axis('off')
+    #plt.title("Mask")    
     plt.show()
-    plt.imsave(folder_dir + image_path +  "_mask.png", comb_mask, cmap='gray')
+    plt.savefig(folder_dir + image_path +  "_mask.png",bbox_inches='tight',pad_inches=0)
+    #plt.imsave(folder_dir + image_path +  "_mask.png", comb_mask, cmap='gray')
