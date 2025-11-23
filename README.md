@@ -273,6 +273,27 @@ to be manually created.
 This script was used to resolve an issue regarding the segmentation images of the reality collection.
 This fixes the issue of incorrect color values of the class `field` caused by anti-aliasing and a old bug in the `line_label_tool`.
 
+#### `heatmap.py`
+
+Creates heatmaps of the annotation positions over all images in the dataset.
+
+#### `seg_merge.py`
+
+Creates segmentations for balls and goalposts and field edges.
+
+#### `split_train_test.py`
+
+Splits the dataset into a training and a test set.
+
+#### `base_footprint_annotator.py`
+
+This script can be used to annotate and verify robot base footprints.
+
+#### `base_footprint_viz.py`
+
+This script can be used to visualize robot base footprint annotations.
+
+
 ### Variational Autoencoder
 
 The variational autoencoder, we have used, is based on [noctrog's conv-vae](https://github.com/noctrog/conv-vae).
@@ -413,3 +434,7 @@ _NOTE: You can get various citation types in the right sidebar on GitHub "Cite t
 ### November 2023
 
 - Addition of robot team color and player number annotations in the reality collection.
+
+### March 2025
+
+- Addition of robot base footprint annotations in the reality collection.
