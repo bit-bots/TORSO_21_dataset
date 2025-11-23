@@ -406,3 +406,7 @@ _NOTE: You can get various citation types in the right sidebar on GitHub "Cite t
 ### June 27, 2021
 
 - Publication
+
+### November 2023
+
+- Addition of robot team color and player number annotations in the reality collection.
