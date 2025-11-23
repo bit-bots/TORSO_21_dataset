@@ -4,7 +4,9 @@ This repository contains the scripts and additional information for the TORSO-21
 This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of the Humanoid League as well as the Standard Platform League. We provide two image collections. The first one consists of images from various real-world locations, recorded by different robots. It includes annotations for the ball, goalposts, robots (including team color and player number), lines, field edge, and three types of line intersections. The second collection is generated in the Webots simulator which is used for the official RoboCup Virtual Humanoid Soccer Competition. Additionally to the labels of the first collection, labels for the complete goal, depth images, 6D poses for all labels, as well as the camera location in the field of play, are provided.
 
 ## Meta Data
+
 ### Real World
+
 | # of Images              | 10464 |
 |--------------------------|-------|
 | # of Balls               |  6081 |
@@ -33,6 +35,7 @@ This is a dataset for the RoboCup Humanoid Soccer domain consisting of images of
 | # of Robots with #6      |    97 |
 
 ### Simultation
+
 **\# of simulated images: 24.000**
 
 ## Example images
@@ -300,9 +303,9 @@ More details are available by running `vae/distances.py -h`.
 
 Creates a yaml file containing three lists containing:
 
-* The images that survived the pruning
-* The images that got selected due to the high reconstruction error
-* The images that will be removed from the dataset
+- The images that survived the pruning
+- The images that got selected due to the high reconstruction error
+- The images that will be removed from the dataset
 
 More details are available by running `vae/duplicates.py -h`.
 
