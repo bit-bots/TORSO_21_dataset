@@ -24,7 +24,7 @@ def extract_classes(data: dict) -> list[dict[str, int | str]]:
 
     categories = [
         {"id": idx, "name": class_type, "supercategory": "none"}
-        for idx, class_type in enumerate(sorted(types), start=1)
+        for idx, class_type in enumerate(sorted(types))
     ]
 
     return categories

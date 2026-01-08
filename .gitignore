@@ -2,6 +2,7 @@
 /data/**/*
 !/data/**/
 !/data/**/annotations.yaml
+!/data/**/_annotations.coco.json
 
 *.pyc
 __pycache__

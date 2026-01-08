@@ -293,6 +293,14 @@ Creates segmentations for balls and goalposts and field edges.
 
 Splits the dataset into a training and a test set.
 
+#### `split_train_valid.py`
+
+Splits the training dataset into a training and a validation set.
+
+#### `create_symlinks.py`
+
+Creates symlinks for image- and segmentation-files in the data directory to some stored location.
+
 #### `base_footprint_annotator.py`
 
 This script can be used to annotate and verify robot base footprints.
@@ -300,7 +308,6 @@ This script can be used to annotate and verify robot base footprints.
 #### `base_footprint_viz.py`
 
 This script can be used to visualize robot base footprint annotations.
-
 
 ### Variational Autoencoder
 
