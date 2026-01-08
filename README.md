@@ -265,6 +265,11 @@ This script can be used to label lines.
 
 This script converts labels from the Pascal VOC XML format to the `yaml` format as defined above.
 
+#### `convert_to_coco.py`
+
+This script converts the annotations from the `yaml` format as defined above to the COCO JSON format.
+The output can be used to train and evaluate models that use the COCO format.
+
 #### `add_metadata.py`
 
 Creates the file `data/annotations_with_metadata.yaml` from `data/annotations.yaml` and
